@@ -1,5 +1,4 @@
-<p align="center"><img src="![Pluto-small](https://user-images.githubusercontent.com/28534765/204599469-f5ef98ee-8b87-48e8-bdd1-a0d0eca48bdc.png)" width="400" alt="Pluto Logo"></p>
-
+<p align="center"><img src="https://user-images.githubusercontent.com/28534765/204599469-f5ef98ee-8b87-48e8-bdd1-a0d0eca48bdc.png" width="400" alt="Pluto Logo"></p>
 
 
 ## About Us
