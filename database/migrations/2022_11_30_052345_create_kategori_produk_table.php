@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mereks', function (Blueprint $table) {
-            $table->id();
+        Schema::create('kategori_produk', function (Blueprint $table) {
+		    $table->unsignedInteger('produk_id');
+		    $table->unsignedInteger('kategori_id');
+		    $table->enum('jenis_produk',['Bahan Baku','Barang Jadi', 'Barang Olahan']);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mereks');
+        Schema::dropIfExists('kategori_produk');
     }
 };

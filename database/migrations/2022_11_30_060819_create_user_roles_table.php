@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi_barang_pemasoks', function (Blueprint $table) {
-            $table->id();
+        Schema::create('user_roles', function (Blueprint $table) {
+            $table->unsignedInteger('users_id');
+            $table->unsignedInteger('roles_id');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi_barang_pemasoks');
+        Schema::dropIfExists('user_roles');
     }
 };

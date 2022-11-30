@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pemasoks', function (Blueprint $table) {
-            $table->id();
+        Schema::create('kategori', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nama_kategori',50);
+            $table->text('keterangan');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pemasoks');
+        Schema::dropIfExists('kategori');
     }
 };
