@@ -36,7 +36,10 @@ class KategoriController extends Controller
      */
     public function store(StoreKategoriRequest $request)
     {
-        //
+        $kategori = new Kategori([
+            'nama_kategori' => $request->get('nama_kategori'),
+            'keterangan' => $request->get('keterangan')]);
+        $kategori->save();
     }
 
     /**

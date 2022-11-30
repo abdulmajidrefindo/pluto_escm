@@ -15,7 +15,7 @@ class BarangController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -25,7 +25,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,7 +36,19 @@ class BarangController extends Controller
      */
     public function store(StoreBarangRequest $request)
     {
-        //
+        $barang = new Barang([
+            'produk_id' => $request->get('produk_id'),
+            'pemasok_id' => $request->get('pemasok_id'),
+            'sku' => $request->get('sku'),
+            'harga' => $request->get('harga'),
+            'total_terjual' => $request->get('total_terjual'),
+            'total_masuk' => $request->get('total_masuk'),
+            'total_stok' => $request->get('total_stok'),
+            'createdBy' => $request->get('createdBy'),
+            'updatedBy' => $request->get('updatedBy'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')]);
+        $barang->save();
     }
 
     /**

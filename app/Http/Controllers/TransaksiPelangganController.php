@@ -36,7 +36,12 @@ class TransaksiPelangganController extends Controller
      */
     public function store(StoreTransaksiPelangganRequest $request)
     {
-        //
+        $transaksiPelanggan = new TransaksiPelanggan([
+            'pelanggan_id' => $request->get('pelanggan_id'),
+            'total_harga' => $request->get('total_harga'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')]);
+        $transaksiPelanggan->save();
     }
 
     /**

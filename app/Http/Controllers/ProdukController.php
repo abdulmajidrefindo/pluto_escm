@@ -36,7 +36,13 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
-        //
+        $produk = new Produk([
+            'nama_produk' => $request->get('nama_produk'),
+            'unit' => $request->get('unit'),
+            'keterangan' => $request->get('keterangan'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')]);
+        $produk->save();
     }
 
     /**
