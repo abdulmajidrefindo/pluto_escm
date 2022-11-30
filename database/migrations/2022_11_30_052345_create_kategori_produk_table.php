@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kategori_produk', function (Blueprint $table) {
-		    $table->unsignedInteger('produk_id');
-		    $table->unsignedInteger('kategori_id');
+            $table->foreignId('kategori_id')->constrained('kategori');
+		    $table->foreignId('produk_id')->constrained('produk');
 		    $table->enum('jenis_produk',['Bahan Baku','Barang Jadi', 'Barang Olahan']);
             $table->timestamps();
         });

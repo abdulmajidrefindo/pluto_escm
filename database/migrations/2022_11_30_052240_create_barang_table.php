@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('barang', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('produk_id');
-            $table->unsignedInteger('pemasok_id');
-            $table->unsignedInteger('merek_id');
+            $table->id();
+            $table->foreignId('produk_id')->constrained('produk');
+            $table->foreignId('pemasok_id')->constrained('pemasok');
+            $table->foreignId('merek_id')->constrained('merek');
             $table->integer('sku')->length(20);
             $table->integer('total_terjual')->length(7);
             $table->integer('total_masuk')->length(7);

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi_pelanggan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('pelanggan_id');
-            $table->integer('total_harga')->length(20);
+        Schema::create('merek', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_merek',50);
+            $table->text('keterangan');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi_pelanggan');
+        Schema::dropIfExists('merek');
     }
 };

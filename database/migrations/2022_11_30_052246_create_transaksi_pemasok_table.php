@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_roles', function (Blueprint $table) {
-            $table->unsignedInteger('users_id');
-            $table->unsignedInteger('roles_id');
+        Schema::create('transaksi_pemasok', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pemasok_id')->constrained('pemasok');
+            $table->integer('total_harga')->length(20);;
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_roles');
+        Schema::dropIfExists('transaksi_pemasok');
     }
 };

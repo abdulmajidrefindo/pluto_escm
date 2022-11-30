@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transaksi_barang_pelanggan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('transaksi_pelanggan_id');
-            $table->unsignedInteger('users_id');
-            $table->unsignedInteger('barang_id');
+            $table->id();
+            $table->foreignId('transaksi_pelanggan_id')->constrained('transaksi_pelanggan');
+            $table->foreignId('users_id')->constrained('users');
+            $table->foreignId('barang_id')->constrained('barang');
             $table->enum('status_transaksi',['Berhasil','Ditolak']);
             $table->integer('kuantitas')->length(7);
             $table->timestamps();
