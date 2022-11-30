@@ -36,7 +36,12 @@ class MerekController extends Controller
      */
     public function store(StoreMerekRequest $request)
     {
-        //
+        $merek = new Merek([
+            'nama_merek' => $request->get('nama_merek'),
+            'keterangan' => $request->get('keterangan'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')]);
+        $merek->save();
     }
 
     /**

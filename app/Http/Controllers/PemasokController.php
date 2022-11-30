@@ -36,7 +36,13 @@ class PemasokController extends Controller
      */
     public function store(StorePemasokRequest $request)
     {
-        //
+        $pemasok = new Pemasok([
+            'nama_pemasok' => $request->get('nama_pemasok'),
+            'alamat_pemasok' => $request->get('alamat_pemasok'),
+            'kontak_pemasok' => $request->get('kontak_pemasok'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')]);
+        $pemasok->save();
     }
 
     /**

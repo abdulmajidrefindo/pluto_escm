@@ -36,7 +36,13 @@ class PelangganController extends Controller
      */
     public function store(StorePelangganRequest $request)
     {
-        //
+        $pelanggan = new Pelanggan([
+            'nama_pelanggan' => $request->get('nama_pelanggan'),
+            'alamat_pelanggan' => $request->get('alamat_pelanggan'),
+            'kontak_pelanggan' => $request->get('kontak_pelanggan'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')]);
+        $pelanggan->save();
     }
 
     /**
