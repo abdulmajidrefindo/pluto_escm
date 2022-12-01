@@ -15,7 +15,9 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        $produk=Produk::all();
+        return response()->json($produk);
+        return view('produk.index',compact('produk'));
     }
 
     /**
@@ -25,7 +27,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        return view('produk.create');
     }
 
     /**
@@ -36,13 +38,15 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
-        $produk = new Produk([
+        $produk = Produk::create([
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
             'keterangan' => $request->get('keterangan'),
             'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')]);
-        $produk->save();
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Disimpan');
+        return redirect('produk')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -53,7 +57,9 @@ class ProdukController extends Controller
      */
     public function show(Produk $produk)
     {
-        //
+        //untuk testing
+        return response()->json($produk);
+        return view('produk.show',compact('produk'));
     }
 
     /**
@@ -64,7 +70,7 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        //
+        return view ('produk.edit');
     }
 
     /**
@@ -76,7 +82,15 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
-        //
+        $produk->update([
+            'nama_produk' => $request->get('nama_produk'),
+            'unit' => $request->get('unit'),
+            'keterangan' => $request->get('keterangan'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Disimpan');
+        return redirect('/produk')->with('completed','Data berhasil diupdate!');
     }
 
     /**
@@ -87,6 +101,8 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
-        //
+        $produk->delete();
+        return response()->json('Berhasil Dihapus');
+        return redirect('/produk')->with('completed','Data berhasil dihapus!');
     }
 }
