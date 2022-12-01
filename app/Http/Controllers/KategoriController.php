@@ -49,8 +49,8 @@ class KategoriController extends Controller
             'keterangan' => $request->get('keterangan')
         ]);
 
-        return response()->json('Kesimpen');
-        //return redirect('/kategori')->with('completed', 'Data kategori berhasil tersimpan!');
+        //return response()->json('Kesimpen');
+        return redirect('kategori')->with('completed', 'Data kategori berhasil tersimpan!');
     }
 
     /**

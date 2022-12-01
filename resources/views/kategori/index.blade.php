@@ -12,9 +12,9 @@
 
 @section('content_header')
     <h1>Daftar Kategori</h1>
-    <button href="#" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
+    <a href="kategori/create" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
         Tambah Kategori baru
-    </button>
+    </a>
 @stop
 
 @section('content')
