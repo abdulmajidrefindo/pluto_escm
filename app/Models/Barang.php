@@ -12,4 +12,35 @@ class Barang extends Model
     protected $table = "barang";
     protected $fillable = ['produk_id','pemasok_id','sku','harga','total_terjual','total_masuk','total_stok','createdBy','updatedBy','createdAt','updatedAt'];
     public $timestamps = true;
+
+    /**
+     * Get the user that owns the Barang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function merek(): BelongsTo
+    {
+        return $this->belongsTo(Merek::class);
+    }
+
+    public function pemasok(): BelongsTo
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
+
+    public function produk(): BelongsTo
+    {
+        return $this->belongsTo(Produk::class);
+    }
+
+    public function transaksiBarangPemasok(): hasMany
+    {
+        return $this->hasMany(TransaksiBarangPemasok::class);
+    }
+
+    public function transaksiBarangPelanggan(): hasMany
+    {
+        return $this->hasMany(TransaksiBarangPelanggan::class);
+    }
+
 }

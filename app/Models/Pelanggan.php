@@ -11,4 +11,10 @@ class Pelanggan extends Model
     protected $table = "pelanggan";
     protected $fillable = ['nama_pelanggan','alamat_pelanggan','kontak_pelanggan','createdAt','updatedAt'];
     public $timestamps = true;
+
+    public function transaksiPelanggan(): BelongsTo
+    {
+        return $this->belongsTo(TransaksiPelanggan::class);
+    }
+
 }

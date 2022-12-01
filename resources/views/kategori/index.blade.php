@@ -20,8 +20,6 @@
 
 @section('content')
 
-
-
     <x-adminlte-datatable id="kategori-table" :heads="$heads" head-theme="light" theme="dark" :config="$config" striped
         hoverable with-footer footer-theme="light" beautify>
         @foreach ($kategori as $kategori)

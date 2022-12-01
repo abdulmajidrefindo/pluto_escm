@@ -9,6 +9,17 @@ class Produk extends Model
 {
     use HasFactory;
     protected $table = "produk";
-    protected $fillable = ['nama_produk','keterangan','createdAt','updatedAt'];
+    protected $fillable = ['nama_produk','keterangan'];
     public $timestamps = true;
+
+    public function barang(): HasMany
+    {
+        return $this->hasMany(Barang::class);
+    }
+
+    public function kategoriProduk(): HasMany
+    {
+        return $this->hasMany(KategoriProduk::class);
+    }
+
 }

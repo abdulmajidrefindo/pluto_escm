@@ -38,13 +38,13 @@ class KategoriController extends Controller
      * @param  \App\Http\Requests\StoreKategoriRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreKategoriRequest $request)
+    public function store(StoreKategoriRequest $a, Kategori $kategori)
     {
         $request->validate([
             'nama_kategori' => 'required'
         ]);
 
-        $kategori = Kategori::create([
+        $kategori->create([
             'nama_kategori' => $request->get('nama_kategori'),
             'keterangan' => $request->get('keterangan')
         ]);

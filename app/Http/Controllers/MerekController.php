@@ -8,6 +8,9 @@ use App\Http\Requests\UpdateMerekRequest;
 
 class MerekController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      *

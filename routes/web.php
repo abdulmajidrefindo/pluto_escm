@@ -32,6 +32,7 @@ Route::get('/testing', function () {
 //Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::resource('barang', BarangController::class);
 Route::resource('kategori', KategoriController::class);
 Route::resource('merek', MerekController::class);
@@ -48,3 +49,5 @@ Route::get('users/{id}', function ($id) {
 Route::get('/token', function () {
     return csrf_token();
 });
+
+

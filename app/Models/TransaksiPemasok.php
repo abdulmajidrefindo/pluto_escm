@@ -11,4 +11,15 @@ class TransaksiPemasok extends Model
     protected $table = "transaksi_pemasok";
     protected $fillable = ['pemasok_id','kuantitas','createdAt','updatedAt'];
     public $timestamps = true;
+
+    public function transaksiBarangPemasok(): hasMany
+    {
+        return $this->hasMany(TransaksiBarangPemasok::class);
+    }
+
+    public function pemasok(): BelongsTo
+    {
+        return $this->belongsTo(Pemasok::class);
+    }
+
 }

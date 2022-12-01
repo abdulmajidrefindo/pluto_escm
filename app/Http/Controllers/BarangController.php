@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateBarangRequest;
 
 class BarangController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +54,7 @@ class BarangController extends Controller
             'updatedAt' => $request->get('updatedAt')
         ]);
         return response()->json('Berhasih Disimpan');
-        //return redirect('/barang')->with('completed', 'Data kategori berhasil tersimpan!');
+        //return redirect('/barang')->with('message', 'Data kategori berhasil tersimpan!');
     }
 
     /**
@@ -89,7 +90,7 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, Barang $barang)
     {
-        $barang->update([    
+        $barang->update([
             'produk_id' => $request->get('produk_id'),
             'pemasok_id' => $request->get('pemasok_id'),
             'sku' => $request->get('sku'),
@@ -97,10 +98,7 @@ class BarangController extends Controller
             'total_terjual' => $request->get('total_terjual'),
             'total_masuk' => $request->get('total_masuk'),
             'total_stok' => $request->get('total_stok'),
-            'createdBy' => $request->get('createdBy'),
-            'updatedBy' => $request->get('updatedBy'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
+
         ]);
         return response()->json("Berhasil Diupdate");
         //return redirect('/barang')->with('completed', 'Data barang berhasil diperbaharui!');
