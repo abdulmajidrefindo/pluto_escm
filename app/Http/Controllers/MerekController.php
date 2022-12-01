@@ -15,7 +15,10 @@ class MerekController extends Controller
      */
     public function index()
     {
-        //
+        // Menampilkan data merek
+        $merek = Merek::all();
+        return response()->json($merek);
+        //return view('merek.index', compact('merek'))
     }
 
     /**
@@ -25,7 +28,7 @@ class MerekController extends Controller
      */
     public function create()
     {
-        //
+        return view('merek.create');
     }
 
     /**
@@ -36,12 +39,14 @@ class MerekController extends Controller
      */
     public function store(StoreMerekRequest $request)
     {
-        $merek = new Merek([
+        $merek = Merek::create([
             'nama_merek' => $request->get('nama_merek'),
             'keterangan' => $request->get('keterangan'),
             'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')]);
-        $merek->save();
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Disimpan');
+        //return redirect('/merek')->with('completed', 'Data merek berhasil tersimpan!');
     }
 
     /**
@@ -52,7 +57,8 @@ class MerekController extends Controller
      */
     public function show(Merek $merek)
     {
-        //
+        //untuk testing
+        return response()->json($merek);
     }
 
     /**
@@ -63,7 +69,7 @@ class MerekController extends Controller
      */
     public function edit(Merek $merek)
     {
-        //
+        return view('merek.edit');
     }
 
     /**
@@ -75,7 +81,12 @@ class MerekController extends Controller
      */
     public function update(UpdateMerekRequest $request, Merek $merek)
     {
-        //
+        $merek->update([
+            'nama_merek' => $request->get('nama_merek'),
+            'keterangan' => $request->get('keterangan'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')
+        ]);
     }
 
     /**
@@ -86,6 +97,8 @@ class MerekController extends Controller
      */
     public function destroy(Merek $merek)
     {
-        //
+        $merek->delete();
+        return response()->json("Terhapus");
+        //return redirect('/merek')->with('completed', 'Data merek berhasil terhapus!');
     }
 }

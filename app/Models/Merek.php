@@ -9,4 +9,5 @@ class Merek extends Model
 {
     use HasFactory;
     protected $table = "merek";
+    protected $fillable=['nama_merek','keterangan','createdAt','updatedAt'];
 }
