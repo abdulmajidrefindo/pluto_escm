@@ -15,7 +15,9 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        //
+        $pelanggan=Pelanggan::all();
+        return response()->json($pelanggan);
+        //return view('pelanggan.index', compact('pelanggan'))
     }
 
     /**
@@ -25,7 +27,7 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        //
+        return view('pelanggan.create');
     }
 
     /**
@@ -36,13 +38,15 @@ class PelangganController extends Controller
      */
     public function store(StorePelangganRequest $request)
     {
-        $pelanggan = new Pelanggan([
+        $pelanggan=Pelanggan::create([
             'nama_pelanggan' => $request->get('nama_pelanggan'),
             'alamat_pelanggan' => $request->get('alamat_pelanggan'),
             'kontak_pelanggan' => $request->get('kontak_pelanggan'),
             'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')]);
-        $pelanggan->save();
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Disimpan');
+        //return redirect('pelanggan.index', compact('pelanggan'))
     }
 
     /**
@@ -53,7 +57,9 @@ class PelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
-        //
+        //untuk testing
+        return response()->json($pelanggan);
+        //return view('pelanggan.index', compact('pelanggan'))
     }
 
     /**
@@ -64,7 +70,7 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+        return view('pelanggan.edit');
     }
 
     /**
@@ -76,7 +82,14 @@ class PelangganController extends Controller
      */
     public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
     {
-        //
+        $pelanggan->update([
+            'nama_pelanggan' => $request->get('nama_pelanggan'),
+            'alamat_pelanggan' => $request->get('alamat_pelanggan'),
+            'kontak_pelanggan' => $request->get('kontak_pelanggan'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        //return redirect('pelanggan.index', compact('pelanggan'))
     }
 
     /**
@@ -87,6 +100,8 @@ class PelangganController extends Controller
      */
     public function destroy(Pelanggan $pelanggan)
     {
-        //
+        $pelanggan->delete();
+        return response()->json('Berhasil Dihapus');
+        return redirect('/pelanggan')->with('completed','Data berhasil dihapus!');
     }
 }
