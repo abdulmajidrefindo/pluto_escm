@@ -18,8 +18,8 @@ class KategoriController extends Controller
         //
                 // Menampilkan data kategori
                 $kategori = Kategori::all();
-                return response()->json($kategori);
-                //return view('kategori.index', compact('kategori'))
+                //return response()->json($kategori);
+                return view('kategori.index', compact('kategori'));
     }
 
     /**
