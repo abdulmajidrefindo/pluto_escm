@@ -9,4 +9,6 @@ class TransaksiPelanggan extends Model
 {
     use HasFactory;
     protected $table = "transaksi_pelanggan";
+    protected $fillable = ['pelanggan_id','total_harga','createdAt','updatedAt'];
+    public $timestamps = true;
 }

@@ -15,7 +15,9 @@ class TransaksiPelangganController extends Controller
      */
     public function index()
     {
-        //
+        $transaksiPelanggan=TransaksiPelanggan::all();
+        return response()->json($transaksiPelanggan);
+        return view('transaksiPelanggan.index',compact('transaksiPelangan'));
     }
 
     /**
@@ -25,7 +27,7 @@ class TransaksiPelangganController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaksiPelanggan');
     }
 
     /**
@@ -36,12 +38,14 @@ class TransaksiPelangganController extends Controller
      */
     public function store(StoreTransaksiPelangganRequest $request)
     {
-        $transaksiPelanggan = new TransaksiPelanggan([
+        $transaksiPelanggan = TransaksiPelanggan::create([
             'pelanggan_id' => $request->get('pelanggan_id'),
             'total_harga' => $request->get('total_harga'),
             'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')]);
-        $transaksiPelanggan->save();
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Disimpan');
+        return redirect('transaksiPelangan')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -52,7 +56,9 @@ class TransaksiPelangganController extends Controller
      */
     public function show(TransaksiPelanggan $transaksiPelanggan)
     {
-        //
+        //untuk testing
+        return response()->json($transaksiPelanggan);
+        return view('transaksiPelanggan.show',compact('transaksiPelanggan'));
     }
 
     /**
@@ -63,7 +69,7 @@ class TransaksiPelangganController extends Controller
      */
     public function edit(TransaksiPelanggan $transaksiPelanggan)
     {
-        //
+        return view('transaksiPelanggan.edit');
     }
 
     /**
@@ -75,7 +81,14 @@ class TransaksiPelangganController extends Controller
      */
     public function update(UpdateTransaksiPelangganRequest $request, TransaksiPelanggan $transaksiPelanggan)
     {
-        //
+        $transaksiPelanggan->update([
+            'pelanggan_id' => $request->get('pelanggan_id'),
+            'total_harga' => $request->get('total_harga'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil diupdate');
+        return redirect('/transaksiPelanggan')->with('completed','Data berhasil diupdate!');
     }
 
     /**
@@ -86,6 +99,8 @@ class TransaksiPelangganController extends Controller
      */
     public function destroy(TransaksiPelanggan $transaksiPelanggan)
     {
-        //
+        $transaksiPelanggan->delete();
+        return response()->json('Berhasil dihapus');
+        return redirect('/transaksiPelanggan')->with('completed','Data berhasil dihapus!');
     }
 }
