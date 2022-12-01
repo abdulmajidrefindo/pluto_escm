@@ -17,8 +17,8 @@ class MerekController extends Controller
     {
         // Menampilkan data merek
         $merek = Merek::all();
-        return response()->json($merek);
-        //return view('merek.index', compact('merek'))
+        //return response()->json($merek);
+        return view('merek.index', compact('merek'));
     }
 
     /**
@@ -45,8 +45,8 @@ class MerekController extends Controller
             'createdAt' => $request->get('createdAt'),
             'updatedAt' => $request->get('updatedAt')
         ]);
-        return response()->json('Berhasil Disimpan');
-        //return redirect('/merek')->with('completed', 'Data merek berhasil tersimpan!');
+        //return response()->json('Berhasil Disimpan');
+        return redirect('/merek')->with('message', 'Data merek berhasil tersimpan!');
     }
 
     /**
@@ -69,7 +69,7 @@ class MerekController extends Controller
      */
     public function edit(Merek $merek)
     {
-        return view('merek.edit');
+        return view('merek.edit', compact('merek'));
     }
 
     /**
@@ -83,10 +83,9 @@ class MerekController extends Controller
     {
         $merek->update([
             'nama_merek' => $request->get('nama_merek'),
-            'keterangan' => $request->get('keterangan'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
+            'keterangan' => $request->get('keterangan')
         ]);
+        return redirect('/merek')->with('message', 'Data merek berhasil diperbaharui!');
     }
 
     /**
@@ -98,7 +97,7 @@ class MerekController extends Controller
     public function destroy(Merek $merek)
     {
         $merek->delete();
-        return response()->json("Terhapus");
-        //return redirect('/merek')->with('completed', 'Data merek berhasil terhapus!');
+        //return response()->json("Terhapus");
+        return redirect('/merek')->with('message', 'Data merek berhasil terhapus!');
     }
 }
