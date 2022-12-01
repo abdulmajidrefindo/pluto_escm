@@ -15,7 +15,10 @@ class BarangController extends Controller
      */
     public function index()
     {
-        
+        // Menampilkan data barang
+        $barang = Barang::all();
+        return response()->json($barang);
+        //return view('barang.index', compact('barang'))
     }
 
     /**
@@ -25,7 +28,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-
+        return view('barang.create');
     }
 
     /**
@@ -36,7 +39,7 @@ class BarangController extends Controller
      */
     public function store(StoreBarangRequest $request)
     {
-        $barang = new Barang([
+        $barang = Barang::create([
             'produk_id' => $request->get('produk_id'),
             'pemasok_id' => $request->get('pemasok_id'),
             'sku' => $request->get('sku'),
@@ -47,8 +50,10 @@ class BarangController extends Controller
             'createdBy' => $request->get('createdBy'),
             'updatedBy' => $request->get('updatedBy'),
             'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')]);
-        $barang->save();
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json('Berhasih Disimpan');
+        //return redirect('/barang')->with('completed', 'Data kategori berhasil tersimpan!');
     }
 
     /**
@@ -59,7 +64,9 @@ class BarangController extends Controller
      */
     public function show(Barang $barang)
     {
-        //
+        //Untuk Testing
+        return response()->json($barang);
+        //return view('barang.show', compact('barang'));
     }
 
     /**
@@ -70,7 +77,7 @@ class BarangController extends Controller
      */
     public function edit(Barang $barang)
     {
-        //
+        return view('barang.edit');
     }
 
     /**
@@ -82,7 +89,21 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, Barang $barang)
     {
-        //
+        $barang->update([    
+            'produk_id' => $request->get('produk_id'),
+            'pemasok_id' => $request->get('pemasok_id'),
+            'sku' => $request->get('sku'),
+            'harga' => $request->get('harga'),
+            'total_terjual' => $request->get('total_terjual'),
+            'total_masuk' => $request->get('total_masuk'),
+            'total_stok' => $request->get('total_stok'),
+            'createdBy' => $request->get('createdBy'),
+            'updatedBy' => $request->get('updatedBy'),
+            'createdAt' => $request->get('createdAt'),
+            'updatedAt' => $request->get('updatedAt')
+        ]);
+        return response()->json("Berhasil Diupdate");
+        //return redirect('/barang')->with('completed', 'Data barang berhasil diperbaharui!');
     }
 
     /**
@@ -93,6 +114,8 @@ class BarangController extends Controller
      */
     public function destroy(Barang $barang)
     {
-        //
+        $barang->delete();
+        return response()->json("Berhasil Dihapus");
+        //return redirect('/barang')->with('completed', 'Data barang berhasil dihapus!');
     }
 }
