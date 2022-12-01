@@ -75,7 +75,7 @@ class KategoriController extends Controller
      */
     public function edit(Kategori $kategori)
     {
-        return view('kategori.edit');
+        return view('kategori.edit', compact('kategori'));
     }
 
     /**
@@ -88,12 +88,13 @@ class KategoriController extends Controller
     public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
         //
+
         $kategori->update([
             'nama_kategori'=>$request->get('nama_kategori'),
             'keterangan'=>$request->get('keterangan')
         ]);
-        return response()->json("Terupdate");
-        //return redirect('/kategori')->with('message', 'Data kategori berhasil diperbaharui!');
+        //return response()->json("Terupdate");
+        return redirect('/kategori')->with('message', 'Data kategori berhasil diperbaharui!');
     }
 
     /**

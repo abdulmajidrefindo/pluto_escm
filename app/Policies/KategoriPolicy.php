@@ -54,6 +54,7 @@ class KategoriPolicy
     public function update(User $user, Kategori $kategori)
     {
         //
+        return true;
     }
 
     /**
@@ -66,6 +67,7 @@ class KategoriPolicy
     public function delete(User $user, Kategori $kategori)
     {
         //
+
     }
 
     /**

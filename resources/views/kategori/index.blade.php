@@ -2,7 +2,7 @@
 
     $heads = ['ID', 'Nama Kategori', 'Keterangan', ['label' => 'Aksi', 'no-export' => true]];
     $config = [
-        'order' => [[1, 'dsc']],
+        'order' => [[1, 'asc']],
         'columns' => [null, null, null, ['orderable' => false]],
     ];
 @endphp
@@ -37,12 +37,12 @@
                 </td>
                 <td>
                     <nobr>
-                        <a href="{{ route('kategori.show', $kategori->id) }}"
+                        <a href="{{ route('kategori.edit', $kategori->id) }}"
                             class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </a>
 
-                        <a href="{{ route('kategori.edit', $kategori->id) }}"
+                        <a href="{{ route('kategori.show', $kategori->id) }}"
                             class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details">
                             <i class="fa fa-lg fa-fw fa-eye"></i>
                         </a>
