@@ -16,6 +16,10 @@ class KategoriController extends Controller
     public function index()
     {
         //
+                // Menampilkan data kategori
+                $kategori = Kategori::all();
+                return response()->json($kategori);
+                //return view('kategori.index', compact('kategori'))
     }
 
     /**
@@ -25,7 +29,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategori.create');
     }
 
     /**
@@ -36,10 +40,17 @@ class KategoriController extends Controller
      */
     public function store(StoreKategoriRequest $request)
     {
-        $kategori = new Kategori([
+        $request->validate([
+            'nama_kategori' => 'required'
+        ]);
+
+        $kategori = Kategori::create([
             'nama_kategori' => $request->get('nama_kategori'),
-            'keterangan' => $request->get('keterangan')]);
-        $kategori->save();
+            'keterangan' => $request->get('keterangan')
+        ]);
+
+        return response()->json('Kesimpen');
+        //return redirect('/kategori')->with('completed', 'Data kategori berhasil tersimpan!');
     }
 
     /**
@@ -50,7 +61,10 @@ class KategoriController extends Controller
      */
     public function show(Kategori $kategori)
     {
-        //
+        //Untuk Testing
+        return response()->json($kategori);
+        //return view('kategori.show', compact('kategori'));
+
     }
 
     /**
@@ -61,7 +75,7 @@ class KategoriController extends Controller
      */
     public function edit(Kategori $kategori)
     {
-        //
+        return view('kategori.edit');
     }
 
     /**
@@ -74,6 +88,12 @@ class KategoriController extends Controller
     public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
         //
+        $kategori->update([
+            'nama_kategori'=>$request->get('nama_kategori'),
+            'keterangan'=>$request->get('keterangan')
+        ]);
+        return response()->json("Terupdate");
+        //return redirect('/kategori')->with('completed', 'Data kategori berhasil diperbaharui!');
     }
 
     /**
@@ -84,6 +104,8 @@ class KategoriController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
-        //
+        $kategori->delete();
+        return response()->json("Terhapus");
+        //return redirect('/kategori')->with('completed', 'Data kategori berhasil terhapus!');
     }
 }

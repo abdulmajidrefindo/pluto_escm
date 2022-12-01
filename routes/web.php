@@ -40,3 +40,11 @@ Route::resource('pemasok', PemasokController::class);
 Route::resource('produk', ProdukController::class);
 Route::resource('transaksiPelanggan', TransaksiPelangganController::class);
 Route::resource('transaksiPemasok', TransaksiPemasokController::class);
+
+Route::get('users/{id}', function ($id) {
+    return response()->json(['id'=>$id]);
+});
+
+Route::get('/token', function () {
+    return csrf_token();
+});
