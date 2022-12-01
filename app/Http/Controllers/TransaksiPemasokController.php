@@ -15,7 +15,9 @@ class TransaksiPemasokController extends Controller
      */
     public function index()
     {
-        //
+        $transaksiPemasok=TransaksiPemasok::all();
+        return response()->json($transaksiPemasok);
+        return view('transaksiPemasok.index',compact('transaksiPemasok'));
     }
 
     /**
@@ -25,7 +27,7 @@ class TransaksiPemasokController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaksiPemasok/create');
     }
 
     /**
@@ -36,7 +38,14 @@ class TransaksiPemasokController extends Controller
      */
     public function store(StoreTransaksiPemasokRequest $request)
     {
-        //
+        $transaksiPemasok=TransaksiPemasok::create([
+            'pemasok_id'=>$request->get('pemasok_id'),
+            'kuantitas'=>$request->get('kuantitas'),
+            'createdAt'=>$request->get('createdAt'),
+            'updatedAt'=>$request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Disimpan');
+        return redirect('/transaksiPemasok')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -47,7 +56,9 @@ class TransaksiPemasokController extends Controller
      */
     public function show(TransaksiPemasok $transaksiPemasok)
     {
-        //
+        //untuk testing
+        return response()->json($transaksiPemasok);
+        return view('transaksiPemasok.show', compact('transaksiPemasok'));
     }
 
     /**
@@ -58,7 +69,7 @@ class TransaksiPemasokController extends Controller
      */
     public function edit(TransaksiPemasok $transaksiPemasok)
     {
-        //
+        return view('transaksiPemasok.edit');
     }
 
     /**
@@ -70,7 +81,14 @@ class TransaksiPemasokController extends Controller
      */
     public function update(UpdateTransaksiPemasokRequest $request, TransaksiPemasok $transaksiPemasok)
     {
-        //
+        $transaksiPemasok->update([
+            'pemasok_id'=>$request->get('pemasok_id'),
+            'kuantitas'=>$request->get('kuantitas'),
+            'createdAt'=>$request->get('createdAt'),
+            'updatedAt'=>$request->get('updatedAt')
+        ]);
+        return response()->json('Berhasil Diupdate');
+        return redirect('/transaksiPemasok')->with('completed','Data berhasil Diupdate!');
     }
 
     /**
@@ -81,6 +99,8 @@ class TransaksiPemasokController extends Controller
      */
     public function destroy(TransaksiPemasok $transaksiPemasok)
     {
-        //
+        $transaksiPemasok->delete();
+        return response()->json('Berhasil Dihapus');
+        return redirect('/transaksiPemasok')->with('completed','Data berhasil dihapus!');
     }
 }
