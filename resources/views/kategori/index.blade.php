@@ -13,7 +13,7 @@
 
 @section('content_header')
     <h1>Daftar Kategori</h1>
-    <a href="kategori/create" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
+    <a href="{{route('kategori.create')}}" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
         Tambah Kategori baru
     </a>
 @stop
@@ -47,7 +47,7 @@
                             <i class="fa fa-lg fa-fw fa-eye"></i>
                         </a>
 
-                        <button data-toggle="modal" data-target="#modalKategori" data-id="{{ $kategori->id }}"
+                        <button data-toggle="modal" data-target="#modalKategori" data-id="{{ $kategori->id }}" data-nama-kategori="{{ $kategori->nama_kategori }}" data-keterangan-kategori="{{ $kategori->keterangan }}"
                             class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
                             <i class="fa fa-lg fa-fw fa-trash"></i>
                         </button>
@@ -59,6 +59,23 @@
 
     <x-adminlte-modal id="modalKategori" title="Hapus Data" theme="danger" icon="fas fa-trash" size='lg'>
         Anda yakin ingin menghapus data berikut?
+        <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">ID</th>
+                <td id="idKategori">Mark</td>
+              </tr>
+              <tr>
+                <th scope="row">Kategori</th>
+                <td id="namaKategori">Jacob</td>
+
+              </tr>
+              <tr>
+                <th scope="row">Keterangan</th>
+                <td id = "keteranganKategori">Larry the Bird</td>
+              </tr>
+            </tbody>
+          </table>
         <x-slot name="footerSlot">
             <form id="deleteForm" method="post">
                 @csrf
@@ -80,7 +97,13 @@
     <script>
         $(document).on('click', '.delete', function() {
             let id = $(this).attr('data-id');
+            let namaKategori = $(this).attr('data-nama-kategori');
+            let keteranganKategori = $(this).attr('data-keterangan-kategori');
+
             $('#deleteForm').attr('action', '/kategori/' + id);
+            document.getElementById("idKategori").innerHTML = id;
+            document.getElementById("namaKategori").innerHTML = namaKategori;
+            document.getElementById("keteranganKategori").innerHTML = keteranganKategori;
         });
 
     </script>
