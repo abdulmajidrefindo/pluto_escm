@@ -50,7 +50,7 @@ class KategoriController extends Controller
         ]);
 
         //return response()->json('Kesimpen');
-        return redirect('kategori')->with('completed', 'Data kategori berhasil tersimpan!');
+        return redirect('kategori')->with('message', 'Data kategori berhasil tersimpan!');
     }
 
     /**
@@ -93,7 +93,7 @@ class KategoriController extends Controller
             'keterangan'=>$request->get('keterangan')
         ]);
         return response()->json("Terupdate");
-        //return redirect('/kategori')->with('completed', 'Data kategori berhasil diperbaharui!');
+        //return redirect('/kategori')->with('message', 'Data kategori berhasil diperbaharui!');
     }
 
     /**
@@ -105,7 +105,7 @@ class KategoriController extends Controller
     public function destroy(Kategori $kategori)
     {
         $kategori->delete();
-        return response()->json("Terhapus");
-        //return redirect('/kategori')->with('completed', 'Data kategori berhasil terhapus!');
+        //return response()->json("Terhapus");
+        return redirect('/kategori')->with('message', 'Data kategori berhasil terhapus!');
     }
 }
