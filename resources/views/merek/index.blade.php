@@ -68,16 +68,16 @@
             <tbody>
               <tr>
                 <th scope="row">ID</th>
-                <td id="idMerek">Mark</td>
+                <td id="idMerek">Majid</td>
               </tr>
               <tr>
                 <th scope="row">Merek</th>
-                <td id="namaMerek">Mail</td>
+                <td id="namaMerek">Ismail Bintang</td>
 
               </tr>
               <tr>
                 <th scope="row">Keterangan</th>
-                <td id = "keteranganMerek">Nando</td>
+                <td id = "keteranganMerek">Hernando Dio Palma</td>
               </tr>
             </tbody>
           </table>

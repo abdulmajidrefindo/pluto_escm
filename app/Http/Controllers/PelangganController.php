@@ -16,8 +16,8 @@ class PelangganController extends Controller
     public function index()
     {
         $pelanggan=Pelanggan::all();
-        return response()->json($pelanggan);
-        //return view('pelanggan.index', compact('pelanggan'))
+        //return response()->json($pelanggan);
+        return view('pelanggan.index', compact('pelanggan'));
     }
 
     /**
@@ -42,11 +42,9 @@ class PelangganController extends Controller
             'nama_pelanggan' => $request->get('nama_pelanggan'),
             'alamat_pelanggan' => $request->get('alamat_pelanggan'),
             'kontak_pelanggan' => $request->get('kontak_pelanggan'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        return response()->json('Berhasil Disimpan');
-        //return redirect('pelanggan.index', compact('pelanggan'))
+        //return response()->json('Berhasil Disimpan');
+        return redirect('/pelanggan')->with('message', 'Data pelanggan berhasil disimpan!');
     }
 
     /**
@@ -59,7 +57,7 @@ class PelangganController extends Controller
     {
         //untuk testing
         return response()->json($pelanggan);
-        //return view('pelanggan.index', compact('pelanggan'))
+        //return view('pelanggan.index', compact('pelanggan'));
     }
 
     /**
@@ -86,10 +84,8 @@ class PelangganController extends Controller
             'nama_pelanggan' => $request->get('nama_pelanggan'),
             'alamat_pelanggan' => $request->get('alamat_pelanggan'),
             'kontak_pelanggan' => $request->get('kontak_pelanggan'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        //return redirect('pelanggan.index', compact('pelanggan'))
+        return redirect('/pelanggan')->with('message', 'Data pelanggan berhasil diperbaharui!');
     }
 
     /**
@@ -101,7 +97,7 @@ class PelangganController extends Controller
     public function destroy(Pelanggan $pelanggan)
     {
         $pelanggan->delete();
-        return response()->json('Berhasil Dihapus');
+        //return response()->json('Berhasil Dihapus');
         return redirect('/pelanggan')->with('completed','Data berhasil dihapus!');
     }
 }
