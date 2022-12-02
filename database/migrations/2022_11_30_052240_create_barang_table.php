@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('produk_id')->constrained('produk');
             $table->foreignId('pemasok_id')->constrained('pemasok');
             $table->foreignId('merek_id')->constrained('merek');
+            $table->integer('harga')->length(15);
             $table->integer('sku')->length(20);
             $table->integer('total_terjual')->length(7);
             $table->integer('total_masuk')->length(7);
