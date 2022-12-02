@@ -13,11 +13,7 @@ class Barang extends Model
     protected $fillable = ['produk_id','pemasok_id','sku','harga','total_terjual','total_masuk','total_stok','createdBy','updatedBy','createdAt','updatedAt'];
     public $timestamps = true;
 
-    /**
-     * Get the user that owns the Barang
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+
     public function merek(): BelongsTo
     {
         return $this->belongsTo(Merek::class);
