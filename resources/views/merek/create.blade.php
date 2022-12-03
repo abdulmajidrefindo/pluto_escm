@@ -12,7 +12,7 @@
         <div class="col-sm">
         <x-adminlte-input name="nama_merek" label="Nama Merek" placeholder="Contoh : Indofood" fgroup-class="col-md-6"
             disable-feedback />
-        <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Indomie Goreng" fgroup-class="col-md-6"
+        <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Apa Saja" fgroup-class="col-md-6"
             disable-feedback />
         <x-adminlte-button class="btn-lg" type="submit" label="Simpan Data" theme="success" icon="fas fa-lg fa-save" />
     </div>

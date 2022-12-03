@@ -16,7 +16,7 @@ class ProdukController extends Controller
     public function index()
     {
         $produk=Produk::all();
-        return response()->json($produk);
+        //return response()->json($produk);
         return view('produk.index',compact('produk'));
     }
 
@@ -42,11 +42,9 @@ class ProdukController extends Controller
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
             'keterangan' => $request->get('keterangan'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        return response()->json('Berhasil Disimpan');
-        return redirect('produk')->with('completed','Data berhasil disimpan!');
+        //return response()->json('Berhasil Disimpan');
+        return redirect('/produk')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -58,7 +56,7 @@ class ProdukController extends Controller
     public function show(Produk $produk)
     {
         //untuk testing
-        return response()->json($produk);
+        //return response()->json($produk);
         return view('produk.show',compact('produk'));
     }
 
@@ -70,7 +68,7 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        return view ('produk.edit');
+        return view ('produk.edit',compact('produk'));
     }
 
     /**
@@ -86,10 +84,8 @@ class ProdukController extends Controller
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
             'keterangan' => $request->get('keterangan'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        return response()->json('Berhasil Disimpan');
+        //return response()->json('Berhasil Disimpan');
         return redirect('/produk')->with('completed','Data berhasil diupdate!');
     }
 
@@ -102,7 +98,7 @@ class ProdukController extends Controller
     public function destroy(Produk $produk)
     {
         $produk->delete();
-        return response()->json('Berhasil Dihapus');
+        //return response()->json('Berhasil Dihapus');
         return redirect('/produk')->with('completed','Data berhasil dihapus!');
     }
 }
