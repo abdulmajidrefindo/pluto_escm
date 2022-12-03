@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Kedaireka',
+    'title' => 'Kedaireka | Home',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Kedaireka</b> ESCM',
-    'logo_img' => 'img/kedaireka.png',
+    'logo_img' => 'img/kedaireka2.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'img/kedaireka.png',
+            'path' => 'img/kedaireka1.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'img/kedaireka.png)',
+            'path' => 'img/kedaireka1.png)',
             'alt' => 'Kedaireka Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -327,44 +327,44 @@ return [
         [
             'text'       => 'Customer',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/pelanggan',
         ],
         [
             'text'       => 'Supplier',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/pemasok',
         ],
         ['header' => 'KOMODITAS'],
         [
             'text'       => 'Barang',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/barang',
         ],
         [
             'text'       => 'Produk',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/produk',
         ],
         [
             'text'       => 'Kategori',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/kategori',
         ],
         [
             'text'       => 'Merek',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/merek',
         ],
         ['header' => 'TRANSAKSI'],
         [
             'text'       => 'Transaksi Customer',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => '/transaksi pelanggan',
         ],
         [
             'text'       => 'Transaksi Supplier',
             'icon_color' => '#',
-            'url'        => '#',
+            'url'        => 'transaksi pemasok',
         ],
     ],
 
