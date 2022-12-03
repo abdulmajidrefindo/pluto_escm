@@ -109,11 +109,11 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'img/kedaireka1.png)',
+            'path' => 'img/kedaireka1.png',
             'alt' => 'Kedaireka Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 700,
+            'height' => 150,
         ],
     ],
 

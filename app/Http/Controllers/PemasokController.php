@@ -16,7 +16,7 @@ class PemasokController extends Controller
     public function index()
     {
         $pemasok=Pemasok::all();
-        return response()->json($pemasok);
+        //return response()->json($pemasok);
         return view('pemasok.index',compact('pemasok'));
     }
 
@@ -42,10 +42,8 @@ class PemasokController extends Controller
             'nama_pemasok' => $request->get('nama_pemasok'),
             'alamat_pemasok' => $request->get('alamat_pemasok'),
             'kontak_pemasok' => $request->get('kontak_pemasok'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        return response()->json('Berhasil Disimpan');
+        //return response()->json('Berhasil Disimpan');
         return redirect('/pemasok')->with('completed','Data berhasil tersimpan!');
     }
 
@@ -70,7 +68,7 @@ class PemasokController extends Controller
      */
     public function edit(Pemasok $pemasok)
     {
-        return view('pemasok.edit');
+        return view('pemasok.edit',compact('pemasok'));
     }
 
     /**
@@ -86,10 +84,8 @@ class PemasokController extends Controller
             'nama_pemasok' => $request->get('nama_pemasok'),
             'alamat_pemasok' => $request->get('alamat_pemasok'),
             'kontak_pemasok' => $request->get('kontak_pemasok'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        return response()->json('Berhasil Diupdate');
+        //return response()->json('Berhasil Diupdate');
         return redirect('/pemasok')->with('completed','Data berhasil diupdate!');
     }
 
@@ -102,7 +98,7 @@ class PemasokController extends Controller
     public function destroy(Pemasok $pemasok)
     {
         $pemasok->delete();
-        return response()->json('Berhasil Dihapur');
+        //return response()->json('Berhasil Dihapur');
         return redirect('/pemasok')->with('completed','Data berhasil dihapus');
     }
 }
