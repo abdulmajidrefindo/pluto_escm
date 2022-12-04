@@ -79,6 +79,10 @@
                 <th scope="row">Keterangan</th>
                 <td id = "keterangan">Nando</td>
               </tr>
+              <tr>
+                <th scope="row">Kategori</th>
+                <td id = "kategori">halah</td>
+              </tr>
             </tbody>
           </table>
         <x-slot name="footerSlot">
@@ -105,12 +109,14 @@
             let namaProduk = $(this).attr('data-nama-produk');
             let unit = $(this).attr('data-unit');
             let keterangan = $(this).attr('data-keterangan');
+            let kategori = $(this).attr('data-kategori');
 
             $('#deleteForm').attr('action', '/produk/' + id);
             document.getElementById("idProduk").innerHTML = id;
             document.getElementById("namaProduk").innerHTML = namaProduk;
             document.getElementById("unit").innerHTML = unit;
             document.getElementById("keterangan").innerHTML = keterangan;
+            document.getElementById("kategori").innerHTML = kategori;
         });
 
     </script>

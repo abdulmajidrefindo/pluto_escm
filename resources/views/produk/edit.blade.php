@@ -17,6 +17,10 @@
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
                 <x-adminlte-input type="text" value="{{ $produk->keterangan }}" name="keterangan" label="Keterangan"
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
+                <x-adminlte-select name="kategori" label="Kategori" fgroup-class="col-md-6">
+                    <x-adminlte-options :options="['Option 1', 'Option 2', 'Option 3']" disabled="-1"
+                        empty-option="Pilih kategori.."/>
+                </x-adminlte-select>
                 <x-adminlte-button class="btn-lg" type="submit" label="Perbaharui Data" theme="success"
                     icon="fas fa-lg fa-save" />
             </div>
