@@ -12,14 +12,14 @@ class Pemasok extends Model
     protected $fillable = ['nama_pemasok','alamat_pemasok','kontak_pemasok','createdAt','updatedAt'];
     public $timestamps = true;
 
-    public function barang(): HasMany
+    public function barang()
     {
         return $this->hasMany(Barang::class);
     }
 
-    public function transaksiPemasok(): HasMany
+    public function transaksiPemasok()
     {
-        return $this->hasMany(TransaksiPemasok::class);
+        return $this->hasMany('App\Models\Pemasok', 'pemasok_id');
     }
 
 }

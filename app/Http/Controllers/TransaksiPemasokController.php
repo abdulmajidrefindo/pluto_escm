@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TransaksiPemasok;
+use App\Models\Pemasok;
 use App\Http\Requests\StoreTransaksiPemasokRequest;
 use App\Http\Requests\UpdateTransaksiPemasokRequest;
 
@@ -15,7 +16,8 @@ class TransaksiPemasokController extends Controller
      */
     public function index()
     {
-        $transaksiPemasok=TransaksiPemasok::all();
+        $transaksiPemasok = TransaksiPemasok::with('pemasok')->get();
+        $transaksiPemasok = TransaksiPemasok::all();
         return response()->json($transaksiPemasok);
         return view('transaksiPemasok.index',compact('transaksiPemasok'));
     }
@@ -27,7 +29,8 @@ class TransaksiPemasokController extends Controller
      */
     public function create()
     {
-        return view('transaksiPemasok/create');
+        $pemasok = Pemasok::all();
+        return view('transaksiPemasok/create',compact('pemasok'));
     }
 
     /**
@@ -44,6 +47,7 @@ class TransaksiPemasokController extends Controller
             'createdAt'=>$request->get('createdAt'),
             'updatedAt'=>$request->get('updatedAt')
         ]);
+        $transaksiPemasok->pemasok_id = $request->pemasok_id;
         return response()->json('Berhasil Disimpan');
         return redirect('/transaksiPemasok')->with('completed','Data berhasil disimpan!');
     }
@@ -69,7 +73,8 @@ class TransaksiPemasokController extends Controller
      */
     public function edit(TransaksiPemasok $transaksiPemasok)
     {
-        return view('transaksiPemasok.edit');
+        $pemasok = Pemasok::all();
+        return view('transaksiPemasok.edit',compact('transaksiPemasok','pemasok'));
     }
 
     /**
@@ -87,6 +92,7 @@ class TransaksiPemasokController extends Controller
             'createdAt'=>$request->get('createdAt'),
             'updatedAt'=>$request->get('updatedAt')
         ]);
+        $transaksiPemasok->pemasok_id = $request->pemasok_id;
         return response()->json('Berhasil Diupdate');
         return redirect('/transaksiPemasok')->with('completed','Data berhasil Diupdate!');
     }

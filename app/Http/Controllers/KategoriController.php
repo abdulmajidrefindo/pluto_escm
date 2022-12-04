@@ -38,7 +38,7 @@ class KategoriController extends Controller
      * @param  \App\Http\Requests\StoreKategoriRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreKategoriRequest $a, Kategori $kategori)
+    public function store(StoreKategoriRequest $request, Kategori $kategori)
     {
         $request->validate([
             'nama_kategori' => 'required'
