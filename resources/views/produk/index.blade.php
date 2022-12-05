@@ -44,11 +44,13 @@
                             class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </a>
-                        <a href="{{ route('produk.show', $produk->id) }}"
-                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details">
+                        <button data-toggle="modal" data-target="#modalProdukDetail" data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}" data-harga="{{ $produk->harga }}" data-total-terjual="{{ $produk->total_terjual }}" data-total-masuk="{{ $produk->total_masuk }}" data-total-stok="{{ $produk->total_masuk }}"
+                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
                             <i class="fa fa-lg fa-fw fa-eye"></i>
-                        </a>
-                        <button data-toggle="modal" data-target="#modalProduk" data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}" data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}" 
+                        </button>
+                        <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
+
+                        <button data-toggle="modal" data-target="#modalProduk" data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}" data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
                             class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
                             <i class="fa fa-lg fa-fw fa-trash"></i>
                         </button>
@@ -96,6 +98,37 @@
                 <x-adminlte-button theme="success" label="Tidak" data-dismiss="modal" />
             </form>
         </x-slot>
+
+    </x-adminlte-modal>
+
+
+    <x-adminlte-modal id="modalProdukDetail" title="Rincian Data" theme="teal" icon="fas fa-eye" size='lg'>
+        Berikut rincian kategori
+        <table class="table">
+            <tbody>
+                <tr>
+                  <th scope="row">ID</th>
+                  <td id="idProduk">Mark</td>
+                </tr>
+                <tr>
+                  <th scope="row">Nama Produk</th>
+                  <td id="namaProduk">Mail</td>
+
+                </tr>
+                <tr>
+                  <th scope="row">Unit</th>
+                  <td id = "unit">Nando</td>
+                </tr>
+                <tr>
+                  <th scope="row">Keterangan</th>
+                  <td id = "keterangan">Nando</td>
+                </tr>
+                <tr>
+                  <th scope="row">Kategori</th>
+                  <td id = "kategori">halah</td>
+                </tr>
+              </tbody>
+            </table>
 
     </x-adminlte-modal>
 
