@@ -161,9 +161,11 @@
     <script>
         $(document).on('click', '.delete', function() {
             let id = $(this).attr('data-id');
-            let namaBarang = $(this).attr('data-nama-Barang');
-            let unit = $(this).attr('data-unit');
-            let keterangan = $(this).attr('data-keterangan');
+            let sku = $(this).attr('data-sku');
+            let harga = $(this).attr('data-harga');
+            let total_terjual = $(this).attr('data-total-terjual');
+            let total_masuk = $(this).attr('data-total-masuk');
+            let total_stok = $(this).attr('data-total-stok');
 
             $('#deleteForm').attr('action', '/barang/' + id);
             document.getElementById("idBarang").innerHTML = id;

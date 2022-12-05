@@ -135,6 +135,7 @@
 @stop
 
 
+
 @section('js')
     <script>
         $(document).on('click', '.delete', function() {
