@@ -50,10 +50,12 @@
                             class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </a>
-                        <a href="{{ route('barang.show', $barang->id) }}"
-                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details">
+                        <button data-toggle="modal" data-target="#modalBarangDetail" data-id="{{ $barang->id }}" data-sku="{{ $barang->sku }}" data-harga="{{ $barang->harga }}" data-total-terjual="{{ $barang->total_terjual }}" data-total-masuk="{{ $barang->total_masuk }}" data-total-stok="{{ $barang->total_masuk }}"
+                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
                             <i class="fa fa-lg fa-fw fa-eye"></i>
-                        </a>
+                        </button>
+                      <?php //  <a href="{{ route('barang.show', $barang->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
+
                         <button data-toggle="modal" data-target="#modalbarang" data-id="{{ $barang->id }}" data-sku="{{ $barang->sku }}" data-harga="{{ $barang->harga }}" data-total-terjual="{{ $barang->total_terjual }}" data-total-masuk="{{ $barang->total_masuk }}" data-total-stok="{{ $barang->total_masuk }}"
                             class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
                             <i class="fa fa-lg fa-fw fa-trash"></i>
@@ -64,8 +66,54 @@
         @endforeach
     </x-adminlte-datatable>
 
-    <x-adminlte-modal id="modalBarang" title="Hapus Data" theme="danger" icon="fas fa-trash" size='lg'>
+    <x-adminlte-modal id="modalbarang" title="Hapus Data" theme="danger" icon="fas fa-trash" size='lg'>
         Anda yakin ingin menghapus data berikut?
+        <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">ID</th>
+                <td id="idBarang">Mark</td>
+              </tr>
+              <tr>
+                <th scope="row">SKU Barang</th>
+                <td id="sku">123</td>
+
+              </tr>
+              <tr>
+                <th scope="row">Harga Barangt</th>
+                <td id = "harga">1000</td>
+              </tr>
+              <tr>
+                <th scope="row">Total Barang Terjual</th>
+                <td id = "total_terjual">30</td>
+              </tr>
+              <tr>
+                <th scope="row">Total Barang Masuk</th>
+                <td id = "total_masuk">60</td>
+              </tr>
+              <tr>
+                <th scope="row">Total Stok Barang</th>
+                <td id = "total_stok">100</td>
+              </tr>
+            </tbody>
+          </table>
+        <x-slot name="footerSlot">
+            <form id="deleteForm" method="post">
+                @csrf
+                @method('DELETE')
+
+                <input id="id" name="id" hidden value="">
+                <x-adminlte-button type="submit" class="mr-auto" theme="danger" label="Iya, hapus data." />
+
+                <x-adminlte-button theme="success" label="Tidak" data-dismiss="modal" />
+            </form>
+        </x-slot>
+
+    </x-adminlte-modal>
+
+
+    <x-adminlte-modal id="modalBarangDetail" title="Rincian Data" theme="teal" icon="fas fa-eye" size='lg'>
+        Berikut rincian kategori
         <table class="table">
             <tbody>
               <tr>
@@ -93,19 +141,16 @@
                 <th scope="row">Total Stok Barang</th>
                 <td id = "total_stok">Nando</td>
               </tr>
+              <tr>
+                <th scope="row">Waktu dibuat</th>
+                <td id = "created_at">Hoho</td>
+              </tr>
+              <tr>
+                <th scope="row">Terakhir diubah</th>
+                <td id = "created_at">Heho</td>
+              </tr>
             </tbody>
           </table>
-        <x-slot name="footerSlot">
-            <form id="deleteForm" method="post">
-                @csrf
-                @method('DELETE')
-
-                <input id="id" name="id" hidden value="">
-                <x-adminlte-button type="submit" class="mr-auto" theme="danger" label="Iya, hapus data." />
-
-                <x-adminlte-button theme="success" label="Tidak" data-dismiss="modal" />
-            </form>
-        </x-slot>
 
     </x-adminlte-modal>
 
@@ -120,7 +165,7 @@
             let unit = $(this).attr('data-unit');
             let keterangan = $(this).attr('data-keterangan');
 
-            $('#deleteForm').attr('action', '/Barang/' + id);
+            $('#deleteForm').attr('action', '/barang/' + id);
             document.getElementById("idBarang").innerHTML = id;
             document.getElementById("sku").innerHTML = sku;
             document.getElementById("harga").innerHTML = harga;
