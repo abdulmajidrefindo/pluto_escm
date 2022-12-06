@@ -14,29 +14,37 @@ class Barang extends Model
     public $timestamps = true;
 
 
-    public function merek(): BelongsTo
+    public function merek()
     {
         return $this->belongsTo(Merek::class);
     }
 
-    public function pemasok(): BelongsTo
+    /**
+     * Get all of the comments for the Barang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pemasok()
     {
-        return $this->belongsTo(Pelanggan::class);
+        return $this->hasMany(Pemasok::class, 'id', 'barang_id');
     }
 
-    public function produk(): BelongsTo
+    public function produk()
     {
         return $this->belongsTo(Produk::class);
     }
 
-    public function transaksiBarangPemasok(): hasMany
+    public function transaksiPemasok()
     {
-        return $this->hasMany(TransaksiBarangPemasok::class);
+        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok','barang_id','transaksi_pemasok_id');
     }
 
-    public function transaksiBarangPelanggan(): hasMany
+    public function transaksiBarangPelanggan()
     {
         return $this->hasMany(TransaksiBarangPelanggan::class);
     }
-
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'transaksi_barang_pemasok', 'barang_id', 'id');
+    }
 }

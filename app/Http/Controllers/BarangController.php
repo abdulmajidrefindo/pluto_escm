@@ -17,7 +17,9 @@ class BarangController extends Controller
     public function index()
     {
         // Menampilkan data barang
-        $barang = Barang::all();
+        $barang = Barang::with('transaksiPemasok')->get();
+        $barang = Barang::with('pemasok')->get();
+        $barang = Barang::with('user')->get();
         //return response()->json($barang);
         return view('barang.index', compact('barang'));
     }

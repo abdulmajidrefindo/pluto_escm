@@ -12,14 +12,13 @@ class Produk extends Model
     protected $fillable = ['nama_produk','keterangan','unit'];
     public $timestamps = true;
 
-    public function barang(): HasMany
+    public function barang()
     {
         return $this->hasMany(Barang::class);
     }
 
-    public function kategoriProduk(): HasMany
+    public function kategori()
     {
-        return $this->hasMany(KategoriProduk::class);
+        return $this->belongsToMany(Kategori::class,'kategori_produk','kategori_id','produk_id');
     }
-
 }
