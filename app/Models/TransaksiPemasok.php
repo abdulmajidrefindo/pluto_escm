@@ -21,4 +21,8 @@ class TransaksiPemasok extends Model
     {
         return $this->hasMany('App\Models\Pemasok', 'pemasok_id');
     }
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'transaksi_barang_pemasok', 'transaksi_pemasok_id', 'user_id');
+    }
 }

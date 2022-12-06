@@ -18,6 +18,7 @@ class TransaksiPemasokController extends Controller
     {
         $transaksiPemasok = TransaksiPemasok::with('pemasok')->get();
         $transaksiPemasok = TransaksiPemasok::with('barang')->get();
+        $transaksiPemasok = TransaksiPemasok::with('user')->get();
         return response()->json($transaksiPemasok);
         return view('transaksiPemasok.index',compact('transaksiPemasok'));
     }

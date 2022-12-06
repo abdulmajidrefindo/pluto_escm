@@ -35,6 +35,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-
+    public function transaksiPemasok()
+    {
+        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok', 'user_id', 'transaksi_pemasok_id');
+    }
 }
