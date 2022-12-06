@@ -19,7 +19,7 @@ class TransaksiPemasok extends Model
 
     public function pemasok()
     {
-        return $this->belongsTo('App\Models\Pemasok', 'pemasok_id');
+        return $this->hasMany('App\Models\Pemasok', 'pemasok_id');
     }
 
 }
