@@ -37,10 +37,10 @@ class User extends Authenticatable
     ];
     public function transaksiPemasok()
     {
-        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok', 'user_id', 'transaksi_pemasok_id');
+        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok', 'id', 'transaksi_pemasok_id');
     }
     public function barang()
     {
-        return $this->belongsToMany(Barang::class, 'transaksi_barang_pemasok', 'user_id', 'barang_id');
+        return $this->belongsToMany(Barang::class, 'transaksi_barang_pemasok', 'id', 'barang_id');
     }
 }
