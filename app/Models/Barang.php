@@ -43,5 +43,8 @@ class Barang extends Model
     {
         return $this->hasMany(TransaksiBarangPelanggan::class);
     }
-
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'transaksi_barang_pemasok', 'barang_id', 'user_id');
+    }
 }

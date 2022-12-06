@@ -39,4 +39,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok', 'user_id', 'transaksi_pemasok_id');
     }
+    public function barang()
+    {
+        return $this->belongsToMany(Barang::class, 'transaksi_barang_pemasok', 'user_id', 'barang_id');
+    }
 }
