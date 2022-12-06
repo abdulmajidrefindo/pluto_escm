@@ -12,11 +12,9 @@ class Kategori extends Model
     protected $fillable = ['nama_kategori','keterangan'];
     public $timestamps = true;
 
-    public function kategoriProduk(): HasMany
+    public function produk()
     {
-        return $this->hasMany(KategoriProduk::class);
+        return $this->belongsToMany(Produk::class,'kategori_produk','kategori_id','produk_id');
     }
-
-
 }
 

@@ -15,11 +15,10 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
-                // Menampilkan data kategori
-                $kategori = Kategori::all();
-                //return response()->json($kategori);
-                return view('kategori.index', compact('kategori'));
+        // Menampilkan data kategori
+        $kategori = Kategori::with('produk')->get();
+        //return response()->json($kategori);
+        return view('kategori.index', compact('kategori'));
     }
 
     /**

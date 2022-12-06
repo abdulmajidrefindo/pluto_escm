@@ -15,7 +15,7 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produk=Produk::all();
+        $produk = Produk::with('kategori')->get();
         //return response()->json($produk);
         return view('produk.index',compact('produk'));
     }
