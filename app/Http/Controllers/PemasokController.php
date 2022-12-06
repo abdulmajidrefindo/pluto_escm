@@ -15,7 +15,8 @@ class PemasokController extends Controller
      */
     public function index()
     {
-        $pemasok=Pemasok::all();
+        $pemasok=Pemasok::with('user')->get();
+        $pemasok=Pemasok::with('transaksiPemasok')->get();
         //return response()->json($pemasok);
         return view('pemasok.index',compact('pemasok'));
     }

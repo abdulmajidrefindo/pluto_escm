@@ -19,9 +19,14 @@ class Barang extends Model
         return $this->belongsTo(Merek::class);
     }
 
+    /**
+     * Get all of the comments for the Barang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function pemasok()
     {
-        return $this->belongsTo(Pelanggan::class);
+        return $this->hasMany(Pemasok::class, 'id', 'barang_id');
     }
 
     public function produk()
