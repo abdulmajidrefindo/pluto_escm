@@ -39,14 +39,22 @@
                             class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                         </a>
-                        <button data-toggle="modal" data-target="#modalKategoriDetail" data-id="{{ $kategori->id }}" data-nama-kategori="{{ $kategori->nama_kategori }}" data-keterangan-kategori="{{ $kategori->keterangan }}"
-                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
+                        <button data-toggle="modal" data-target="#modalKategoriDetail" 
+                            data-id="{{ $kategori->id }}" 
+                            data-nama-kategori="{{ $kategori->nama_kategori }}"  
+                            data-keterangan-kategori="{{ $kategori->keterangan }}"
+                            id = 'showData' 
+                            class=" btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
                             <i class="fa fa-lg fa-fw fa-eye"></i>
                         </button>
                       <?php //  <a href="{{ route('kategori.show', $kategori->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
 
-                        <button data-toggle="modal" data-target="#modalKategori" data-id="{{ $kategori->id }}" data-nama-kategori="{{ $kategori->nama_kategori }}" data-keterangan-kategori="{{ $kategori->keterangan }}"
-                            class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
+                        <button data-toggle="modal" data-target="#modalKategori" 
+                            data-id="{{ $kategori->id }}" 
+                            data-nama-kategori="{{ $kategori->nama_kategori }}" 
+                            data-keterangan-kategori="{{ $kategori->keterangan }}"
+                            id = 'deleteData'
+                            class=" btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
                             <i class="fa fa-lg fa-fw fa-trash"></i>
                         </button>
                     </nobr>
@@ -111,7 +119,7 @@
               </tr>
               <tr>
                 <th scope="row">Terakhir diubah</th>
-                <td id = "created_at">Heho</td>
+                <td id = "updated_at">Heho</td>
               </tr>
             </tbody>
           </table>
@@ -125,7 +133,20 @@
 
 @section('js')
     <script>
-        $(document).on('click', '.delete', function() {
+        $(document).on('click', '#showData', function() {
+            let id = $(this).attr('data-id');
+            let namaKategori = $(this).attr('data-nama-kategori');
+            let keteranganKategori = $(this).attr('data-keterangan-kategori');
+
+            $('#showForm').attr('action', '/kategori/' + id);
+            document.getElementById("idKategori").innerHTML = id;
+            document.getElementById("namaKategori").innerHTML = namaKategori;
+            document.getElementById("keteranganKategori").innerHTML = keteranganKategori;
+        });
+
+    </script>
+    <script>
+        $(document).on('click', '#deleteData', function() {
             let id = $(this).attr('data-id');
             let namaKategori = $(this).attr('data-nama-kategori');
             let keteranganKategori = $(this).attr('data-keterangan-kategori');
