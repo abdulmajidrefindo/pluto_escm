@@ -15,4 +15,8 @@ class TransaksiPelanggan extends Model
     {
         return $this->hasMany(Pelanggan::class, 'pelanggan_id', 'transaksi_pelanggan_id');
     }
+    public function barang()
+    {
+        return $this->belongsToMany(Barang::class, 'transaksi_barang_pelanggan', 'transaksi_pelanggan_id', 'barang_id');
+    }
 }

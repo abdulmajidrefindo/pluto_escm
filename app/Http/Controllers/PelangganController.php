@@ -15,7 +15,7 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $pelanggan=Pelanggan::with('transaksiPelanggan');
+        $pelanggan=Pelanggan::with('transaksiPelanggan')->get();
         //return response()->json($pelanggan);
         return view('pelanggan.index', compact('pelanggan'));
     }
