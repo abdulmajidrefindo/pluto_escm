@@ -12,12 +12,14 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Kategori</h1>
-
+    <h1>Daftar Kategori</h1>
+    <a href="{{route('kategori.create')}}" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
+        Tambah Kategori baru
+    </a>
 @stop
 
 @section('content')
-    <div class="card card-dark card-tabs">
+    <div class="card card-primary card-tabs">
         <div class="card-header p-0 pt-1">
             <div class="card-tools">
 
@@ -113,26 +115,25 @@
             </div>
         </div>
 
-    </div>
     <x-adminlte-modal id="modalKategori" title="Hapus Data" theme="danger" icon="fas fa-trash" size='lg'>
-        <p class="lead">Anda yakin ingin menghapus data berikut?</p>
+        Anda yakin ingin menghapus data berikut?
         <table class="table">
             <tbody>
-                <tr>
-                    <th scope="row">ID</th>
-                    <td id="idKategori">Mark</td>
-                </tr>
-                <tr>
-                    <th scope="row">Kategori</th>
-                    <td id="namaKategori">Jacob</td>
+              <tr>
+                <th scope="row">ID</th>
+                <td id="idKategori">Mark</td>
+              </tr>
+              <tr>
+                <th scope="row">Kategori</th>
+                <td id="namaKategori">Jacob</td>
 
-                </tr>
-                <tr>
-                    <th scope="row">Keterangan</th>
-                    <td id="keteranganKategori">Larry the Bird</td>
-                </tr>
+              </tr>
+              <tr>
+                <th scope="row">Keterangan</th>
+                <td id = "keteranganKategori">Larry the Bird</td>
+              </tr>
             </tbody>
-        </table>
+          </table>
         <x-slot name="footerSlot">
             <form id="deleteForm" method="post">
                 @csrf
@@ -148,32 +149,32 @@
     </x-adminlte-modal>
 
     <x-adminlte-modal id="modalKategoriDetail" title="Rincian Data" theme="teal" icon="fas fa-eye" size='lg'>
-        <p class="lead">Rincian Kategori</p>
+        Berikut rincian kategori
         <table class="table">
             <tbody>
-                <tr>
-                    <th scope="row">ID</th>
-                    <td id="idKategori">Jacob</td>
-                </tr>
-                <tr>
-                    <th scope="row">Kategori</th>
-                    <td id="namaKategori">Larry</td>
+              <tr>
+                <th scope="row">ID</th>
+                <td id="idKategori">Jacob</td>
+              </tr>
+              <tr>
+                <th scope="row">Kategori</th>
+                <td id="namaKategori">Larry</td>
 
-                </tr>
-                <tr>
-                    <th scope="row">Keterangan</th>
-                    <td id="keteranganKategori">Hoho</td>
-                </tr>
-                <tr>
-                    <th scope="row">Waktu dibuat</th>
-                    <td id="created_at">Hoho</td>
-                </tr>
-                <tr>
-                    <th scope="row">Terakhir diubah</th>
-                    <td id="created_at">Heho</td>
-                </tr>
+              </tr>
+              <tr>
+                <th scope="row">Keterangan</th>
+                <td id = "keteranganKategori">Hoho</td>
+              </tr>
+              <tr>
+                <th scope="row">Waktu dibuat</th>
+                <td id = "created_at">Hoho</td>
+              </tr>
+              <tr>
+                <th scope="row">Terakhir diubah</th>
+                <td id = "updated_at">Heho</td>
+              </tr>
             </tbody>
-        </table>
+          </table>
 
     </x-adminlte-modal>
 
@@ -183,6 +184,19 @@
 
 
 @section('js')
+    <script>
+        $(document).on('click', '#showData', function() {
+            let id = $(this).attr('data-id');
+            let namaKategori = $(this).attr('data-nama-kategori');
+            let keteranganKategori = $(this).attr('data-keterangan-kategori');
+
+            $('#showForm').attr('action', '/kategori/' + id);
+            document.getElementById("idKategori").innerHTML = id;
+            document.getElementById("namaKategori").innerHTML = namaKategori;
+            document.getElementById("keteranganKategori").innerHTML = keteranganKategori;
+        });
+
+    </script>
     <script>
         $(document).on('click', '#deleteData', function() {
             let id = $(this).attr('data-id');
@@ -194,5 +208,6 @@
             document.getElementById("namaKategori").innerHTML = namaKategori;
             document.getElementById("keteranganKategori").innerHTML = keteranganKategori;
         });
+
     </script>
 @stop
