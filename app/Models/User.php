@@ -45,6 +45,6 @@ class User extends Authenticatable
     }
     public function transaksiPelanggan()
     {
-        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan', 'user_id', 'transaksi_pelanggan_id');
+        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan', 'id', 'transaksi_pelanggan_id');
     }
 }
