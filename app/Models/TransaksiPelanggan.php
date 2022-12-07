@@ -12,12 +12,12 @@ class TransaksiPelanggan extends Model
     protected $fillable = ['pelanggan_id','total_harga','createdAt','updatedAt'];
     public $timestamps = true;
 
-    public function transaksiBarangPelanggan(): hasMany
+    public function transaksiBarangPelanggan()
     {
         return $this->hasMany(TransaksiBarangPelanggan::class);
     }
 
-    public function pelanggan(): BelongsTo
+    public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);
     }
