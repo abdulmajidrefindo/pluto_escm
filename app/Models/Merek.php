@@ -16,7 +16,7 @@ class Merek extends Model
     *
     * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
-    public function barang(): HasMany
+    public function barang()
     {
         return $this->hasMany(Barang::class);
     }
