@@ -36,7 +36,7 @@ class Barang extends Model
 
     public function transaksiPemasok()
     {
-        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok','barang_id','transaksi_pemasok_id');
+        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok','id','transaksi_pemasok_id');
     }
 
     public function transaksiBarangPelanggan()
@@ -45,6 +45,6 @@ class Barang extends Model
     }
     public function transaksiPelanggan()
     {
-        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan', 'barang_id', 'transaksi_pelanggan_id');
+        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan', 'id', 'transaksi_pelanggan_id');
     }
 }
