@@ -10,17 +10,17 @@ class TransaksiBarangPemasok extends Model
     use HasFactory;
     protected $table = "transaksi_barang_pemasok";
 
-    public function transaksiPemasok(): BelongsTo
+    public function transaksiPemasok()
     {
         return $this->belongsTo(TransaksiPemasok::class);
     }
 
-    public function barang(): BelongsTo
+    public function barang()
     {
         return $this->belongsTo(Barang::class);
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

@@ -364,7 +364,7 @@ return [
         [
             'text'       => 'Transaksi Supplier',
             'icon_color' => '#',
-            'url'        => 'transaksi pemasok',
+            'url'        => '/transaksiPemasok',
         ],
     ],
 
