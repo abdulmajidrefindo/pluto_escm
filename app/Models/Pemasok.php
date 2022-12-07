@@ -26,5 +26,14 @@ class Pemasok extends Model
         return $this->hasMany(Barang::class);
     }
 
+    /**
+     * Get all of the comments for the Pemasok
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'foreign_key', 'local_key');
+    }
 
 }

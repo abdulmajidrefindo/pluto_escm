@@ -13,6 +13,13 @@ class Barang extends Model
     protected $fillable = ["merek_id", 'produk_id','pemasok_id','sku','harga','total_terjual','total_masuk','total_stok','createdBy','updatedBy','createdAt','updatedAt'];
     public $timestamps = true;
 
+    protected $attributes = [
+
+        'total_terjual' => '0',
+        'total_masuk' => '0',
+
+    ];
+
 
     public function merek()
     {

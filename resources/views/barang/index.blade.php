@@ -7,7 +7,13 @@
     ];
 @endphp
 
+@php
+
+@endphp
+
 @extends('adminlte::page')
+
+@section('plugins.Select2', true)
 
 @section('title', 'Barang')
 
@@ -26,8 +32,7 @@
                 <!-- This will cause the card to maximize when clicked -->
                 <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
                 <!-- This will cause the card to collapse when clicked -->
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                        class="fas fa-minus"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
 
             </div>
 
@@ -36,13 +41,13 @@
                     <a class="nav-link active" id="barang-tabs-table-tab" data-toggle="pill" href="#barang-tabs-table"
                         role="tab" aria-controls="barang-tabs-table" aria-selected="true">
                         <i class="fas fa-xs fa-table fa-fw"></i>
-                        Daftar Kategori</a>
+                        Daftar Barang</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="barang-tabs-add-tab" data-toggle="pill" href="#barang-tabs-add" role="tab"
                         aria-controls="barang-tabs-add" aria-selected="false">
                         <i class="fas fa-xs fa-plus fa-fw"></i>
-                        Tambah Kategori
+                        Tambah Barang
                         Baru</a>
                 </li>
             </ul>
@@ -119,35 +124,53 @@
                 </div>
                 <div class="tab-pane fade" id="barang-tabs-add" role="tabpanel" aria-labelledby="barang-tabs-add-tab">
 
-                  <!-- Form input barang -->
+                    <!-- Form input barang -->
 
-                    <form action="{{route('barang.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-sm">
+                                <x-adminlte-select2 id="selectProduk" name="produk_id" label="Produk"
+                                    label-class="text-lightblue" fgroup-class="col-md-6"
+                                    data-placeholder="Pilih produk...">
+                                    <option/>
+                                    @foreach ($produk as $produk)
+                                        <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
+                                    @endforeach
+                                </x-adminlte-select2>
 
-                            <x-adminlte-select name="nama_produk" label="Nama produk" fgroup-class="col-md-6">
-                                <x-adminlte-options :options="['Option 1', 'Option 2', 'Option 3']" disabled="-1"
-                                    empty-option="Pilih Produk.."/>
-                            </x-adminlte-select>
+                                <x-adminlte-select2 id="selectMerek" name="merek_id" label="Merek Barang"
+                                    label-class="text-lightblue" fgroup-class="col-md-6"
+                                    data-placeholder="Pilih merek...">
+                                    <option/>
+                                    @foreach ($merek as $merek)
+                                        <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
+                                    @endforeach
+                                </x-adminlte-select2>
 
-                            <x-adminlte-select name="nama_pemasok" label="Nama Pemasok" fgroup-class="col-md-6">
-                                <x-adminlte-options :options="['Option 1', 'Option 2', 'Option 3']" disabled="-1"
-                                    empty-option="Pilih Pemasok.."/>
-                            </x-adminlte-select>
+                                <x-adminlte-select2 id="selectPemasok" name="pemasok_id" label="Pemasok"
+                                    label-class="text-lightblue" fgroup-class="col-md-6"
+                                    data-placeholder="Pilih pemasok...">
+                                    <option/>
+                                    @foreach ($pemasok as $pemasok)
+                                        <option value="{{ $pemasok->id }}">{{ $pemasok->nama_pemasok }}</option>
+                                    @endforeach
+                                </x-adminlte-select2>
 
+                                <x-adminlte-input name="sku" label="SKU Barang" label-class="text-lightblue"
+                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6" disable-feedback />
 
-                            <x-adminlte-input name="sku" label="SKU Barang" placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6"
-                                disable-feedback />
+                                <x-adminlte-input name="harga" label="Harga Barang" label-class="text-lightblue"
+                                    placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
+                                    disable-feedback />
 
-                            <x-adminlte-input name="harga" label="Harga Barang" placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
-                                disable-feedback />
+                                <x-adminlte-input name="total_stok" label="Total Stok Barang"
+                                    label-class="text-lightblue" placeholder="Contoh : Apa saja " fgroup-class="col-md-6"
+                                    disable-feedback />
 
-                            <x-adminlte-input name="total_stok" label="Total Stok Barang" placeholder="Contoh : Apa saja " fgroup-class="col-md-6"
-                                disable-feedback />
-
-                            <x-adminlte-button class="btn-lg" type="submit" label="Simpan Data" theme="success" icon="fas fa-lg fa-save" />
-                        </div>
+                                <x-adminlte-button class="btn" type="submit" label="Simpan Data" theme="info"
+                                    icon="fas fa-lg fa-save" />
+                            </div>
                         </div>
                     </form>
 
