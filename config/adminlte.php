@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'img/kedaireka1.png',
             'alt' => 'Kedaireka Preloader Image',
