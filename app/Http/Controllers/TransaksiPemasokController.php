@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TransaksiPemasok;
 use App\Models\Pemasok;
+use App\Models\Barang;
+
 use App\Http\Requests\StoreTransaksiPemasokRequest;
 use App\Http\Requests\UpdateTransaksiPemasokRequest;
 
@@ -29,7 +31,8 @@ class TransaksiPemasokController extends Controller
     public function create()
     {
         $pemasok = Pemasok::all();
-        return view('transaksiPemasok/create',compact('pemasok'));
+        $barang = Barang::all();
+        return view('transaksi.pemasok/create',compact('pemasok','barang'));
     }
 
     /**
@@ -46,7 +49,7 @@ class TransaksiPemasokController extends Controller
         ]);
         $transaksiPemasok->pemasok_id = $request->pemasok_id;
         return response()->json('Berhasil Disimpan');
-        return redirect('/transaksiPemasok')->with('completed','Data berhasil disimpan!');
+        //return redirect('/transaksi.pemasok')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -60,6 +63,7 @@ class TransaksiPemasokController extends Controller
         //untuk testing
         $id = $transaksiPemasok->id;
         $transaksiPemasok = TransaksiPemasok::with('barang')->where('id',$id)->first();
+        //$barang = Barang::with('produk')->where('id',$id)->first();
         return response()->json($transaksiPemasok);
         return view('transaksiPemasok.show', compact('transaksiPemasok'));
     }

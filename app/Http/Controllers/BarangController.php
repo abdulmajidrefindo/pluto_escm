@@ -72,8 +72,10 @@ class BarangController extends Controller
     public function show(Barang $barang)
     {
         //Untuk Testing
-        //return response()->json($barang);
-        return view('barang.show', compact('barang'));
+        $id = $barang->id;
+        $barang = Barang::with('produk')->where('id',$id)->first();
+        return response()->json($barang);
+        //return view('barang.show', compact('barang'));
     }
 
     /**
