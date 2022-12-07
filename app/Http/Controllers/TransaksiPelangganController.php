@@ -15,7 +15,7 @@ class TransaksiPelangganController extends Controller
      */
     public function index()
     {
-        $transaksiPelanggan=TransaksiPelanggan::all();
+        $transaksiPelanggan=TransaksiPelanggan::with('pelanggan');
         return response()->json($transaksiPelanggan);
         return view('transaksiPelanggan.index',compact('transaksiPelangan'));
     }

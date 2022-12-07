@@ -11,14 +11,8 @@ class TransaksiPelanggan extends Model
     protected $table = "transaksi_pelanggan";
     protected $fillable = ['pelanggan_id','total_harga','createdAt','updatedAt'];
     public $timestamps = true;
-
-    public function transaksiBarangPelanggan()
-    {
-        return $this->hasMany(TransaksiBarangPelanggan::class);
-    }
-
     public function pelanggan()
     {
-        return $this->belongsTo(Pelanggan::class);
+        return $this->hasMany(Pelanggan::class, 'pelanggan_id', 'transaksi_pelanggan_id');
     }
 }
