@@ -17,10 +17,10 @@ class BarangController extends Controller
     public function index()
     {
         // Menampilkan data barang
-        $barang = Barang::with('transaksiPemasok')->get();
-        $barang = Barang::with('pemasok')->get();
+        //$barang = Barang::with('transaksiPemasok')->get();
+        //$barang = Barang::with('pemasok')->get();
         //$barang = Barang::with('user')->get();
-        $barang = Barang::with('transaksiPelanggan')->get();
+        $barang = Barang::with('produk','pemasok','merek')->get();
         //return response()->json($barang);
         return view('barang.index', compact('barang'));
     }

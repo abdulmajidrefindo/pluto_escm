@@ -13,13 +13,10 @@
 
 @section('content_header')
     <h1>Daftar Kategori</h1>
-    <a href="{{route('kategori.create')}}" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
-        Tambah Kategori baru
-    </a>
 @stop
 
 @section('content')
-    <div class="card card-primary card-tabs">
+    <div class="card card-dark card-tabs">
         <div class="card-header p-0 pt-1">
             <div class="card-tools">
 
@@ -30,17 +27,17 @@
 
               </div>
               <!-- /.card-tools -->
-            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+            <ul class="nav nav-tabs" id="katefori-tabs" role="tablist">
 
                 <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home"
-                        role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">
+                    <a class="nav-link active" id="kategori-tabs-table-tab" data-toggle="pill" href="#kategori-tabs-table"
+                        role="tab" aria-controls="kategori-tabs-table" aria-selected="true">
                         <i class="fas fa-xs fa-table fa-fw"></i>
                         Daftar Kategori</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile"
-                        role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">
+                    <a class="nav-link" id="kategori-tabs-add-tab" data-toggle="pill" href="#kategori-tabs-add"
+                        role="tab" aria-controls="kategori-tabs-add" aria-selected="false">
                         <i class="fas fa-xs fa-plus fa-fw"></i>
                         Tambah Kategori
                         Baru</a>
@@ -49,9 +46,9 @@
 
         </div>
         <div class="card-body">
-            <div class="tab-content" id="custom-tabs-two-tabContent">
-                <div class="tab-pane active show" id="custom-tabs-two-home" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-home-tab">
+            <div class="tab-content" id="kategoriTabContent">
+                <div class="tab-pane active show" id="kategori-tabs-table" role="tabpanel"
+                    aria-labelledby="kategori-tabs-table-tab">
                     <x-adminlte-datatable id="kategori-table" :heads="$heads" theme="light"
                         :config="$config" striped hoverable beautify>
                         @foreach ($kategori as $kategori)
@@ -68,25 +65,25 @@
                                 <td>
                                     <nobr>
                                         <a href="{{ route('kategori.edit', $kategori->id) }}"
-                                            class="btn btn-primary mx-1 shadow" title="Edit">
+                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
                                             <i class="fa fa-sm fa-fw fa-pen"></i> Edit
                                         </a>
                                         <button data-toggle="modal" data-target="#modalKategoriDetail"
                                             data-id="{{ $kategori->id }}"
                                             data-nama-kategori="{{ $kategori->nama_kategori }}"
                                             data-keterangan-kategori="{{ $kategori->keterangan }}"
-                                            class="btn btn-success mx-1 shadow" title="Detail">
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
                                             <i class="fa fa-sm fa-fw fa-eye"></i> Detail
                                         </button>
                                         <?php //  <a href="{{ route('kategori.show', $kategori->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
                                         ?> </a>
 
-                                        <button data-toggle="modal" data-target="#modalKategori"
+                                        <button  data-toggle="modal" data-target="#modalKategori"
                                             data-id="{{ $kategori->id }}"
                                             data-nama-kategori="{{ $kategori->nama_kategori }}"
                                             data-keterangan-kategori="{{ $kategori->keterangan }}"
                                             id = "deleteData"
-                                            class="btn  btn-danger mx-1 shadow" title="Hapus">
+                                            class="btn btn-sm btn-danger mx-1 shadow" title="Hapus">
                                             <i class="fa fa-sm fa-fw fa-trash"></i> Hapus
                                         </button>
                                     </nobr>
@@ -95,8 +92,8 @@
                         @endforeach
                     </x-adminlte-datatable>
                 </div>
-                <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-profile-tab">
+                <div class="tab-pane fade" id="kategori-tabs-add" role="tabpanel"
+                    aria-labelledby="kategori-tabs-add-tab">
                     <form action="{{ route('kategori.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -158,7 +155,7 @@
               </tr>
               <tr>
                 <th scope="row">Kategori</th>
-                <td id="namaKategori">Larry</td>
+                <td id="namaKategoriShow">Larry</td>
 
               </tr>
               <tr>
@@ -192,12 +189,10 @@
 
             $('#showForm').attr('action', '/kategori/' + id);
             document.getElementById("idKategori").innerHTML = id;
-            document.getElementById("namaKategori").innerHTML = namaKategori;
+            document.getElementById("namaKategoriShow").innerHTML = namaKategori;
             document.getElementById("keteranganKategori").innerHTML = keteranganKategori;
         });
 
-    </script>
-    <script>
         $(document).on('click', '#deleteData', function() {
             let id = $(this).attr('data-id');
             let namaKategori = $(this).attr('data-nama-kategori');

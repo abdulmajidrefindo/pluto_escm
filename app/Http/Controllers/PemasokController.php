@@ -15,8 +15,10 @@ class PemasokController extends Controller
      */
     public function index()
     {
-        $pemasok=Pemasok::with('user')->get();
-        $pemasok=Pemasok::with('transaksiPemasok')->get();
+        //$pemasok=Pemasok::with('user')->get();
+        //$pemasok=Pemasok::with('transaksiPemasok');
+        $pemasok = Pemasok::all();
+
         //return response()->json($pemasok);
         return view('pemasok.index',compact('pemasok'));
     }
@@ -57,8 +59,10 @@ class PemasokController extends Controller
     public function show(Pemasok $pemasok)
     {
         //untuk testing
+        $id = $pemasok->id;
+        $pemasok = Pemasok::with('barang')->where('id', $id)->first();
         return response()->json($pemasok);
-        return view('pemasok.show',compact('pemasok'));
+        //return view('pemasok.show',compact('pemasok'));
     }
 
     /**

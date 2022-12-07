@@ -22,4 +22,9 @@ class Pemasok extends Model
         return $this->belongsTo(TransaksiPemasok::class,'transaksi_pemasok_id', 'pemasok_id');
     }
 
+    public function barang() {
+        return $this->hasMany(Barang::class);
+    }
+
+
 }

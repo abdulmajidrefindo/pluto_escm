@@ -56,8 +56,9 @@ class ProdukController extends Controller
     public function show(Produk $produk)
     {
         //untuk testing
-        //return response()->json($produk);
-        return view('produk.show',compact('produk'));
+        $produk = Produk::with('kategori')->get();
+        return response()->json($produk);
+        //return view('produk.show',compact('produk'));
     }
 
     /**
