@@ -19,4 +19,8 @@ class TransaksiPelanggan extends Model
     {
         return $this->belongsToMany(Barang::class, 'transaksi_barang_pelanggan', 'transaksi_pelanggan_id', 'barang_id');
     }
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'transaksi_barang_pelanggan', 'transaksi_pelanggan_id', 'user_id');
+    }
 }
