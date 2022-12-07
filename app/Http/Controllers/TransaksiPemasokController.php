@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TransaksiPemasok;
 use App\Models\Pemasok;
+use App\Models\Barang;
+
 use App\Http\Requests\StoreTransaksiPemasokRequest;
 use App\Http\Requests\UpdateTransaksiPemasokRequest;
 
@@ -17,15 +19,8 @@ class TransaksiPemasokController extends Controller
     public function index()
     {
         $transaksiPemasok = TransaksiPemasok::with('pemasok')->get();
-<<<<<<< HEAD
-        $transaksiPemasok = TransaksiPemasok::all();
-        //return response()->json($transaksiPemasok);
-=======
-        $transaksiPemasok = TransaksiPemasok::with('barang')->get();
-        $transaksiPemasok = TransaksiPemasok::with('user')->get();
         return response()->json($transaksiPemasok);
->>>>>>> main
-        return view('transaksiPemasok.index',compact('transaksiPemasok'));
+        //return view('transaksi.pemasok.index',compact('transaksiPemasok'));
     }
 
     /**
@@ -36,7 +31,8 @@ class TransaksiPemasokController extends Controller
     public function create()
     {
         $pemasok = Pemasok::all();
-        return view('transaksiPemasok/create',compact('pemasok'));
+        $barang = Barang::all();
+        return view('transaksi.pemasok/create',compact('pemasok','barang'));
     }
 
     /**
@@ -50,12 +46,10 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok=TransaksiPemasok::create([
             'pemasok_id'=>$request->get('pemasok_id'),
             'kuantitas'=>$request->get('kuantitas'),
-            'createdAt'=>$request->get('createdAt'),
-            'updatedAt'=>$request->get('updatedAt')
         ]);
         $transaksiPemasok->pemasok_id = $request->pemasok_id;
         return response()->json('Berhasil Disimpan');
-        return redirect('/transaksiPemasok')->with('completed','Data berhasil disimpan!');
+        //return redirect('/transaksi.pemasok')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -67,6 +61,9 @@ class TransaksiPemasokController extends Controller
     public function show(TransaksiPemasok $transaksiPemasok)
     {
         //untuk testing
+        $id = $transaksiPemasok->id;
+        $transaksiPemasok = TransaksiPemasok::with('barang')->where('id',$id)->first();
+        //$barang = Barang::with('produk')->where('id',$id)->first();
         return response()->json($transaksiPemasok);
         return view('transaksiPemasok.show', compact('transaksiPemasok'));
     }

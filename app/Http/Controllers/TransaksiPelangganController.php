@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\TransaksiPelanggan;
+use App\Models\Pelanggan;
+use App\Models\Barang;
+
 use App\Http\Requests\StoreTransaksiPelangganRequest;
 use App\Http\Requests\UpdateTransaksiPelangganRequest;
 
@@ -16,10 +19,8 @@ class TransaksiPelangganController extends Controller
     public function index()
     {
         $transaksiPelanggan=TransaksiPelanggan::with('pelanggan')->get();
-        $transaksiPelanggan=TransaksiPelanggan::with('barang')->get();
-        $transaksiPelanggan=TransaksiPelanggan::with('user')->get();
         return response()->json($transaksiPelanggan);
-        return view('transaksiPelanggan.index',compact('transaksiPelangan'));
+        //return view('transaksiPelanggan.index',compact('transaksiPelangan'));
     }
 
     /**
@@ -29,7 +30,9 @@ class TransaksiPelangganController extends Controller
      */
     public function create()
     {
-        return view('transaksiPelanggan');
+        $pelanggan = Pelanggan::all();
+        $barang = Barang::all();
+        return view('transaksi.pelanggan', compact('pelanggan','barang'));
     }
 
     /**
@@ -43,8 +46,7 @@ class TransaksiPelangganController extends Controller
         $transaksiPelanggan = TransaksiPelanggan::create([
             'pelanggan_id' => $request->get('pelanggan_id'),
             'total_harga' => $request->get('total_harga'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
+
         ]);
         return response()->json('Berhasil Disimpan');
         return redirect('transaksiPelangan')->with('completed','Data berhasil disimpan!');
@@ -59,8 +61,10 @@ class TransaksiPelangganController extends Controller
     public function show(TransaksiPelanggan $transaksiPelanggan)
     {
         //untuk testing
+        $id = $transaksiPelanggan->id;
+        $transaksiPelanggan = TransaksiPelanggan::with('barang')->where('id',$id)->first();
         return response()->json($transaksiPelanggan);
-        return view('transaksiPelanggan.show',compact('transaksiPelanggan'));
+        //return view('transaksiPelanggan.show',compact('transaksiPelanggan'));
     }
 
     /**

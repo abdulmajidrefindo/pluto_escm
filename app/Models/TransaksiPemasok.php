@@ -14,13 +14,18 @@ class TransaksiPemasok extends Model
 
     public function barang()
     {
-        return $this->belongsToMany(Barang::class,'transaksi_barang_pemasok','transaksi_pemasok_id','barang_id');
+        return $this->belongsToMany(Barang::class,'transaksi_barang_pemasok')->with('produk')->withPivot('kuantitas');
+        //return $this->belongsToMany(Barang::class,'transaksi_barang_pemasok','transaksi_pemasok_id','barang_id')->with('produk')->withPivot('kuantitas');
     }
+
+
 
     public function pemasok()
     {
-        return $this->hasMany('App\Models\Pemasok', 'pemasok_id');
+        return $this->belongsTo(Pemasok::class);
     }
+
+
     public function user()
     {
         return $this->belongsToMany(User::class, 'transaksi_barang_pemasok', 'transaksi_pemasok_id', 'user_id');
