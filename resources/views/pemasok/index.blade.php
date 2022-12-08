@@ -69,22 +69,23 @@
                                 <td>
                                     <nobr>
                                         <a href="{{ route('pemasok.edit', $pemasok->id) }}"
-                                            class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
+                                            <i class="fa fa-fw fa-pen"></i> Edit
                                         </a>
                                         <a href="{{ route('pemasok.show', $pemasok->id) }}"
-                                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
+                                            <i class="fa fa-fw fa-eye"></i> Detail
                                         </a>
                                         <button data-toggle="modal" data-target="#modalPemasok" data-id="{{ $pemasok->id }}" data-nama-pemasok="{{ $pemasok->nama_pemasok }}" data-alamat-pemasok="{{ $pemasok->alamat_pemasok }}" data-kontak-pemasok="{{ $pemasok->kontak_pemasok }}"
-                                            class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            class="delete btn btn-sm btn-danger mx-1 shadow" title="Hapus">
+                                            <i class="fa fa-fw fa-trash"></i> Hapus
                                         </button>
                                     </nobr>
                                 </td>
                             </tr>
                         @endforeach
                     </x-adminlte-datatable>
+                    </div>
 
                     <div class="tab-pane fade" id="pemasok-tabs-add" role="tabpanel" aria-labelledby="pemasok-tabs-add-tab">
 
@@ -102,6 +103,13 @@
                                 </div>
                             </div>
                         </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
 
     <x-adminlte-modal id="modalPemasok" title="Hapus Data" theme="danger" icon="fas fa-trash" size='lg'>
         Anda yakin ingin menghapus data berikut?

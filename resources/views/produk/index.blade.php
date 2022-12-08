@@ -69,24 +69,25 @@
                                 <td>
                                     <nobr>
                                         <a href="{{ route('produk.edit', $produk->id) }}"
-                                            class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
+                                            <i class="fa fa-fw fa-pen"></i> Edit
                                         </a>
                                         <button data-toggle="modal" data-target="#modalProdukDetail" data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}" data-harga="{{ $produk->harga }}" data-total-terjual="{{ $produk->total_terjual }}" data-total-masuk="{{ $produk->total_masuk }}" data-total-stok="{{ $produk->total_masuk }}"
-                                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
+                                            <i class="fa fa-fw fa-eye"></i> Detail
                                         </button>
                                         <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
 
                                         <button data-toggle="modal" data-target="#modalProduk" data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}" data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
-                                            class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            class="delete btn btn-sm btn-danger mx-1 shadow" title="Hapus">
+                                            <i class="fa fa-fw fa-trash"></i> Hapus
                                         </button>
                                     </nobr>
                                 </td>
                             </tr>
                         @endforeach
                     </x-adminlte-datatable>
+                </div>
 
                     <div class="tab-pane fade" id="produk-tabs-add" role="tabpanel" aria-labelledby="produk-tabs-add-tab">
                         <form action="{{route('produk.store')}}" method="POST" enctype="multipart/form-data">

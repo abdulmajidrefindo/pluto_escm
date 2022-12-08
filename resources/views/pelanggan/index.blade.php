@@ -57,7 +57,7 @@
             <div class="tab-content" id="pelangganTabContent">
                 <div class="tab-pane active show" id="pelanggan-tabs-table" role="tabpanel"
                     aria-labelledby="pelanggan-tabs-table-tab">
-                    <x-adminlte-datatable id="pelanggan-table" :heads="$heads" theme="light" :config="$config" striped
+                    <x-adminlte-datatable id="pelanggan-table" :heads="$heads" head-theme="light" theme="light" :config="$config" striped
                         hoverable with-footer footer-theme="light" beautify>
                         @foreach ($pelanggan as $pelanggan)
                             <tr>
@@ -76,16 +76,16 @@
                                 <td>
                                     <nobr>
                                         <a href="{{ route('pelanggan.edit', $pelanggan->id) }}"
-                                            class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
-                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
+                                            <i class="fa fa-fw fa-pen"></i> Edit
                                         </a>
                                         <a href="{{ route('pelanggan.show', $pelanggan->id) }}"
-                                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details">
-                                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
+                                            <i class="fa fa-fw fa-eye"></i> Detail
                                         </a>
                                         <button data-toggle="modal" data-target="#modalPelanggan" data-id="{{ $pelanggan->id }}" data-nama-pelanggan="{{ $pelanggan->nama_pelanggan }}" data-alamat-pelanggan="{{ $pelanggan->alamat_pelanggan }}" data-kontak-pelanggan="{{ $pelanggan->kontak_pelanggan }}"
-                                            class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            class="delete btn btn-sm btn-danger mx-1 shadow" title="Hapus">
+                                            <i class="fa fa-fw fa-trash"></i> Hapus
                                         </button>
                                     </nobr>
                                 </td>
