@@ -4,7 +4,7 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fas fa-exclamation-triangle fa-fw"></i>
-                    Peringatan
+                    Pemberitahuan
                 </h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -23,16 +23,6 @@
                     Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my
                     entire
                     soul, like these sweet mornings of spring which I enjoy with my whole heart.
-                </div>
-                <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5><i class="icon fas fa-info"></i> Alert!</h5>
-                    Info alert preview. This alert is dismissable.
-                </div>
-                <div class="alert alert-warning alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
-                    Warning alert preview. This alert is dismissable.
                 </div>
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
