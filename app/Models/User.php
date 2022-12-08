@@ -26,6 +26,12 @@ class User extends Authenticatable
         'role_id'
     ];
 
+    protected $attributes = [
+
+        'nomor_telepon' => '0'
+
+    ];
+
     protected $table = 'users';
 
 
