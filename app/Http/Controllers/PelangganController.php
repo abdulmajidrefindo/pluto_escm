@@ -78,7 +78,7 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        return view('pelanggan.edit');
+        return view('pelanggan.edit', compact('pelanggan'));
     }
 
     /**
