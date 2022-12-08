@@ -13,52 +13,107 @@
 
 @section('content_header')
     <h1>Daftar Produk</h1>
-    <a href="{{route('produk.create')}}" class="btn btn-primary btn-lg shadow aria-pressed='true'" title="New">
-        Tambah Produk
-    </a>
 @stop
 
 @section('content')
 
+    <div class="card card-dark card-tabs">
+        <div class="card-header p-0 pt-1">
+            <div class="card-tools">
 
+                <!-- This will cause the card to maximize when clicked -->
+                <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+                <!-- This will cause the card to collapse when clicked -->
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
 
-    <x-adminlte-datatable id="produk-table" :heads="$heads" head-theme="light" theme="dark" :config="$config" striped
-        hoverable with-footer footer-theme="light" beautify>
-        @foreach ($produk as $produk)
-            <tr>
-                <td>
-                    {{ $produk->id }}
-                </td>
-                <td>
-                    {{ $produk->nama_produk }}
-                </td>
-                <td>
-                    {{ $produk->unit }}
-                </td>
-                <td>
-                    {{ $produk->keterangan }}
-                </td>
-                <td>
-                    <nobr>
-                        <a href="{{ route('produk.edit', $produk->id) }}"
-                            class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
-                            <i class="fa fa-lg fa-fw fa-pen"></i>
-                        </a>
-                        <button data-toggle="modal" data-target="#modalProdukDetail" data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}" data-harga="{{ $produk->harga }}" data-total-terjual="{{ $produk->total_terjual }}" data-total-masuk="{{ $produk->total_masuk }}" data-total-stok="{{ $produk->total_masuk }}"
-                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
-                            <i class="fa fa-lg fa-fw fa-eye"></i>
-                        </button>
-                        <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
+            </div>
 
-                        <button data-toggle="modal" data-target="#modalProduk" data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}" data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
-                            class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
-                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                        </button>
-                    </nobr>
-                </td>
-            </tr>
-        @endforeach
-    </x-adminlte-datatable>
+            <ul class="nav nav-tabs" id="produk-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="produk-tabs-table-tab" data-toggle="pill" href="#produk-tabs-table"
+                        role="tab" aria-controls="produk-tabs-table" aria-selected="true">
+                        <i class="fas fa-xs fa-table fa-fw"></i>
+                        Daftar Produk</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="produk-tabs-add-tab" data-toggle="pill" href="#produk-tabs-add" role="tab"
+                        aria-controls="produk-tabs-add" aria-selected="false">
+                        <i class="fas fa-xs fa-plus fa-fw"></i>
+                        Tambah Produk Baru</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="card-body">
+            <div class="tab-content" id="produkTabContent">
+                <div class="tab-pane active show" id="produk-tabs-table" role="tabpanel"
+                    aria-labelledby="produk-tabs-table-tab">
+
+                    <x-adminlte-datatable id="produk-table" :heads="$heads" theme="light" :config="$config" striped
+                        hoverable with-footer footer-theme="light" beautify>
+                        @foreach ($produk as $produk)
+                            <tr>
+                                <td>
+                                    {{ $produk->id }}
+                                </td>
+                                <td>
+                                    {{ $produk->nama_produk }}
+                                </td>
+                                <td>
+                                    {{ $produk->unit }}
+                                </td>
+                                <td>
+                                    {{ $produk->keterangan }}
+                                </td>
+                                <td>
+                                    <nobr>
+                                        <a href="{{ route('produk.edit', $produk->id) }}"
+                                            class="btn btn-sm btn-default text-primary mx-1 shadow" title="Edit">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </a>
+                                        <button data-toggle="modal" data-target="#modalProdukDetail" data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}" data-harga="{{ $produk->harga }}" data-total-terjual="{{ $produk->total_terjual }}" data-total-masuk="{{ $produk->total_masuk }}" data-total-stok="{{ $produk->total_masuk }}"
+                                            class="btn btn-sm btn-default text-teal mx-1 shadow" title="Detail">
+                                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                                        </button>
+                                        <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
+
+                                        <button data-toggle="modal" data-target="#modalProduk" data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}" data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
+                                            class="delete btn btn-sm btn-default text-danger mx-1 shadow" title="Hapus">
+                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                        </button>
+                                    </nobr>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
+
+                    <div class="tab-pane fade" id="produk-tabs-add" role="tabpanel" aria-labelledby="produk-tabs-add-tab">
+                        <form action="{{route('produk.store')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm">
+                                    <x-adminlte-input name="nama_produk" label="Nama Produk" placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6"
+                                        disable-feedback />
+                                    <x-adminlte-input name="unit" label="Unit" placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
+                                        disable-feedback />
+                                    <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Apa saja " fgroup-class="col-md-6"
+                                        disable-feedback />
+                                    <x-adminlte-select name="kategori" label="Kategori" fgroup-class="col-md-6">
+                                        <x-adminlte-options :options="['Option 1', 'Option 2', 'Option 3']" disabled="-1"
+                                            empty-option="Pilih kategori.."/>
+                                    </x-adminlte-select>
+                                    <x-adminlte-button class="btn-lg" type="submit" label="Simpan Data" theme="success" icon="fas fa-lg fa-save" />
+                                </div>
+                            </div>
+                        </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <x-adminlte-modal id="modalProduk" title="Hapus Data" theme="danger" icon="fas fa-trash" size='lg'>
         Anda yakin ingin menghapus data berikut?
