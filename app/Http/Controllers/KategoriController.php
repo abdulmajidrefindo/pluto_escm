@@ -44,8 +44,8 @@ class KategoriController extends Controller
             'keterangan' => 'required'
         ],
         [
-            'nama_kategori' => 'Nama kategori harus diisi',
-            'keterangan' => 'Keterangan'
+            'nama_kategori.required' => 'Nama kategori harus diisi',
+            'keterangan.required' => 'Keterangan'
         ]);
         $kategori->create([
             'nama_kategori' => $request->get('nama_kategori'),

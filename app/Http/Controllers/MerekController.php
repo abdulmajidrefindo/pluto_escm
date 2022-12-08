@@ -42,6 +42,14 @@ class MerekController extends Controller
      */
     public function store(StoreMerekRequest $request)
     {
+        $validationData = $request->validate([
+            'nama_merek' => 'required',
+            'keterangan' => 'required',
+        ],
+        [
+            'nama_merek.required' => 'Nama merek harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi'
+        ]);
         $merek = Merek::create([
             'nama_merek' => $request->get('nama_merek'),
             'keterangan' => $request->get('keterangan'),
