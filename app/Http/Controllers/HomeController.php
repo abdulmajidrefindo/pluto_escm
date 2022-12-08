@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransaksiPemasok;
+use App\Models\TransaksiPelanggan;
+use App\Models\Pelanggan;
+use App\Models\Barang;
+
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
