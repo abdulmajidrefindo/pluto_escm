@@ -1,9 +1,9 @@
 @php
 
-    $heads = ['ID', 'Nama Produk', 'Unit', 'Keterangan', ['label' => 'Aksi', 'no-export' => true]];
+    $heads = ['ID', 'Nama Produk', 'Kategori', ['label' => 'Aksi', 'no-export' => true]];
     $config = [
         'order' => [[1, 'asc']],
-        'columns' => [null, null, null, null, ['orderable' => false]],
+        'columns' => [null, null, null, ['orderable' => false]],
     ];
 @endphp
 
@@ -60,15 +60,11 @@
                                 <td>
                                     {{ $produk->nama_produk }}
                                 </td>
+
                                 <td>
-                                    {{ $produk->unit }}
+                                    {{$produk->kategori->first()->nama_kategori}}
                                 </td>
-                                <td>
-                                    {{ $produk->keterangan }}
-                                </td>
-                                <td>
-                                    {{ $produk->kategori }}
-                                </td>
+
                                 <td>
                                     <nobr>
                                         <a href="{{ route('produk.edit', $produk->id) }}"

@@ -18,7 +18,7 @@ class ProdukController extends Controller
     {
         $produk = Produk::with('kategori')->get();
         //return response()->json($produk);
-        return view('produk.index',compact('produk'));
+        return view('produk.index', compact('produk'));
     }
 
     /**
