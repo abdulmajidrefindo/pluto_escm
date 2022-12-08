@@ -57,7 +57,7 @@
             <div class="tab-content" id="pelangganTabContent">
                 <div class="tab-pane active show" id="pelanggan-tabs-table" role="tabpanel"
                     aria-labelledby="pelanggan-tabs-table-tab">
-                    <x-adminlte-datatable id="pelanggan-table" :heads="$heads" head-theme="light" theme="dark" :config="$config" striped
+                    <x-adminlte-datatable id="pelanggan-table" :heads="$heads" theme="light" :config="$config" striped
                         hoverable with-footer footer-theme="light" beautify>
                         @foreach ($pelanggan as $pelanggan)
                             <tr>
