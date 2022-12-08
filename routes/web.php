@@ -33,7 +33,7 @@ Route::get('/testing', function () {
 
 //Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
 

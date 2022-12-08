@@ -62,7 +62,7 @@
                                 </td>
 
                                 <td>
-                                    {{$produk->kategori->first()->nama_kategori}}
+                                    {{ $produk->kategori->first()->nama_kategori }}
                                 </td>
 
                                 <td>
@@ -71,13 +71,21 @@
                                             class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
                                             <i class="fa fa-fw fa-pen"></i> Edit
                                         </a>
-                                        <button data-toggle="modal" data-target="#modalProdukDetail" data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}" data-harga="{{ $produk->harga }}" data-total-terjual="{{ $produk->total_terjual }}" data-total-masuk="{{ $produk->total_masuk }}" data-total-stok="{{ $produk->total_masuk }}"
+                                        <button data-toggle="modal" data-target="#modalProdukDetail"
+                                            data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}"
+                                            data-harga="{{ $produk->harga }}"
+                                            data-total-terjual="{{ $produk->total_terjual }}"
+                                            data-total-masuk="{{ $produk->total_masuk }}"
+                                            data-total-stok="{{ $produk->total_masuk }}"
                                             class="btn btn-sm btn-success mx-1 shadow" title="Detail">
                                             <i class="fa fa-fw fa-eye"></i> Detail
                                         </button>
-                                        <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i> ?> </a>
+                                        <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
+                                        ?> </a>
 
-                                        <button data-toggle="modal" data-target="#modalProduk" data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}" data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
+                                        <button data-toggle="modal" data-target="#modalProduk"
+                                            data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}"
+                                            data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
                                             class="delete btn btn-sm btn-danger mx-1 shadow" title="Hapus">
                                             <i class="fa fa-fw fa-trash"></i> Hapus
                                         </button>
@@ -88,25 +96,34 @@
                     </x-adminlte-datatable>
                 </div>
 
-                    <div class="tab-pane fade" id="produk-tabs-add" role="tabpanel" aria-labelledby="produk-tabs-add-tab">
-                        <form action="{{route('produk.store')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-sm">
-                                    <x-adminlte-input name="nama_produk" label="Nama Produk" placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6"
-                                        disable-feedback />
-                                    <x-adminlte-input name="unit" label="Unit" placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
-                                        disable-feedback />
-                                    <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Apa saja " fgroup-class="col-md-6"
-                                        disable-feedback />
-                                    <x-adminlte-select name="kategori" label="Kategori" fgroup-class="col-md-6">
-                                        <x-adminlte-options :options="['Option 1', 'Option 2', 'Option 3']" disabled="-1"
-                                            empty-option="Pilih kategori.."/>
-                                    </x-adminlte-select>
-                                    <x-adminlte-button class="btn-lg" type="submit" label="Simpan Data" theme="success" icon="fas fa-lg fa-save" />
-                                </div>
+                <div class="tab-pane fade" id="produk-tabs-add" role="tabpanel" aria-labelledby="produk-tabs-add-tab">
+                    <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm">
+                                <x-adminlte-input name="nama_produk" label="Nama Produk"
+                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6" disable-feedback />
+                                <x-adminlte-input name="unit" label="Unit"
+                                    placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
+                                    disable-feedback />
+                                <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Apa saja "
+                                    fgroup-class="col-md-6" disable-feedback />
+                                <x-adminlte-select2 id="selectKategori" name="kategori_id" label="Kategori Produk"
+                                    label-class="" fgroup-class="col-md-6" data-placeholder="Pilih kategori...">
+                                    <option />
+                                    @foreach ($kategori as $kategori)
+                                        <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                    @endforeach
+                                </x-adminlte-select2>
+
+                                <x-adminlte-select name="jenis_produk" label="Jenis Produk" fgroup-class="col-md-6">
+                                    <x-adminlte-options :options="['Bahan Jadi', 'Bahan Baku', 'Bahan Olahan']" disabled="-1" />
+                                </x-adminlte-select>
+                                <x-adminlte-button class="btn" type="submit" label="Simpan Data" theme="info"
+                                    icon="fas fa-sm fa-fw fa-save" />
                             </div>
-                        </form>
+                        </div>
+                    </form>
 
                 </div>
 
@@ -119,29 +136,29 @@
         Anda yakin ingin menghapus data berikut?
         <table class="table">
             <tbody>
-              <tr>
-                <th scope="row">ID</th>
-                <td id="idProduk">Mark</td>
-              </tr>
-              <tr>
-                <th scope="row">Nama Produk</th>
-                <td id="namaProduk">Mail</td>
+                <tr>
+                    <th scope="row">ID</th>
+                    <td id="idProduk">Mark</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nama Produk</th>
+                    <td id="namaProduk">Mail</td>
 
-              </tr>
-              <tr>
-                <th scope="row">Unit</th>
-                <td id = "unit">Nando</td>
-              </tr>
-              <tr>
-                <th scope="row">Keterangan</th>
-                <td id = "keterangan">Nando</td>
-              </tr>
-              <tr>
-                <th scope="row">Kategori</th>
-                <td id = "kategori">halah</td>
-              </tr>
+                </tr>
+                <tr>
+                    <th scope="row">Unit</th>
+                    <td id="unit">Nando</td>
+                </tr>
+                <tr>
+                    <th scope="row">Keterangan</th>
+                    <td id="keterangan">Nando</td>
+                </tr>
+                <tr>
+                    <th scope="row">Kategori</th>
+                    <td id="kategori">halah</td>
+                </tr>
             </tbody>
-          </table>
+        </table>
         <x-slot name="footerSlot">
             <form id="deleteForm" method="post">
                 @csrf
@@ -162,28 +179,28 @@
         <table class="table">
             <tbody>
                 <tr>
-                  <th scope="row">ID</th>
-                  <td id="idProduk">Mark</td>
+                    <th scope="row">ID</th>
+                    <td id="idProduk">Mark</td>
                 </tr>
                 <tr>
-                  <th scope="row">Nama Produk</th>
-                  <td id="namaProduk">Mail</td>
+                    <th scope="row">Nama Produk</th>
+                    <td id="namaProduk">Mail</td>
 
                 </tr>
                 <tr>
-                  <th scope="row">Unit</th>
-                  <td id = "unit">Nando</td>
+                    <th scope="row">Unit</th>
+                    <td id="unit">Nando</td>
                 </tr>
                 <tr>
-                  <th scope="row">Keterangan</th>
-                  <td id = "keterangan">Nando</td>
+                    <th scope="row">Keterangan</th>
+                    <td id="keterangan">Nando</td>
                 </tr>
                 <tr>
-                  <th scope="row">Kategori</th>
-                  <td id = "kategori">halah</td>
+                    <th scope="row">Kategori</th>
+                    <td id="kategori">halah</td>
                 </tr>
-              </tbody>
-            </table>
+            </tbody>
+        </table>
 
     </x-adminlte-modal>
 
@@ -207,6 +224,5 @@
             document.getElementById("keterangan").innerHTML = keterangan;
             document.getElementById("kategori").innerHTML = kategori;
         });
-
     </script>
 @stop

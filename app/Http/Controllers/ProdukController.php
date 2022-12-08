@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
-
+use App\Models\Kategori;
 use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
 
@@ -17,8 +17,9 @@ class ProdukController extends Controller
     public function index()
     {
         $produk = Produk::with('kategori')->get();
+        $kategori = Kategori::all();
         //return response()->json($produk);
-        return view('produk.index', compact('produk'));
+        return view('produk.index', compact('produk','kategori'));
     }
 
     /**
