@@ -120,6 +120,22 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, Barang $barang)
     {
+        $validationData = $request->validate([
+            'merek_id' => 'numeric',
+            'produk_id' => 'numeric',
+            'pemasok_id' => 'numeric',
+            'sku' => 'numeric',
+            'harga' => 'numeric',
+            'total_stok' => 'numeric'
+        ],
+        [
+            'merek_id.numeric'=>'Masukkan merek dengan benar',
+            'produk_id.numeric'=>'Masukkan produk dengan benar',
+            'pemasok_id.numeric'=>'Masukkan pemasok dengan benar',
+            'sku.numeric'=>'SKU harus berupa angka',
+            'harga.numeric'=>'Harga harus berupa angka',
+            'total_stok.numeric'=>'Stok harus berupa angka'
+        ]);
         $barang->update([
             'merek_id' => $request->get('merek_id'),
             'produk_id' => $request->get('produk_id'),
