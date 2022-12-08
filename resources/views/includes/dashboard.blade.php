@@ -47,9 +47,9 @@
             <div class="clearfix hidden-md-up"></div>
             <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                    <span class="info-box-icon bg-info"><i class="fas fa-dolly-flatbed"></i></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Sales</span>
+                        <span class="info-box-text">Jumlah Pemasok</span>
                         <span class="info-box-number">760</span>
                     </div>
 
@@ -59,9 +59,9 @@
 
             <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box mb-3">
-                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                    <span class="info-box-icon bg-info"><i class="fas fa-user-tag"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-text">Jumlah Pelanggan</span>
                         <span class="info-box-number">2,000</span>
                     </div>
 
@@ -71,9 +71,9 @@
 
             <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box mb-3">
-                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-file-download"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-text">Transaksi Masuk</span>
                         <span class="info-box-number">2,000</span>
                     </div>
 
@@ -83,9 +83,33 @@
 
             <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box mb-3">
-                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-file-upload"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-text">Transaksi Keluar</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-6">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success"><i class="fas fa-file-invoice-dollar"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Pendapatan</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-6">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success"><i class="fas fa-file-invoice-dollar"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Pengeluaran</span>
                         <span class="info-box-number">2,000</span>
                     </div>
 
