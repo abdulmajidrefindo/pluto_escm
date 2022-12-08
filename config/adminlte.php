@@ -359,7 +359,7 @@ return [
         [
             'text'       => 'Transaksi Customer',
             'icon_color' => '#',
-            'url'        => '/transaksi pelanggan',
+            'url'        => '/transaksiPelanggan',
         ],
         [
             'text'       => 'Transaksi Supplier',
