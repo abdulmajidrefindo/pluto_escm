@@ -22,9 +22,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [HomeController::class, 'home'])->name('homo');
 
 Route::get('/testing', function () {
     return view('test');
@@ -33,7 +31,7 @@ Route::get('/testing', function () {
 
 //Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
 
@@ -55,3 +53,7 @@ Route::get('/token', function () {
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

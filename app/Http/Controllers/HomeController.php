@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\TransaksiPemasok;
 use App\Models\TransaksiPelanggan;
 use App\Models\Pelanggan;
 use App\Models\Pemasok;
 use App\Models\Barang;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -22,7 +21,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+       // $this->middleware('auth');
     }
 
     /**
@@ -32,8 +31,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        return view('home');
+    }
 
-        // Kombinasi dua tabel untuk mendapat data transaksi terbaru
+    public function home()
+    {
+ // Kombinasi dua tabel untuk mendapat data transaksi terbaru
         $transaksiPemasok = TransaksiPemasok::join('pemasok','transaksi_pemasok.pemasok_id','=','pemasok.id')
                                 ->select(DB::raw('transaksi_pemasok.id,pemasok.nama_pemasok as nama,transaksi_pemasok.total_harga,transaksi_pemasok.created_at, "Masuk" as jenis_transaksi'));
         $transaksiPelanggan = TransaksiPelanggan::join('pelanggan','transaksi_pelanggan.pelanggan_id','=','pelanggan.id')
@@ -56,11 +59,6 @@ class HomeController extends Controller
         //return response()->json($transaksiTerbaru);
         return view('index', compact('informasi', 'transaksiTerbaru'));
 
-
     }
 
-    public function transaksi()
-    {
-
-    }
 }
