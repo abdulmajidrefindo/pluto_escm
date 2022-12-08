@@ -7,6 +7,7 @@ use App\Models\TransaksiPelanggan;
 use App\Models\Pelanggan;
 use App\Models\Pemasok;
 use App\Models\Barang;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 
@@ -41,8 +42,18 @@ class HomeController extends Controller
 
         //Hitung jumlah data
 
+        $informasi = array();
+        $informasi['total_user'] = User::all()->count();
+        $informasi['total_barang'] = Barang::all()->count();
+        $informasi['total_pemasok'] = Pemasok::all()->count();
+        $informasi['total_pelanggan'] = Pelanggan::all()->count();
+        $informasi['total_transaksi_pemasok'] = TransaksiPemasok::all()->count();
+        $informasi['total_transaksi_pelanggan'] = TransaksiPelanggan::all()->count();
+        $informasi['total_pengeluaran'] = TransaksiPemasok::all()->sum('total_harga');
+        $informasi['total_pendapatan'] = TransaksiPelanggan::all()->sum('total_harga');
 
-        return response()->json($transaksiTerbaru);
+
+        return response()->json($informasi);
         //return view('index');
 
 
