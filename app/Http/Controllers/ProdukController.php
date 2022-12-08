@@ -39,6 +39,16 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
+        $validationData = $request->validate([
+            'nama_produk' => 'required',
+            'unit' => 'required',
+            'keterangan' => 'required'
+        ],
+        [
+            'nama_produk.required' => 'Nama pemasok harus diisi',
+            'unit.required' => 'Keterangan harus diisi',
+            'keterangan.required' => 'Kontak pemasok harus diisi'
+        ]);
         $produk = Produk::create([
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),

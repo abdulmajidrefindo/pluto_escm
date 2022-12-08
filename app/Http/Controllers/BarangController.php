@@ -51,13 +51,35 @@ class BarangController extends Controller
      */
     public function store(StoreBarangRequest $request)
     {
+        $validationData = $request->validate([
+            'merek_id' => 'required|numeric',
+            'produk_id' => 'required|numeric',
+            'pemasok_id' => 'required|numeric',
+            'sku' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'total_stok' => 'required|numeric'
+        ],
+        [
+            'merek_id.required'=>'Merek harus diisi',
+            'merek_id.numeric'=>'Masukkan merek dengan benar',
+            'produk_id.required'=>'Produk harus diisi',
+            'produk_id.numeric'=>'Masukkan produk dengan benar',
+            'pemasok_id.required'=>'Pemasok harus diisi',
+            'pemasok_id.numeric'=>'Masukkan pemasok dengan benar',
+            'sku.required'=>'SKU harus diisi',
+            'sku.numeric'=>'SKU harus berupa angka',
+            'harga.required'=>'Harga harus diisi',
+            'harga.numeric'=>'Harga harus berupa angka',
+            'total_stok.required'=>'Stok harus diisi. Masukkan angka 0 jika tidak ada stok!',
+            'total_stok.numeric'=>'Stok harus berupa angka'
+        ]);
         $barang = Barang::create([
             'merek_id' => $request->get('merek_id'),
             'produk_id' => $request->get('produk_id'),
             'pemasok_id' => $request->get('pemasok_id'),
             'sku' => $request->get('sku'),
             'harga' => $request->get('harga'),
-            'total_stok' => $request->get('total_stok'),
+            'total_stok' => $request->get('total_stok')
         ]);
         //return response()->json('Berhasih Disimpan');
         return redirect('/barang')->with('message', 'Data kategori berhasil tersimpan!');
@@ -98,6 +120,22 @@ class BarangController extends Controller
      */
     public function update(UpdateBarangRequest $request, Barang $barang)
     {
+        $validationData = $request->validate([
+            'merek_id' => 'numeric',
+            'produk_id' => 'numeric',
+            'pemasok_id' => 'numeric',
+            'sku' => 'numeric',
+            'harga' => 'numeric',
+            'total_stok' => 'numeric'
+        ],
+        [
+            'merek_id.numeric'=>'Masukkan merek dengan benar',
+            'produk_id.numeric'=>'Masukkan produk dengan benar',
+            'pemasok_id.numeric'=>'Masukkan pemasok dengan benar',
+            'sku.numeric'=>'SKU harus berupa angka',
+            'harga.numeric'=>'Harga harus berupa angka',
+            'total_stok.numeric'=>'Stok harus berupa angka'
+        ]);
         $barang->update([
             'merek_id' => $request->get('merek_id'),
             'produk_id' => $request->get('produk_id'),

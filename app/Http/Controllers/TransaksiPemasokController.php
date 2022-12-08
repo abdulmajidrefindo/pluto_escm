@@ -43,9 +43,19 @@ class TransaksiPemasokController extends Controller
      */
     public function store(StoreTransaksiPemasokRequest $request)
     {
+        $validationData = $request->validate([
+            'pemasok_id' => 'required|numeric',
+            'total_harga' => 'required|numeric'
+        ],
+        [
+            'pemasok_id.required' => 'Pemasok harus diisi',
+            'pemasok_id.numeric' => 'Masukkan pemasok dengan benar',
+            'total_harga.required' => 'Harga harus diisi',
+            'total_harga.numeric' => 'Harga harus berupa angka'
+        ]);
         $transaksiPemasok=TransaksiPemasok::create([
             'pemasok_id'=>$request->get('pemasok_id'),
-            'kuantitas'=>$request->get('kuantitas'),
+            'total_harga'=>$request->get('total_harga'),
         ]);
         $transaksiPemasok->pemasok_id = $request->pemasok_id;
         return response()->json('Berhasil Disimpan');
@@ -89,9 +99,17 @@ class TransaksiPemasokController extends Controller
      */
     public function update(UpdateTransaksiPemasokRequest $request, TransaksiPemasok $transaksiPemasok)
     {
+        $validationData = $request->validate([
+            'pemasok_id' => 'numeric',
+            'total_harga' => 'numeric'
+        ],
+        [
+            'pemasok_id.numeric' => 'Masukkan pemasok dengan benar',
+            'total_harga.numeric' => 'Harga harus berupa angka'
+        ]);
         $transaksiPemasok->update([
             'pemasok_id'=>$request->get('pemasok_id'),
-            'kuantitas'=>$request->get('kuantitas'),
+            'total_harga'=>$request->get('total_harga'),
             'createdAt'=>$request->get('createdAt'),
             'updatedAt'=>$request->get('updatedAt')
         ]);

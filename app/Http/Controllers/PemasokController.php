@@ -41,6 +41,16 @@ class PemasokController extends Controller
      */
     public function store(StorePemasokRequest $request)
     {
+        $validationData = $request->validate([
+            'nama_pemasok' => 'required',
+            'alamat_pemasok' => 'required',
+            'kontak_pemasok' => 'required'
+        ],
+        [
+            'nama_pemasok.required' => 'Nama pemasok harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi',
+            'kontak_pemasok.required' => 'Kontak pemasok harus diisi'
+        ]);
         $pemasok=Pemasok::create([
             'nama_pemasok' => $request->get('nama_pemasok'),
             'alamat_pemasok' => $request->get('alamat_pemasok'),
