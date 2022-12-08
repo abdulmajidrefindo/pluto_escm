@@ -35,6 +35,8 @@ Route::get('/testing', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
+
 Route::resource('barang', BarangController::class);
 Route::resource('kategori', KategoriController::class);
 Route::resource('merek', MerekController::class);

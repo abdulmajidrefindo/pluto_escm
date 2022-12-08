@@ -13,72 +13,45 @@
 
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table m-0">
+            <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Item</th>
-                        <th>Status</th>
-                        <th>Popularity</th>
+                        <th>ID</th>
+                        <th>Tanggal</th>
+                        <th>Nama</th>
+                        <th>Transaksi</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                        <td>Call of Duty IV</td>
-                        <td><span class="badge badge-success">Shipped</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                        <td>Samsung Smart TV</td>
-                        <td><span class="badge badge-warning">Pending</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                        <td>iPhone 6 Plus</td>
-                        <td><span class="badge badge-danger">Delivered</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                        <td>Samsung Smart TV</td>
-                        <td><span class="badge badge-info">Processing</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                        <td>Samsung Smart TV</td>
-                        <td><span class="badge badge-warning">Pending</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                        <td>iPhone 6 Plus</td>
-                        <td><span class="badge badge-danger">Delivered</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                        <td>Call of Duty IV</td>
-                        <td><span class="badge badge-success">Shipped</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                        </td>
-                    </tr>
+
+                    @foreach ($transaksiTerbaru as $transaksi)
+                        @if ($transaksi->jenis_transaksi === 'Masuk')
+                            <?php
+                            $badge = 'badge-success';
+                            $kode = 'OR';
+                            ?>
+                        @else
+                            <?php
+                            $badge = 'badge-danger';
+                            $kode = 'IN';
+                            ?>
+                        @endif
+
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">{{$kode}}{{ $transaksi->id }}</a></td>
+                            <td>@datetime($transaksi->created_at)</td>
+                            <td>{{ $transaksi->nama }}</td>
+                            <td>
+
+                                    <span class="badge {{$badge}}">{{ $transaksi->jenis_transaksi }}</span>
+
+                            </td>
+                            <td>@currency($transaksi->total_harga)</td>
+                        </tr>
+                    @endforeach
+
+
                 </tbody>
             </table>
         </div>
@@ -87,8 +60,7 @@
 
     <div class="card-footer clearfix">
         <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+        <a href="{{route('transaksi')}}" class="btn btn-sm btn-secondary float-right">View All Orders</a>
     </div>
 
 </div>
-

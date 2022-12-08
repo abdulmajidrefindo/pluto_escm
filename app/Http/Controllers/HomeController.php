@@ -53,9 +53,14 @@ class HomeController extends Controller
         $informasi['total_pendapatan'] = TransaksiPelanggan::all()->sum('total_harga');
 
 
-        //return response()->json($informasi);
+        //return response()->json($transaksiTerbaru);
         return view('index', compact('informasi', 'transaksiTerbaru'));
 
+
+    }
+
+    public function transaksi()
+    {
 
     }
 }

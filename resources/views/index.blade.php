@@ -8,21 +8,22 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-12">
-        @include('includes.dashboard')
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-4">
-        @include('includes.aksi-cepat')
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-4">
+            @include('includes.aksi-cepat')
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-8">
+            @include('includes.peringatan')
+        </div>
     </div>
 
-    <div class="col-12 col-sm-12 col-md-8">
-        @include('includes.peringatan')
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12">
+            @include('includes.dashboard')
+        </div>
     </div>
-</div>
     <div class="row">
         <div class="col-md-8">
             @include('includes.transaksi-terbaru')
