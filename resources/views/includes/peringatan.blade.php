@@ -1,3 +1,5 @@
+
+
 <div class="row">
     <div class="col-md-12 col-md-6">
         <div class="card card-danger">
@@ -17,18 +19,19 @@
             </div>
 
             <div class="card-body">
+                @foreach ($notifikasi as $notifikasi)
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-                    Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my
-                    entire
-                    soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                    <i class="fas fa-exclamation-circle fa-fw"></i> Stok {{$notifikasi->data['nama_barang']}} Hampir Habis!
+                    Jumlah stok tersisa {{$notifikasi->data['sisa_stok']}}. <a href="{{route('barang.show',$notifikasi->data['barang_id'])}}">Kunjungi Halaman</a>
+
+
+
                 </div>
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5><i class="icon fas fa-check"></i> Alert!</h5>
-                    Success alert preview. This alert is dismissable.
-                </div>
+
+
+                @endforeach
+
             </div>
 
         </div>

@@ -56,8 +56,12 @@ class HomeController extends Controller
         $informasi['total_pendapatan'] = TransaksiPelanggan::all()->sum('total_harga');
 
 
-        //return response()->json($transaksiTerbaru);
-        return view('index', compact('informasi', 'transaksiTerbaru'));
+
+
+        //notifikasi
+        $notifikasi = auth()->user()->unreadNotifications;
+        //return response()->json($notifikasi);
+        return view('index', compact('informasi', 'transaksiTerbaru','notifikasi'));
 
     }
 

@@ -7,6 +7,9 @@ use App\Models\Produk;
 use App\Models\Pemasok;
 use App\Models\Merek;
 
+use App\Providers\RouteServiceProvider;
+use App\Providers\SisaStokEvent;
+
 use App\Http\Requests\StoreBarangRequest;
 use App\Http\Requests\UpdateBarangRequest;
 
@@ -147,7 +150,10 @@ class BarangController extends Controller
             'total_stok' => $request->get('total_stok'),
 
         ]);
-        //return response()->json("Berhasil Diupdate");
+        //return response()->json($barang->id);
+
+        //Cek sisa stok barang, kalo tinggal dikit kirim notifikasi
+        //event(new SisaStokEvent($barang->id,20));
         return redirect('/barang')->with('completed', 'Data barang berhasil diperbaharui!');
     }
 

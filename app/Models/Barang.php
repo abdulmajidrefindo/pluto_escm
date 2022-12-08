@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use Log;
+
+use App\Providers\SisaStokEvent;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +23,19 @@ class Barang extends Model
         'total_masuk' => '0',
 
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::updated(function ($model) {
+        //Cek sisa stok barang, kalo tinggal dikit kirim notifikasi
+
+        event(new SisaStokEvent($model->id,20));
+
+        });
+
+    }
 
 
     public function merek()
