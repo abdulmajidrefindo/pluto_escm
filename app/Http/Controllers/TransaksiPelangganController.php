@@ -19,8 +19,9 @@ class TransaksiPelangganController extends Controller
     public function index()
     {
         $transaksiPelanggan=TransaksiPelanggan::with('pelanggan')->get();
-        return response()->json($transaksiPelanggan);
-        //return view('transaksiPelanggan.index',compact('transaksiPelangan'));
+        //return response()->json($transaksiPelanggan);
+        $pelanggan = Pelanggan::all('id','nama_pelanggan');
+        return view('transaksiPelanggan.index',compact('transaksiPelanggan', 'pelanggan'));
     }
 
     /**
@@ -32,7 +33,7 @@ class TransaksiPelangganController extends Controller
     {
         $pelanggan = Pelanggan::all();
         $barang = Barang::all();
-        return view('transaksi.pelanggan', compact('pelanggan','barang'));
+        return view('transaksiPelanggan', compact('pelanggan','barang'));
     }
 
     /**
@@ -58,8 +59,8 @@ class TransaksiPelangganController extends Controller
             'total_harga' => $request->get('total_harga'),
 
         ]);
-        return response()->json('Berhasil Disimpan');
-        return redirect('transaksiPelangan')->with('completed','Data berhasil disimpan!');
+        //return response()->json('Berhasil Disimpan');
+        return redirect('transaksiPelanggan')->with('completed','Data berhasil disimpan!');
     }
 
     /**

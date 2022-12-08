@@ -67,6 +67,9 @@
                                     {{ $produk->keterangan }}
                                 </td>
                                 <td>
+                                    {{ $produk->kategori }}
+                                </td>
+                                <td>
                                     <nobr>
                                         <a href="{{ route('produk.edit', $produk->id) }}"
                                             class="btn btn-sm btn-primary mx-1 shadow" title="Edit">

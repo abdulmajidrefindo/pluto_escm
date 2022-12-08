@@ -65,7 +65,7 @@ class KategoriController extends Controller
     public function show(Kategori $kategori)
     {
         //Untuk Testing
-        return response()->json($kategori);
+        //return response()->json($kategori);
         return view('kategori.show', compact('kategori'));
 
     }

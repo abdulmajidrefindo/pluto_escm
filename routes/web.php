@@ -43,8 +43,8 @@ Route::resource('merek', MerekController::class);
 Route::resource('pelanggan', PelangganController::class);
 Route::resource('pemasok', PemasokController::class);
 Route::resource('produk', ProdukController::class);
-Route::resource('transaksi-pelanggan', TransaksiPelangganController::class);
-Route::resource('transaksi-pemasok', TransaksiPemasokController::class);
+Route::resource('transaksiPelanggan', TransaksiPelangganController::class);
+Route::resource('transaksiPemasok', TransaksiPemasokController::class);
 
 Route::get('users/{id}', function ($id) {
     return response()->json(['id'=>$id]);
