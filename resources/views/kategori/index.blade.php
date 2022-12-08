@@ -68,16 +68,11 @@
                                             class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
                                             <i class="fa fa-sm fa-fw fa-pen"></i> Edit
                                         </a>
-                                        <button data-toggle="modal" data-target="#modalKategoriDetail"
-                                            data-id="{{ $kategori->id }}"
-                                            data-nama-kategori="{{ $kategori->nama_kategori }}"
-                                            data-keterangan-kategori="{{ $kategori->keterangan }}"
-                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
-                                            <i class="fa fa-sm fa-fw fa-eye"></i> Detail
                                         </button>
-                                        <?php //  <a href="{{ route('kategori.show', $kategori->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        ?> </a>
-
+                                        <a href="{{ route('kategori.show', $kategori->id) }}" 
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Details"> 
+                                            <i class="fas fa-sm fa-fw fa-eye"></i> Detail
+                                        </a>
                                         <button  data-toggle="modal" data-target="#modalKategori"
                                             data-id="{{ $kategori->id }}"
                                             data-nama-kategori="{{ $kategori->nama_kategori }}"
