@@ -38,6 +38,16 @@ class PelangganController extends Controller
      */
     public function store(StorePelangganRequest $request)
     {
+        $validationData = $request->validate([
+            'nama_pelanggan' => 'required',
+            'alamat_pelanggan' => 'required',
+            'kontak_pelanggan' => 'required'
+        ],
+        [
+            'nama_pelanggan.required' => 'Nama pelanggan harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi',
+            'kontak_pelanggan.required' => 'Kontak pelanggan harus diisi'
+        ]);
         $pelanggan=Pelanggan::create([
             'nama_pelanggan' => $request->get('nama_pelanggan'),
             'alamat_pelanggan' => $request->get('alamat_pelanggan'),

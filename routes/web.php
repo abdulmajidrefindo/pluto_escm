@@ -9,6 +9,7 @@ use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiPelangganController;
 use App\Http\Controllers\TransaksiPemasokController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,10 @@ Route::get('/testing', function () {
     return view('test');
 });
 
+
 //Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('barang', BarangController::class);
 Route::resource('kategori', KategoriController::class);
@@ -39,8 +41,8 @@ Route::resource('merek', MerekController::class);
 Route::resource('pelanggan', PelangganController::class);
 Route::resource('pemasok', PemasokController::class);
 Route::resource('produk', ProdukController::class);
-Route::resource('transaksi-pelanggan', TransaksiPelangganController::class);
-Route::resource('transaksi-pemasok', TransaksiPemasokController::class);
+Route::resource('transaksiPelanggan', TransaksiPelangganController::class);
+Route::resource('transaksiPemasok', TransaksiPemasokController::class);
 
 Route::get('users/{id}', function ($id) {
     return response()->json(['id'=>$id]);

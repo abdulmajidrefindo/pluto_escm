@@ -18,9 +18,9 @@ class TransaksiPelanggan extends Model
     }
     public function barang()
     {
-        //return $this->belongsToMany(Barang::class, 'transaksi_barang_pelanggan','transaksi_pelanggan_id','barang_id')->with('produk')->withPivot('kuantitas');
+        //return $this->belongsToMany(Barang::class, 'transaksi_barang_pelanggan','transaksi_pelanggan_id','barang_id')->with('produk')->withPivot('total_harga');
         //sama hasilnya
-        return $this->belongsToMany(Barang::class, 'transaksi_barang_pelanggan')->with('produk')->withPivot('kuantitas');
+        return $this->belongsToMany(Barang::class, 'transaksi_barang_pelanggan')->with('produk')->withPivot('total_harga');
 
     }
 

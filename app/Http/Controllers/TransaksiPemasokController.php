@@ -19,8 +19,9 @@ class TransaksiPemasokController extends Controller
     public function index()
     {
         $transaksiPemasok = TransaksiPemasok::with('pemasok')->get();
-        return response()->json($transaksiPemasok);
-        //return view('transaksi.pemasok.index',compact('transaksiPemasok'));
+        //return response()->json($transaksiPemasok);
+        $pemasok = Pemasok::all('id','nama_pemasok');
+        return view('transaksiPemasok.index',compact('transaksiPemasok', 'pemasok'));
     }
 
     /**
@@ -32,7 +33,7 @@ class TransaksiPemasokController extends Controller
     {
         $pemasok = Pemasok::all();
         $barang = Barang::all();
-        return view('transaksi.pemasok/create',compact('pemasok','barang'));
+        return view('transaksiPemasok/create',compact('pemasok','barang'));
     }
 
     /**
@@ -43,13 +44,22 @@ class TransaksiPemasokController extends Controller
      */
     public function store(StoreTransaksiPemasokRequest $request)
     {
+        $validationData = $request->validate([
+            'pemasok_id' => 'required|numeric',
+            'total_harga' => 'required|numeric'
+        ],
+        [
+            'pemasok_id.required' => 'Pemasok harus diisi',
+            'pemasok_id.numeric' => 'Masukkan pemasok dengan benar',
+            'total_harga.required' => 'Harga harus diisi',
+            'total_harga.numeric' => 'Harga harus berupa angka'
+        ]);
         $transaksiPemasok=TransaksiPemasok::create([
             'pemasok_id'=>$request->get('pemasok_id'),
-            'kuantitas'=>$request->get('kuantitas'),
+            'total_harga'=>$request->get('total_harga'),
         ]);
-        $transaksiPemasok->pemasok_id = $request->pemasok_id;
-        return response()->json('Berhasil Disimpan');
-        //return redirect('/transaksi.pemasok')->with('completed','Data berhasil disimpan!');
+        //return response()->json('Berhasil Disimpan');
+        return redirect('/transaksiPemasok')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -65,7 +75,7 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok = TransaksiPemasok::with('barang')->where('id',$id)->first();
         //$barang = Barang::with('produk')->where('id',$id)->first();
         return response()->json($transaksiPemasok);
-        return view('transaksiPemasok.show', compact('transaksiPemasok'));
+        //return view('transaksiPemasok.show', compact('transaksiPemasok'));
     }
 
     /**
@@ -89,14 +99,22 @@ class TransaksiPemasokController extends Controller
      */
     public function update(UpdateTransaksiPemasokRequest $request, TransaksiPemasok $transaksiPemasok)
     {
+        $validationData = $request->validate([
+            'pemasok_id' => 'numeric',
+            'total_harga' => 'numeric'
+        ],
+        [
+            'pemasok_id.numeric' => 'Masukkan pemasok dengan benar',
+            'total_harga.numeric' => 'Harga harus berupa angka'
+        ]);
         $transaksiPemasok->update([
             'pemasok_id'=>$request->get('pemasok_id'),
-            'kuantitas'=>$request->get('kuantitas'),
+            'total_harga'=>$request->get('total_harga'),
             'createdAt'=>$request->get('createdAt'),
             'updatedAt'=>$request->get('updatedAt')
         ]);
         $transaksiPemasok->pemasok_id = $request->pemasok_id;
-        return response()->json('Berhasil Diupdate');
+        //return response()->json('Berhasil Diupdate');
         return redirect('/transaksiPemasok')->with('completed','Data berhasil Diupdate!');
     }
 
@@ -109,7 +127,7 @@ class TransaksiPemasokController extends Controller
     public function destroy(TransaksiPemasok $transaksiPemasok)
     {
         $transaksiPemasok->delete();
-        return response()->json('Berhasil Dihapus');
+        //return response()->json('Berhasil Dihapus');
         return redirect('/transaksiPemasok')->with('completed','Data berhasil dihapus!');
     }
 }

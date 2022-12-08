@@ -19,8 +19,9 @@ class TransaksiPelangganController extends Controller
     public function index()
     {
         $transaksiPelanggan=TransaksiPelanggan::with('pelanggan')->get();
-        return response()->json($transaksiPelanggan);
-        //return view('transaksiPelanggan.index',compact('transaksiPelangan'));
+        //return response()->json($transaksiPelanggan);
+        $pelanggan = Pelanggan::all('id','nama_pelanggan');
+        return view('transaksiPelanggan.index',compact('transaksiPelanggan', 'pelanggan'));
     }
 
     /**
@@ -32,7 +33,7 @@ class TransaksiPelangganController extends Controller
     {
         $pelanggan = Pelanggan::all();
         $barang = Barang::all();
-        return view('transaksi.pelanggan', compact('pelanggan','barang'));
+        return view('transaksiPelanggan', compact('pelanggan','barang'));
     }
 
     /**
@@ -43,13 +44,23 @@ class TransaksiPelangganController extends Controller
      */
     public function store(StoreTransaksiPelangganRequest $request)
     {
+        $validationData = $request->validate([
+            'pelanggan_id' => 'required|numeric',
+            'total_harga' => 'required|numeric'
+        ],
+        [
+            'pelanggan_id.required' => 'Pelanggan harus diisi',
+            'pelanggan_id.numeric' => 'Masukkan pelanggan dengan benar',
+            'total_harga.required' => 'Harga harus diisi',
+            'total_harga.numeric' => 'Harga harus berupa angka'
+        ]);
         $transaksiPelanggan = TransaksiPelanggan::create([
             'pelanggan_id' => $request->get('pelanggan_id'),
             'total_harga' => $request->get('total_harga'),
 
         ]);
-        return response()->json('Berhasil Disimpan');
-        return redirect('transaksiPelangan')->with('completed','Data berhasil disimpan!');
+        //return response()->json('Berhasil Disimpan');
+        return redirect('transaksiPelanggan')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -87,6 +98,14 @@ class TransaksiPelangganController extends Controller
      */
     public function update(UpdateTransaksiPelangganRequest $request, TransaksiPelanggan $transaksiPelanggan)
     {
+        $validationData = $request->validate([
+            'pelanggan_id' => 'numeric',
+            'total_harga' => 'numeric'
+        ],
+        [
+            'pelanggan_id.numeric' => 'Masukkan pelanggan dengan benar',
+            'total_harga.numeric' => 'Harga harus berupa angka'
+        ]);
         $transaksiPelanggan->update([
             'pelanggan_id' => $request->get('pelanggan_id'),
             'total_harga' => $request->get('total_harga'),

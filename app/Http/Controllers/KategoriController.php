@@ -39,10 +39,14 @@ class KategoriController extends Controller
      */
     public function store(StoreKategoriRequest $request, Kategori $kategori)
     {
-        $request->validate([
-            'nama_kategori' => 'required'
+        $validationData = $request->validate([
+            'nama_kategori' => 'required',
+            'keterangan' => 'required'
+        ],
+        [
+            'nama_kategori.required' => 'Nama kategori harus diisi',
+            'keterangan.required' => 'Keterangan'
         ]);
-
         $kategori->create([
             'nama_kategori' => $request->get('nama_kategori'),
             'keterangan' => $request->get('keterangan')
@@ -86,8 +90,6 @@ class KategoriController extends Controller
      */
     public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
-        //
-
         $kategori->update([
             'nama_kategori'=>$request->get('nama_kategori'),
             'keterangan'=>$request->get('keterangan')
