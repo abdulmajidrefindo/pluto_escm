@@ -49,6 +49,12 @@ class SisaStokListener
             ];
             Notification::send(User::all(), new SisaStokNotification($detail));
         }
+        else{
+            if(DB::table('notifications')->where('type','App\Notifications\SisaStokNotification')->where('data->barang_id',$id_barang)->exists()){
+                DB::table('notifications')->where('type','App\Notifications\SisaStokNotification')->where('data->barang_id',$id_barang)->delete();
+            }
+            return;
+        }
 
     }
 }
