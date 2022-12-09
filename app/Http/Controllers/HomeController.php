@@ -72,11 +72,13 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
+        $informasi['daily_sales_data'] = $this->getPendapatanHarian();
+
 
         //notifikasi
         $notifikasi = auth()->user()->unreadNotifications;
-        return response()->json($informasi);
-        //return view('index', compact('informasi', 'notifikasi'));
+        //return response()->json($informasi);
+        return view('index', compact('informasi', 'notifikasi'));
 
     }
 
@@ -100,7 +102,7 @@ class HomeController extends Controller
             }
         }
 
-        return response()->json($sales);
+        return $sales;
 
     }
 
@@ -116,7 +118,7 @@ class HomeController extends Controller
         $sales = TransaksiPelanggan::select(DB::raw('WEEK(created_at) as week'), DB::raw('sum(total_harga) as total'))
             ->whereBetween('created_at', [$start, $end])
             ->groupBy('week')
-            ->get()->pluck('total', 'week')->all();
+            ->get()->pluck('total', 'week');
 
         for($i = Carbon::now()->subMonth()->addDay(); $i <= Carbon::now(); $i->addWeek()) {
             $week = $i->weekOfYear;
