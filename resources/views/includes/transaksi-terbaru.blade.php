@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach ($transaksiTerbaru as $transaksi)
+                    @foreach (  $informasi['transaksi_terbaru'] as $transaksi)
                         @if ($transaksi->jenis_transaksi === 'Masuk')
                             <?php
                             $badge = 'badge-success';
@@ -61,8 +61,8 @@
     </div>
 
     <div class="card-footer clearfix">
-        <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-        <a href="{{route('transaksi')}}" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Tambah Transaksi</a>
+        <a href="{{route('transaksi')}}" class="btn btn-sm btn-secondary float-right">Lihat Semua Transaksi</a>
     </div>
 
 </div>

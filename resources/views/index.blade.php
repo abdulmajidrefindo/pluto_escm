@@ -29,7 +29,7 @@
             @include('includes.transaksi-terbaru')
         </div>
         <div class="col-md-4">
-            @include('includes.produk-terbaru')
+            @include('includes.produk-terlaris')
         </div>
     </div>
 
