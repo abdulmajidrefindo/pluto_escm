@@ -1,5 +1,5 @@
 <div class="card card-dark">
-    <div class="card-header">
+    <div class="card-header" role="button" data-card-widget="collapse">
         <h3 class="card-title">Item Terlaris</h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">

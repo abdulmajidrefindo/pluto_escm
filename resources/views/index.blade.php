@@ -2,6 +2,8 @@
 
 @section('title', 'Dashboard')
 
+@section('plugins.Chartjs', true)
+
 @section('content_header')
     <h1>Dashboard (pre-Alpha)</h1>
 @stop
@@ -31,6 +33,14 @@
         <div class="col-md-4">
             @include('includes.produk-terlaris')
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @include('includes.grafik-penjualan')
+        </div>
+
+
     </div>
 
 @stop

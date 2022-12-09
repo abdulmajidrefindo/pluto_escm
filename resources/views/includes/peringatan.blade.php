@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12 col-md-6">
         <div class="card card-danger">
-            <div class="card-header">
+            <div class="card-header" role="button" data-card-widget="collapse">
                 <h3 class="card-title">
                     <i class="fas fa-exclamation-triangle fa-fw"></i>
                     Pemberitahuan

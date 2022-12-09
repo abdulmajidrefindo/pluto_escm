@@ -1,5 +1,5 @@
 <div class="card card-dark">
-    <div class="card-header border-transparent">
+    <div class="card-header border-transparent" role="button" data-card-widget="collapse">
         <h3 class="card-title">Transaksi Terbaru</h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">

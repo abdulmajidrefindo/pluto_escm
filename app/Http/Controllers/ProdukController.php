@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KategoriProduk;
 use App\Models\Produk;
 use App\Models\Kategori;
 use App\Http\Requests\StoreProdukRequest;
@@ -54,6 +55,11 @@ class ProdukController extends Controller
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
             'keterangan' => $request->get('keterangan'),
+        ]);
+
+        KategoriProduk::create([
+            'kategori_id' => $request->get('kategori_id'),
+            'produk_id' => $produk->id
         ]);
         //return response()->json('Berhasil Disimpan');
         return redirect('/produk')->with('completed','Data berhasil disimpan!');

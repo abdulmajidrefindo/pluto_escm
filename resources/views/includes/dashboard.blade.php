@@ -1,5 +1,5 @@
 <div class="card card-dark">
-    <div class="card-header">
+    <div class="card-header" role="button" data-card-widget="collapse">
       <h3 class="card-title">
         <i class="fas fa-sm fa-exclamation-triangle fa-fw"></i> Informasi
       </h3>

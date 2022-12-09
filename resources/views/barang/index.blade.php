@@ -59,7 +59,7 @@
                 <div class="tab-pane active show" id="barang-tabs-table" role="tabpanel"
                     aria-labelledby="barang-tabs-table-tab">
                     <x-adminlte-datatable id="barang-table" :heads="$heads" theme="light" :config="$config" striped
-                        hoverable beautify>
+                        hoverable beautify with-footer>
                         @foreach ($barang as $barang)
                             <tr>
                                 <td>
@@ -292,5 +292,12 @@
             document.getElementById("total_masuk").innerHTML = totalMasuk;
             document.getElementById("total_stok").innerHTML = totalStok;
         });
+
+
+
+
+
+
+
     </script>
 @stop

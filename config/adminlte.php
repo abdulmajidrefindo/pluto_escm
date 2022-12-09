@@ -524,6 +524,27 @@ return [
                 ],
             ],
         ],
+
+        'jsGrid' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'vendor/jsgrid/jsgrid.min.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'vendor/jsgrid/jsgrid-theme.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'vendor/jsgrid/jsgrid.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*
