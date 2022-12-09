@@ -25,6 +25,14 @@
             <div class="tab-pane fade active show" id="custom-tabs-two-home" role="tabpanel"
                 aria-labelledby="custom-tabs-two-home-tab">
 
+
+
+                <div class="position-relative mb-4">
+
+                    {!! $grafik['harian']->container() !!}
+
+                </div>
+
                 <div class="d-flex">
                     <p class="d-flex flex-column">
                         <span class="text-bold text-lg">$18,230.00</span>
@@ -36,22 +44,6 @@
                         </span>
                         <span class="text-muted">Since last month</span>
                     </p>
-                </div>
-
-                <div class="position-relative mb-4">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div class=""></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div class=""></div>
-                        </div>
-                    </div>
-
-
-                    <canvas id="daily-sales-chart"
-                        class="chartjs-render-monitor" width="725" height="350"></canvas>
-
                 </div>
 
                 <div class="d-flex flex-row justify-content-end">
@@ -64,6 +56,14 @@
             <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel"
                 aria-labelledby="custom-tabs-two-profile-tab">
 
+
+                <div class="position-relative mb-4">
+
+                    {!! $grafik['mingguan']->container() !!}
+
+                </div>
+
+
                 <div class="d-flex">
                     <p class="d-flex flex-column">
                         <span class="text-bold text-lg">$18,230.00</span>
@@ -77,41 +77,31 @@
                     </p>
                 </div>
 
-                <div class="position-relative mb-4">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div class=""></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div class=""></div>
-                        </div>
-                    </div>
-                    <canvas id="weekly-sales-chart" style="display: block; height: 200px; width: 580px;"
-                        class="chartjs-render-monitor" width="725" height="350"></canvas>
-
-                </div>
-
-
-
-                <div class="d-flex flex-row justify-content-end">
-                    <span class="mr-2">
-                        <i class="fas fa-square text-primary"></i> This year
-                    </span>
-                    <span>
-                        <i class="fas fa-square text-gray"></i> Last year
-                    </span>
-                </div>
-
             </div>
             <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
                 aria-labelledby="custom-tabs-two-messages-tab">
-                Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi
-                placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique
-                nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna
-                a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus
-                efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex
-                vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget
-                sem eu risus tincidunt eleifend ac ornare magna.
+
+
+
+                <div class="position-relative mb-4">
+
+                    {!! $grafik['bulanan']->container() !!}
+
+                </div>
+
+                <div class="d-flex">
+                    <p class="d-flex flex-column">
+                        <span class="text-bold text-lg">$18,230.00</span>
+                        <span>Sales Over Time</span>
+                    </p>
+                    <p class="ml-auto d-flex flex-column text-right">
+                        <span class="text-success">
+                            <i class="fas fa-arrow-up"></i> 33.1%
+                        </span>
+                        <span class="text-muted">Since last month</span>
+                    </p>
+                </div>
+
             </div>
 
         </div>
@@ -130,3 +120,14 @@
 
     </div>
 </div>
+
+@section('js')
+    <script src="{{ @asset('vendor/larapex-charts/apexcharts.js') }}"></script>
+
+    {{ $grafik['harian']->script() }}
+
+    {{ $grafik['mingguan']->script() }}
+
+    {{ $grafik['bulanan']->script() }}
+
+@endsection

@@ -13,6 +13,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Charts\SalesChart;
+
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -37,7 +39,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function home()
+    public function home(SalesChart $chart)
     {
         $informasi = array();
         // Kombinasi dua tabel untuk mendapat data transaksi terbaru
@@ -77,8 +79,13 @@ class HomeController extends Controller
 
         //notifikasi
         $notifikasi = auth()->user()->unreadNotifications;
+
+
+        $grafik['harian'] = $chart->harian($this->getPendapatanHarian());
+        $grafik['mingguan'] = $chart->mingguan();
+        $grafik['bulanan'] = $chart->bulanan();
         //return response()->json($informasi);
-        return view('index', compact('informasi', 'notifikasi'));
+        return view('index', compact('informasi', 'notifikasi', 'grafik'));
 
     }
 
