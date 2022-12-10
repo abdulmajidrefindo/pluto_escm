@@ -67,11 +67,12 @@
                         @endif
 
                         <span class="text-muted">Sejak Bulan Lalu</span>
-                        <div class="d-flex flex-row justify-content-end">
-                          <a class="btn btn-sm btn-primary" href="{{ route('transaksiPelanggan.index') }}">View Report</a>
-                      </div>
+
                     </p>
                 </div>
+                <div class="d-flex flex-row justify-content-end">
+                  <a class="btn btn-sm btn-primary" href="{{ route('transaksiPelanggan.index') }}">View Report</a>
+              </div>
             </div>
             <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
                 aria-labelledby="custom-tabs-two-messages-tab">
@@ -92,11 +93,11 @@
                             </span>
                         @endif
                         <span class="text-muted">Sejak Tahun Lalu</span>
-                        <div class="d-flex flex-row justify-content-end">
-                          <a class="btn btn-sm btn-primary" href="{{ route('transaksiPelanggan.index') }}">View Report</a>
-                      </div>
                     </p>
                 </div>
+                <div class="d-flex flex-row justify-content-end">
+                  <a class="btn btn-sm btn-primary" href="{{ route('transaksiPelanggan.index') }}">View Report</a>
+              </div>
             </div>
         </div>
     </div>
