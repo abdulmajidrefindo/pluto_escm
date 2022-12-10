@@ -120,16 +120,20 @@
                         </div>
                         <hr />
                         <h4 class="text-lightblue"> Form Barang </h4>
-                        <div class="row d-flex">
+                        <div class="row">
 
 
 
                             <x-adminlte-select2 id="selectBarang" name="barang_id" label-class="text-lightblue"
-                                fgroup-class="col-6" data-placeholder="Pilih produk...">
+                                fgroup-class="col-3" data-placeholder="Pilih produk...">
                                 <option />
                                 @foreach ($barang as $barang)
-                                    <option value="{{ $barang->id }}">{{ $barang->produk->nama_produk }} -
-                                        {{ $barang->merek->nama_merek }}</option>
+                                    <option data-harga="{{ $barang->harga }}"
+                                        data-merek="{{ $barang->merek->nama_merek }}"
+                                        data-unit="{{ $barang->produk->unit }}" data-stok="{{ $barang->total_stok }}"
+                                        value="{{ $barang->id }}">
+                                        {{ $barang->produk->nama_produk }}
+                                    </option>
                                 @endforeach
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text text-blue">
@@ -138,22 +142,52 @@
                                 </x-slot>
                             </x-adminlte-select2>
 
-                            <x-adminlte-input name="kuantitas" placeholder="Jumlah Barang" fgroup-class="col-6"
-                                type="number" min=1 max=10>
+                            <x-adminlte-input name="kuantitas" placeholder="Jumlah Barang" fgroup-class="col-3"
+                                type="number" min=0 max=10 disabled>
                                 <x-slot name="appendSlot">
-                                    <x-adminlte-button id="tambahBarang" theme="primary" label="Tambahkan Ke Daftar" />
+                                    <div id="unitBarang" class="input-group-text text-blue">
+                                        Kg
+                                    </div>
                                 </x-slot>
                             </x-adminlte-input>
+
+                            <x-adminlte-input id="merek" name="merek" placeholder="Merek" fgroup-class="col-3"
+                                disabled />
+
+
+
+                            <x-adminlte-input id="harga" name="harga" placeholder="Harga" fgroup-class="col-3"
+                                disabled>
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text text-blue">
+                                        Rp.
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-input>
+
+
+
 
 
                         </div>
 
                         <div class="row">
                             <div class="col-12">
+
+                                <x-adminlte-button class="col-12 btn-block" id="tambahBarang" theme="outline-primary"
+                                    label="Tambahkan Ke Daftar" disabled />
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-12">
                                 <table id="tabelAddBarang" class="table table-striped">
                                     <thead>
                                         <tr>
-
+                                            <th style="width: 40px">#</th>
                                             <th style="width: 10px">ID</th>
                                             <th>Produk</th>
                                             <th>Merek</th>
@@ -161,7 +195,7 @@
                                             <th>Unit</th>
                                             <th>Harga</th>
                                             <th>Total</th>
-                                            <th style="width: 40px"></th>
+
 
                                         </tr>
                                     </thead>
@@ -172,16 +206,16 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th class="text-right" colspan="6">
+                                            <th class="text-right" colspan="7">
                                                 Total :
                                             </th>
-                                            <th>
-                                                Rp.600.000,-
+                                            <th class="total-harga">
+                                                Rp.,-
                                             </th>
                                         </tr>
                                     </tfoot>
                                 </table>
-                        </div>
+                            </div>
 
                     </form>
                 </div>
@@ -278,41 +312,94 @@
 
         <script>
             $(document).ready(function() {
+                var totalHarga = 0;
 
                 $('#tambahBarang').click(function() {
+                    totalHarga = 0;
 
-
-                    let id = $('#iaad').val();
-                    let produk = $('#produk').val();
+                    let id = $('#selectBarang').val();
+                    let produk = $('#selectBarang').find(":selected").text();
                     let merek = $('#merek').val();
                     let kuantitas = $('#kuantitas').val();
-                    let unit = $('#unit').val();
+                    let unit = $('#unitBarang').text();
                     let harga = $('#harga').val();
-                    let total = $('#total').val();
+                    let total = kuantitas * harga;
 
                     let html = '';
                     html += '<tr>';
-
+                    html +=
+                        '<td><button type="button" class="btn btn-danger btn-sm" value="Delete"><i class="fas fa-trash"></i></button></td>';
                     html += '<td>' + id + '</td>';
                     html += '<td>' + produk + '</td>';
                     html += '<td>' + merek + '</td>';
                     html += '<td>' + kuantitas + '</td>';
                     html += '<td>' + unit + '</td>';
                     html += '<td>' + harga + '</td>';
-                    html += '<td>' + total + '</td>';
-                    html += '<td><button type="button" class="btn btn-danger btn-sm" value="Delete"><i class="fas fa-trash"></i></button></td>';
+                    html += '<td class = "total">' + total + '</td>';
+
                     html += '</tr>';
 
+                    console.log($('#selectBarang').val());
+
+                    $('#kuantitas').val('');
 
                     $('#tabelAddBarang').append(html);
+                    $('#tabelAddBarang').find('.total').each(function() {
+                        totalHarga += parseInt($(this).text());
+                    });
 
-
+                    $('.total-harga').text(totalHarga);
                 });
 
                 $('#tabelAddBarang').on('click', '.btn-danger', function() {
                     $(this).closest('tr').remove();
+                    $(this).closest('tr').find('.total').each(function() {
+                        totalHarga -= parseInt($(this).text());
+                    });
+
+                    $('.total-harga').text(totalHarga);
 
                 });
+
+                // Barang change
+                $('#selectBarang').change(function() {
+                    let id = $(this).find(":selected").val();
+                    let harga = $(this).find(":selected").attr('data-harga');
+                    let unit = $(this).find(":selected").attr('data-unit');
+                    let merek = $(this).find(":selected").attr('data-merek');
+                    let stok = $(this).find(":selected").attr('data-stok');
+
+                    $('#kuantitas').attr('max', stok);
+                    $('#kuantitas').attr('placeholder', 'Maksimal ' + stok);
+                    $('#kuantitas').attr('disabled', false);
+                    $('#tambahBarang').attr('disabled', false);
+
+
+                    $('#harga').val(harga);
+                    $('#unitBarang').html(unit);
+                    $('#merek').val(merek);
+                });
+
+                //prevent input number outside range
+                $('#kuantitas').on('change', function() {
+                    if (this.value > this.max) {
+                        $(document).Toasts('create', {
+                            title: 'Peringatan',
+                            body: 'Stok tidak mencukupi.',
+                            class: 'bg-warning',
+                            autohide: true,
+                            delay: 2000,
+                            position: 'bottomRight',
+                            size: 'sm',
+                            icon: 'fas fa-exclamation-triangle fa-lg',
+
+                        });
+                        this.value = this.max;
+                    }
+                });
+
+
+
 
             });
         </script>

@@ -132,4 +132,12 @@ class TransaksiPemasokController extends Controller
         //return response()->json('Berhasil Dihapus');
         return redirect('/transaksiPemasok')->with('completed','Data berhasil dihapus!');
     }
+
+    //fetch barang
+    public function fetchBarang(Request $request)
+    {
+        $id = $request->get('id');
+        $barang = Barang::with('produk','merek')->where('id',$id)->first();
+        return response()->json($barang);
+    }
 }
