@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\PendapatanHelper;
 use App\Models\Produk;
 use App\Models\TransaksiPemasok;
 use App\Models\TransaksiPelanggan;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Charts\SalesChart;
 
 use Carbon\Carbon;
+
 
 class HomeController extends Controller
 {
@@ -42,6 +44,7 @@ class HomeController extends Controller
     public function home(SalesChart $chart)
     {
         $informasi = array();
+        $pendapatanHelper = new PendapatanHelper();
         // Kombinasi dua tabel untuk mendapat data transaksi terbaru
 
         $transaksiPemasok = TransaksiPemasok::join('pemasok', 'transaksi_pemasok.pemasok_id', '=', 'pemasok.id')
@@ -74,94 +77,18 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        $informasi['daily_sales_data'] = $this->getPendapatanHarian();
-
 
         //notifikasi
         $notifikasi = auth()->user()->unreadNotifications;
 
 
-        $grafik['harian'] = $chart->harian($this->getPendapatanHarian());
-        $grafik['mingguan'] = $chart->mingguan();
+        $grafik['harian'] = $chart->harian($pendapatanHelper->getPendapatanHarian(), $pendapatanHelper->getPendapatanHarian(true));
+        $grafik['mingguan'] = $chart->mingguan($pendapatanHelper->getPendapatanMingguan(), $pendapatanHelper->getPendapatanMingguan(true));
         $grafik['bulanan'] = $chart->bulanan();
-        //return response()->json($informasi);
+        //return response()->json($this->getPendapatanMingguan(true));
         return view('index', compact('informasi', 'notifikasi', 'grafik'));
 
     }
 
-    public function getPendapatanHarian()
-    {
-        //get start day a week before
-        $start = Carbon::now()->subWeek()->addDay()->format('Y-m-d') . ' 00:00:01';
-        //get today
-        $end = Carbon::now()->format('Y-m-d') . ' 23:59:59';
-
-        //mendapat total penjualan dalam rentang waktu seminggu
-        $sales = TransaksiPelanggan::select(DB::raw('DATE(created_at) as date'), DB::raw('sum(total_harga) as total'))
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy('date')
-            ->get()->pluck('total', 'date')->all();
-
-        for($i = Carbon::now()->subWeek()->addDay(); $i <= Carbon::now(); $i->addDay()) {
-            $date = $i->format('Y-m-d');
-            if(!isset($sales[$date])) {
-                $sales[$date] = 0;
-            }
-        }
-
-        return $sales;
-
-    }
-
-    public function getPendapatanMingguan()
-    {
-        //get start day a month before
-        $start = Carbon::now()->subMonth()->addDay()->format('Y-m-d') . ' 00:00:01';
-
-        //get today
-        $end = Carbon::now()->format('Y-m-d') . ' 23:59:59';
-
-        //get weekly sales
-        $sales = TransaksiPelanggan::select(DB::raw('WEEK(created_at) as week'), DB::raw('sum(total_harga) as total'))
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy('week')
-            ->get()->pluck('total', 'week');
-
-        for($i = Carbon::now()->subMonth()->addDay(); $i <= Carbon::now(); $i->addWeek()) {
-            $week = $i->weekOfYear;
-            if(!isset($sales[$week])) {
-                $sales[$week] = 0;
-            }
-        }
-
-
-        return response()->json($sales);
-
-    }
-
-    public function getPendapatanBulanan()
-    {
-        //get start day a year before
-        $start = Carbon::now()->subYear()->addDay()->format('Y-m-d') . ' 00:00:01';
-
-        //get today
-        $end = Carbon::now()->format('Y-m-d') . ' 23:59:59';
-
-        //get monthly sales
-        $sales = TransaksiPelanggan::select(DB::raw('MONTH(created_at) as month'), DB::raw('sum(total_harga) as total'))
-            ->whereBetween('created_at', [$start, $end])
-            ->groupBy('month')
-            ->get()->pluck('total', 'month')->all();
-
-        for($i = Carbon::now()->subYear()->addDay(); $i <= Carbon::now(); $i->addMonth()) {
-            $month = $i->month;
-            if(!isset($sales[$month])) {
-                $sales[$month] = 0;
-            }
-        }
-
-        return response()->json($sales);
-
-    }
 
 }

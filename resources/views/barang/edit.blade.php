@@ -15,6 +15,7 @@
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
                 <x-adminlte-input type="text" value="{{ $barang->produk_id }}" name="produk_id" label="Produk ID"
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
+
                 <x-adminlte-input type="text" value="{{ $barang->pemasok_id }}" name="pemasok_id" label="Pemasok ID"
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
                 <x-adminlte-input type="text" value="{{ $barang->sku }}" name="sku" label="Nama Barang"
@@ -30,7 +31,12 @@
                 <x-adminlte-button class="btn-lg" type="submit" label="Perbaharui Data" theme="success"
                     icon="fas fa-lg fa-save" />
             </div>
+
+
+
         </div>
     </form>
+
+    <table>
 
 @stop

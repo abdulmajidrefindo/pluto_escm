@@ -30,7 +30,7 @@
                             <?php
                             $badge = 'badge-success';
                             $kode = 'OR';
-                            $showTransaksi = route('transaksiPemasok.show', $transaksi->id);
+                            $routeTransaksi = route('transaksiPemasok.show', $transaksi->id);
                             ?>
                         @else
                             <?php
@@ -41,7 +41,7 @@
                         @endif
 
                         <tr>
-                            <td><a href="{{$showTransaksi}}">{{$kode}}{{ $transaksi->id }}</a></td>
+                            <td><a href="{{$routeTransaksi}}">{{$kode}}{{ $transaksi->id }}</a></td>
                             <td>@datetime($transaksi->created_at)</td>
                             <td>{{ $transaksi->nama }}</td>
                             <td>
