@@ -44,7 +44,7 @@ class HomeController extends Controller
     public function home(SalesChart $chart)
     {
         $informasi = array();
-        $pendapatanHelper = new PendapatanHelper();
+        $getPendapatan = new PendapatanHelper();
         // Kombinasi dua tabel untuk mendapat data transaksi terbaru
 
         $transaksiPemasok = TransaksiPemasok::join('pemasok', 'transaksi_pemasok.pemasok_id', '=', 'pemasok.id')
@@ -63,7 +63,7 @@ class HomeController extends Controller
         $informasi['total_transaksi_pemasok'] = TransaksiPemasok::all()->count();
         $informasi['total_transaksi_pelanggan'] = TransaksiPelanggan::all()->count();
         $informasi['total_pengeluaran'] = TransaksiPemasok::all()->sum('total_harga');
-        $informasi['total_pendapatan'] = TransaksiPelanggan::all()->sum('total_harga');
+
 
         //get top 5 produk terlaris
         $informasi['produk_terlaris'] = TransaksiPelanggan::join('transaksi_barang_pelanggan', 'transaksi_pelanggan.id', '=', 'transaksi_barang_pelanggan.transaksi_pelanggan_id')
@@ -81,11 +81,31 @@ class HomeController extends Controller
         //notifikasi
         $notifikasi = auth()->user()->unreadNotifications;
 
+        //informasi total pendapatan
 
-        $grafik['harian'] = $chart->harian($pendapatanHelper->getPendapatanHarian(), $pendapatanHelper->getPendapatanHarian(true));
-        $grafik['mingguan'] = $chart->mingguan($pendapatanHelper->getPendapatanMingguan(), $pendapatanHelper->getPendapatanMingguan(true));
-        $grafik['bulanan'] = $chart->bulanan();
-        //return response()->json($this->getPendapatanMingguan(true));
+        $pendapatanMingguIni = $getPendapatan->getPendapatanMinggu();
+        $pendapatanMingguLalu = $getPendapatan->getPendapatanMinggu(true);
+        $pendapatanBulanIni = $getPendapatan->getPendapatanBulan();
+        $pendapatanBulanLalu = $getPendapatan->getPendapatanBulan(true);
+        $pendapatanTahunIni = $getPendapatan->getPendapatanTahun();
+        $pendapatanTahunLalu = $getPendapatan->getPendapatanTahun(true);
+
+        $informasi['total_pendapatan']['minggu_ini'] = array_sum($pendapatanMingguIni);
+        $informasi['total_pendapatan']['bulan_ini'] = array_sum($pendapatanBulanIni);
+        $informasi['total_pendapatan']['tahun_ini'] = array_sum($pendapatanTahunIni);
+        $informasi['total_pendapatan']['total'] = TransaksiPelanggan::all()->sum('total_harga');
+
+        //persentasi peningkatan pendapatan
+        $informasi['persentasi_pendapatan']['minggu_ini'] = $getPendapatan->PeningkatanPendapatanMingguan();
+        $informasi['persentasi_pendapatan']['bulan_ini'] = $getPendapatan->PeningkatanPendapatanBulanan();
+        $informasi['persentasi_pendapatan']['tahun_ini'] = $getPendapatan->PeningkatanPendapatanTahunan();
+
+        //grafik
+
+        $grafik['harian'] = $chart->harian($pendapatanMingguIni, $pendapatanMingguLalu);
+        $grafik['mingguan'] = $chart->mingguan($pendapatanBulanIni, $pendapatanBulanLalu);
+        $grafik['bulanan'] = $chart->bulanan($pendapatanTahunIni, $pendapatanTahunLalu);
+        //return response()->json($informasi);
         return view('index', compact('informasi', 'notifikasi', 'grafik'));
 
     }

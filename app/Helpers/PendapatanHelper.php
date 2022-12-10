@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PendapatanHelper{
-    public function getPendapatanHarian($yesterWeek = false)
+    public function getPendapatanMinggu($yesterWeek = false)
     {
 
         if ($yesterWeek) {
@@ -46,7 +46,7 @@ class PendapatanHelper{
     }
 
     //get weekly sales
-    public function getPendapatanMingguan($yesterMonth = false)
+    public function getPendapatanBulan($yesterMonth = false)
     {
 
         if ($yesterMonth) {
@@ -84,12 +84,12 @@ class PendapatanHelper{
 
     }
 
-    public function getPendapatanBulanan($yesterYear = false)
+    public function getPendapatanTahun($yesterYear = false)
     {
 
         if ($yesterYear) {
             $start = Carbon::now()->startOfYear()->subYearsNoOverflow()->format('Y-m-d') . ' 00:00:01';
-            $end = Carbon::now()->subYearsNoOverflow()()->endOfYear()->format('Y-m-d') . ' 23:59:59';
+            $end = Carbon::now()->subYearsNoOverflow()->endOfYear()->format('Y-m-d') . ' 23:59:59';
         } else {
             $start = Carbon::now()->startOfYear()->format('Y-m-d') . ' 00:00:01';
             $end = Carbon::now()->endOfYear()->format('Y-m-d') . ' 23:59:59';
@@ -119,9 +119,65 @@ class PendapatanHelper{
             }
         }
 
-        return response()->json($sales);
+        return collect($sales)->sortKeys()->all();
 
 
     }
+
+    public function PeningkatanPendapatanMingguan()
+    {
+        $lastWeek = $this->getPendapatanMinggu(true);
+        $thisWeek = $this->getPendapatanMinggu();
+
+        $lastWeekTotal = array_sum($lastWeek);
+        $thisWeekTotal = array_sum($thisWeek);
+
+        if($lastWeekTotal == 0){
+            $percentage = 100;
+        }
+        else{
+            $percentage = ($thisWeekTotal - $lastWeekTotal) / $lastWeekTotal * 100;
+        }
+
+        return round($percentage, 2);
+    }
+
+    public function PeningkatanPendapatanBulanan()
+    {
+        $lastMonth = $this->getPendapatanBulan(true);
+        $thisMonth = $this->getPendapatanBulan();
+
+        $lastMonthTotal = array_sum($lastMonth);
+        $thisMonthTotal = array_sum($thisMonth);
+
+        if($lastMonthTotal == 0){
+            $percentage = 100;
+        }
+        else{
+            $percentage = ($thisMonthTotal - $lastMonthTotal) / $lastMonthTotal * 100;
+        }
+
+        return round($percentage, 2);
+    }
+
+    public function PeningkatanPendapatanTahunan()
+    {
+        $lastYear = $this->getPendapatanTahun(true);
+        $thisYear = $this->getPendapatanTahun();
+
+        $lastYearTotal = array_sum($lastYear);
+        $thisYearTotal = array_sum($thisYear);
+
+        if($lastYearTotal == 0){
+            $percentage = 100;
+        }
+        else{
+            $percentage = ($thisYearTotal - $lastYearTotal) / $lastYearTotal * 100;
+        }
+
+        return round($percentage, 2);
+    }
+
+
 }
 ?>

@@ -112,7 +112,7 @@
         <div class="col-12 col-sm-6 col-md-3">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3> @currency($informasi['total_pendapatan'])</h3>
+              <h3> @currency($informasi['total_pendapatan']['total'])</h3>
               <p>Total Pendapatan</p>
             </div>
             <div class="icon">

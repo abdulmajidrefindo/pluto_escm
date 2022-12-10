@@ -55,21 +55,28 @@ class SalesChart
         return $this->chart->AreaChart()
             ->setTitle('Pendapatan Bulan Ini.')
             ->setSubtitle('Pendapatan Bulan Ini vs Pendapatan Bulan Lalu.')
-            ->addData('Physical sales', $bulanIni)
-            ->addData('Digital sales', $bulanLalu)
+            ->addData('Bulan Ini', $bulanIni)
+            ->addData('Bulan Lalu', $bulanLalu)
             ->setXAxis($day)
             ->setGrid();
     }
 
-    public function bulanan(): \ArielMejiaDev\LarapexCharts\BarChart
+    public function bulanan($tahunIni, $tahunLalu): \ArielMejiaDev\LarapexCharts\AreaChart
     {
+        $day = array_keys($tahunIni);
+        foreach ($day as $key => $value) {
+            $day[$key] = Carbon::createFromFormat('m', $value)->format('F');
+        }
+        $tahunIni = array_values($tahunIni);
+        $tahunLalu = array_values($tahunLalu);
 
-        return $this->chart->barChart()
-            ->setTitle('Penjualan Minggu Ini.')
-            ->setSubtitle('Physical sales vs Digital sales.')
-            ->addData('Minggu Ini', [70, 29, 77, 28, 55, 45, 66, 44])
-            ->addData('Digital sales', [70, 29, 77, 28, 55, 45, 66, 44])
-            ->setXAxis(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']);
+        return $this->chart->AreaChart()
+            ->setTitle('Pendapatan Tahun Ini.')
+            ->setSubtitle('Pendapatan Tahun Ini vs Pendapatan Tahun Lalu.')
+            ->addData('Tahun Ini', $tahunIni)
+            ->addData('Tahun Lalu', $tahunLalu)
+            ->setXAxis($day)
+            ->setGrid();
     }
 
 

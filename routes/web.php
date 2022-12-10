@@ -35,7 +35,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
 
-Route::get('/chart', [HomeController::class, 'getPendapatanBulanan'])->name('chart');
 
 Route::resource('barang', BarangController::class);
 Route::resource('kategori', KategoriController::class);
