@@ -314,8 +314,30 @@
             $(document).ready(function() {
                 var totalHarga = 0;
 
+                $('#tambahBarang').text('Mohon Isi Data Barang Terlebih Dahulu');
+
+                //Tambah Barang Ke Table
                 $('#tambahBarang').click(function() {
                     totalHarga = 0;
+
+                    if ($('#kuantitas').val() == '') {
+                        Swal.fire({
+                            title: 'Peringatan! Kuantitas Barang Tidak Boleh Kosong',
+                            icon: 'warning',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+                        return; //Jika Kuantitas Kosong, Maka Tidak Melanjutkan
+                    }
 
                     let id = $('#selectBarang').val();
                     let produk = $('#selectBarang').find(":selected").text();
@@ -324,7 +346,6 @@
                     let unit = $('#unitBarang').text();
                     let harga = $('#harga').val();
                     let total = kuantitas * harga;
-
                     let html = '';
                     html += '<tr>';
                     html +=
@@ -336,33 +357,54 @@
                     html += '<td>' + unit + '</td>';
                     html += '<td>' + harga + '</td>';
                     html += '<td class = "total">' + total + '</td>';
-
                     html += '</tr>';
-
-                    console.log($('#selectBarang').val());
-
+                    $('#selectBarang').val('');
                     $('#kuantitas').val('');
-
                     $('#tabelAddBarang').append(html);
                     $('#tabelAddBarang').find('.total').each(function() {
                         totalHarga += parseInt($(this).text());
                     });
-
                     $('.total-harga').text(totalHarga);
+                    //Hapus Barang Dari Select
+                    $('#selectBarang option[value="' + id + '"]').remove();
+
+                    $('#tambahBarang').text('Mohon Isi Data Barang Terlebih Dahulu');
+                    $('#tambahBarang').attr('disabled', 'true');
+
+
                 });
 
+                //Hapus Barang Dari Table
                 $('#tabelAddBarang').on('click', '.btn-danger', function() {
                     $(this).closest('tr').remove();
-                    $(this).closest('tr').find('.total').each(function() {
-                        totalHarga -= parseInt($(this).text());
-                    });
+                    $(this).closest('tr').find('td').each(function() {
+                        //Kembalikan Barang Ke Select
+                        if ($(this).index() == 1) {
+                            let id = $(this).text();
+                            let produk = $(this).closest('tr').find('td').eq(2).text();
+                            let merek = $(this).closest('tr').find('td').eq(3).text();
+                            let unit = $(this).closest('tr').find('td').eq(5).text();
+                            let harga = $(this).closest('tr').find('td').eq(6).text();
+                            totalHarga -= parseInt($(this).closest('tr').find('td').eq(7).text());
 
+                            let html = '';
+                            html += '<option value="' + id + '" data-merek="' + merek + '" data-harga="' + harga +
+                                '" data-unit="' + unit + '">' + produk + '</option>';
+                            $('#selectBarang').append(html);
+                        }
+                    });
                     $('.total-harga').text(totalHarga);
+
+
 
                 });
 
-                // Barang change
+                //Mengambil Data Barang
                 $('#selectBarang').change(function() {
+
+                    $('#tambahBarang').text('Tambah Barang Ke Table');
+                    $('#tambahBarang').attr('disabled', false);
+
                     let id = $(this).find(":selected").val();
                     let harga = $(this).find(":selected").attr('data-harga');
                     let unit = $(this).find(":selected").attr('data-unit');
@@ -372,7 +414,7 @@
                     $('#kuantitas').attr('max', stok);
                     $('#kuantitas').attr('placeholder', 'Maksimal ' + stok);
                     $('#kuantitas').attr('disabled', false);
-                    $('#tambahBarang').attr('disabled', false);
+
 
 
                     $('#harga').val(harga);
@@ -380,24 +422,32 @@
                     $('#merek').val(merek);
                 });
 
-                //prevent input number outside range
-                $('#kuantitas').on('change', function() {
-                    if (this.value > this.max) {
-                        $(document).Toasts('create', {
-                            title: 'Peringatan',
-                            body: 'Stok tidak mencukupi.',
-                            class: 'bg-warning',
-                            autohide: true,
-                            delay: 2000,
-                            position: 'bottomRight',
-                            size: 'sm',
-                            icon: 'fas fa-exclamation-triangle fa-lg',
 
-                        });
+
+                //prevent input number outside range
+                $('#kuantitas').on('input', function() {
+
+
+
+                    if (parseInt(this.value) > this.max) {
                         this.value = this.max;
+                        Swal.fire({
+                            title: 'Peringatan! Sisa stok hanya tersedia ' + this.max + ' ' + $('#unitBarang').text(),
+                            icon: 'warning',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
                     }
                 });
-
 
 
 
