@@ -21,7 +21,8 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok = TransaksiPemasok::with('pemasok')->get();
         //return response()->json($transaksiPemasok);
         $pemasok = Pemasok::all('id','nama_pemasok');
-        return view('transaksiPemasok.index',compact('transaksiPemasok', 'pemasok'));
+        $barang = Barang::with('produk','merek')->get();
+        return view('transaksiPemasok.index',compact('transaksiPemasok', 'pemasok','barang'));
     }
 
     /**
@@ -33,7 +34,8 @@ class TransaksiPemasokController extends Controller
     {
         $pemasok = Pemasok::all();
         $barang = Barang::all();
-        return view('transaksiPemasok/create',compact('pemasok','barang'));
+
+        //return view('transaksiPemasok/create',compact('pemasok','barang'));
     }
 
     /**

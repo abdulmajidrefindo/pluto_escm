@@ -1,9 +1,11 @@
-<div class="card card-dark card-tabs">
-    <div class="card-header p-0 pt-1">
-        <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-            <li class="pt-2 px-3">
-                <h3 class="card-title">Grafik Penjualan</h3>
-            </li>
+<div class="card card-dark">
+    <div class="card-header p-0 d-flex">
+
+
+      <h3 class="card-title p-3">Grafik Penjualan</h3>
+
+        <ul class="nav nav-pills ml-auto p-2" id="custom-tabs-two-tab" role="tablist">
+
             <li class="nav-item">
                 <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home"
                     role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Minggu</a>
@@ -17,6 +19,16 @@
                     href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages"
                     aria-selected="false">Tahun</a>
             </li>
+
+            <li class = "d-flex">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+            </li>
+
         </ul>
     </div>
     <div class="card-body">

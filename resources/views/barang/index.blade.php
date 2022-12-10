@@ -2,7 +2,7 @@
 
     $heads = ['ID', 'Nama', 'Merek', 'Pemasok', 'SKU', 'Harga', 'Total Terjual', 'Total Masuk', 'Total Stok', ['label' => 'Aksi', 'no-export' => true]];
     $config = [
-        'order' => [[1, 'asc']],
+        'order' => [[0, 'desc']],
         'columns' => [null, null, null, null, null, null, null, null, null, ['orderable' => false]],
     ];
 @endphp
