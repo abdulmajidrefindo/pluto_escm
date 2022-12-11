@@ -68,16 +68,10 @@
                                             class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
                                             <i class="fa fa-sm fa-fw fa-pen"></i> Edit
                                         </a>
-                                        <button data-toggle="modal" data-target="#modalMerekDetail"
-                                            data-id="{{ $merek->id }}"
-                                            data-nama-merek="{{ $merek->nama_merek }}"
-                                            data-keterangan-merek="{{ $merek->keterangan }}"
+                                        <a href="{{ route('merek.show', $merek->id) }}"
                                             class="btn btn-sm btn-success mx-1 shadow" title="Detail">
-                                            <i class="fa fa-sm fa-fw fa-eye"></i> Detail
+                                            <i class="fa fa-sm fa-fw fa-eye"></i> Detail </a>
                                         </button>
-                                        <?php //  <a href="{{ route('merek.show', $merek->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        ?> </a>
-
                                         <button  data-toggle="modal" data-target="#modalMerek"
                                             data-id="{{ $merek->id }}"
                                             data-nama-merek="{{ $merek->nama_merek }}"

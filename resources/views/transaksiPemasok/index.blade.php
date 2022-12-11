@@ -145,18 +145,13 @@
                             </x-adminlte-select2>
 
                             <x-adminlte-input name="kuantitas" placeholder="Jumlah Barang" fgroup-class="col-3"
-                                type="number" min=0 max=10 disabled>
+                                type="number" min=0 disabled>
                                 <x-slot name="appendSlot">
                                     <div id="unitBarang" class="input-group-text text-blue">
                                         Kg
                                     </div>
                                 </x-slot>
                             </x-adminlte-input>
-
-                            <x-adminlte-input id="merek" name="merek" placeholder="Merek" fgroup-class="col-3"
-                                disabled />
-
-
 
                             <x-adminlte-input id="harga" name="harga" placeholder="Harga" fgroup-class="col-3"
                                 disabled>
@@ -166,6 +161,14 @@
                                     </div>
                                 </x-slot>
                             </x-adminlte-input>
+
+
+                            <x-adminlte-input id="merek" name="merek" placeholder="Merek" fgroup-class="col-3"
+                                disabled />
+
+
+
+
 
 
 
@@ -317,6 +320,7 @@
 
         <script>
             $(document).ready(function() {
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -413,17 +417,15 @@
                 //Mengambil Data Barang
                 $('#selectBarang').change(function() {
 
-                    $('#tambahBarang').text('Tambah Barang Ke Table');
+                    $('#tambahBarang').text('Tambahkan Ke Daftar');
                     $('#tambahBarang').attr('disabled', false);
+                    //$('#tambahBarang').addClass('btn-primary').removeClass('btn-outline-primary');
 
                     let id = $(this).find(":selected").val();
                     let harga = $(this).find(":selected").attr('data-harga');
                     let unit = $(this).find(":selected").attr('data-unit');
                     let merek = $(this).find(":selected").attr('data-merek');
                     let stok = $(this).find(":selected").attr('data-stok');
-
-                    $('#kuantitas').attr('max', stok);
-                    $('#kuantitas').attr('placeholder', 'Maksimal ' + stok);
                     $('#kuantitas').attr('disabled', false);
 
 
@@ -432,36 +434,6 @@
                     $('#unitBarang').html(unit);
                     $('#merek').val(merek);
                 });
-
-
-
-                //prevent input number outside range
-                $('#kuantitas').on('input', function() {
-
-
-
-                    if (parseInt(this.value) > this.max) {
-                        this.value = this.max;
-                        Swal.fire({
-                            title: 'Peringatan! Sisa stok hanya tersedia ' + this.max + ' ' + $(
-                                '#unitBarang').text(),
-                            icon: 'warning',
-                            iconColor: '#fff',
-                            toast: true,
-                            background: '#f8bb86',
-                            position: 'center-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        });
-                    }
-                });
-
-
 
                 //fungsi ajax submit data
                 //Submit Data
@@ -544,11 +516,24 @@
                         },
                         dataType: 'json',
                         success: function(data) {
-                            if(data != null && data.success){
-                                console.log(data);
+                            if (data.errors) {
+                                $.each(data.errors, function(key, value) {
+                                    $(document).Toasts('create', {
+                                        title: 'Harap isi data dengan benar!',
+                                        body: value,
+                                        class: 'bg-danger',
+                                        autohide: true,
+                                        delay: 5000,
+                                        icon: 'fas fa-exclamation-triangle fa-lg',
+                                        position: 'bottomRight'
+
+                                    });
+
+                                });
+                            } else {
                                 Swal.fire({
                                     title: 'Berhasil!',
-                                    text: data.message,
+                                    text: 'Data Berhasil Disimpan',
                                     icon: 'success',
                                     iconColor: '#fff',
                                     toast: true,
@@ -558,56 +543,32 @@
                                     timer: 3000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        toast.addEventListener('mouseenter', Swal
+                                            .stopTimer)
+                                        toast.addEventListener('mouseleave', Swal
+                                            .resumeTimer)
                                     }
                                 });
-
-                            } else {
-                                Swal.fire({
-                                    title: 'Peringatan!',
-                                    text: data.message,
-                                    icon: 'warning',
-                                    iconColor: '#fff',
-                                    toast: true,
-                                    background: '#f8bb86',
-                                    position: 'center-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                    }
-                                });
+                                $('#tabelAddBarang tbody').empty();
+                                $('#selectBarang').empty();
+                                $('#selectPemasok').val('');
+                                $('#totalHarga').val('');
+                                $('#tambahBarang').attr('disabled', true);
+                                $('#tambahBarang').text('Tambahkan Ke Daftar');
+                                $('#kuantitas').attr('disabled', true);
+                                $('#kuantitas').val('');
+                                $('#harga').val('');
+                                $('#unitBarang').html('');
+                                $('#merek').val('');
+                                totalHarga = 0;
+                                $('.total-harga').text(totalHarga);
                             }
                         },
                         errors: function(data) {
-                           if(data.status === 422){
-                            var errors = $.parseJson(data.responseText);
-                            $.each(errors.errors, function(key, value){
-                                Swal.fire({
-                                    title: 'Peringatan!',
-                                    text: value,
-                                    icon: 'warning',
-                                    iconColor: '#fff',
-                                    toast: true,
-                                    background: '#f8bb86',
-                                    position: 'center-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                    }
-                                });
-                            });
-                           } else {
                             Swal.fire({
-                                title: 'Peringatan!',
+                                title: 'Gagal!',
                                 text: 'Data Gagal Disimpan',
-                                icon: 'warning',
+                                icon: 'error',
                                 iconColor: '#fff',
                                 toast: true,
                                 background: '#f8bb86',
@@ -620,7 +581,6 @@
                                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                                 }
                             });
-                           }
 
                         }
                     });

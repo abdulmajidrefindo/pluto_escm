@@ -9,10 +9,17 @@ use App\Models\Barang;
 use App\Http\Requests\StoreTransaksiPemasokRequest;
 use App\Http\Requests\UpdateTransaksiPemasokRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TransaksiPemasokController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,26 +85,18 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok = TransaksiPemasok::latest()->first();
         foreach ($request->get('data_barang') as $data) {
             $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+            DB::table('barang')
+                ->where('id', $data['id'])
+                ->update([
+                    'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),
+                    'total_masuk' => DB::raw('total_masuk + ' . $data['kuantitas'])
+                ]);
         }
-
         if($transaksiPemasok){
             return response()->json(['success' => 'Data berhasil disimpan!']);
         } else {
             return response()->json(['errors' => 'Data gagal disimpan!']);
         }
-
-
-
-
-
-
-
-
-        //insert data transaksi pemasok
-
-
-        //return response()->json($validationData);
-        //return redirect('/transaksiPemasok')->with('completed','Data berhasil disimpan!');
     }
 
     /**

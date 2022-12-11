@@ -99,8 +99,8 @@ class BarangController extends Controller
         //Untuk Testing
         $id = $barang->id;
         $barang = Barang::with('produk')->where('id',$id)->first();
-        return response()->json($barang);
-        //return view('barang.show', compact('barang'));
+        //return response()->json($barang);
+        return view('barang.show', compact('barang'));
     }
 
     /**
