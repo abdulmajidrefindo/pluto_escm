@@ -69,7 +69,8 @@ class MerekController extends Controller
     public function show(Merek $merek)
     {
         //untuk testing
-        return response()->json($merek);
+        //return response()->json($merek);
+        return view('merek.show', compact('merek'));
     }
 
     /**
