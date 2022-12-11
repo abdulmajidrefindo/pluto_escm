@@ -124,7 +124,8 @@ class TransaksiPemasokController extends Controller
     public function edit(TransaksiPemasok $transaksiPemasok)
     {
         $pemasok = Pemasok::all();
-        return view('transaksiPemasok.edit', compact('transaksiPemasok', 'pemasok'));
+        $barang = Barang::with('produk', 'merek')->get();
+        return view('transaksiPemasok.edit', compact('transaksiPemasok', 'pemasok', 'barang'));
     }
 
     /**
