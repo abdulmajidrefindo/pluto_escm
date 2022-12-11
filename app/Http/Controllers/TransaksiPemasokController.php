@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateTransaksiPemasokRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Utilities\Request;
 
 class TransaksiPemasokController extends Controller
 {
@@ -85,8 +87,7 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok = TransaksiPemasok::latest()->first();
         foreach ($request->get('data_barang') as $data) {
             $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
-            DB::table('barang')
-                ->where('id', $data['id'])
+            Barang::find($data['id'])
                 ->update([
                     'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),
                     'total_masuk' => DB::raw('total_masuk + ' . $data['kuantitas'])
@@ -166,16 +167,30 @@ class TransaksiPemasokController extends Controller
      */
     public function destroy(TransaksiPemasok $transaksiPemasok)
     {
+        //delete from ajax and return response
         $transaksiPemasok->delete();
-        //return response()->json('Berhasil Dihapus');
-        return redirect('/transaksiPemasok')->with('completed', 'Data berhasil dihapus!');
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+
+
     }
 
-    //fetch barang
-    public function fetchBarang(Request $request)
-    {
-        $id = $request->get('id');
-        $barang = Barang::with('produk', 'merek')->where('id', $id)->first();
-        return response()->json($barang);
+    //get data transaksi pemasok for yajra datatable
+    public function getTableTransaksiPemasok(Request $request){
+        if($request->ajax()){
+            $data = TransaksiPemasok::with('pemasok')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fa fa-sm fa-fw fa-trash"></i> Hapus</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
+
+
+
 }

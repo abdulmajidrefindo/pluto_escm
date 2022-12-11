@@ -9,6 +9,7 @@ use App\Models\Barang;
 use App\Http\Requests\StoreTransaksiPelangganRequest;
 use App\Http\Requests\UpdateTransaksiPelangganRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TransaksiPelangganController extends Controller
@@ -78,6 +79,10 @@ class TransaksiPelangganController extends Controller
         $transaksiPelanggan = TransaksiPelanggan::latest()->first();
         foreach ($request->get('data_barang') as $data) {
             $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+            Barang::find($data['id'])->update([
+                'total_stok' => DB::raw('total_stok - ' . $data['kuantitas']),
+                'total_terjual' => DB::raw('total_terjual + ' . $data['kuantitas'])
+            ]);
         }
 
         if($transaksiPelanggan){

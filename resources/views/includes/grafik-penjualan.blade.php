@@ -39,7 +39,7 @@
                 <div class="d-flex">
                     <p class="d-flex flex-column">
                         <span class="text-bold text-lg">@currency($informasi['total_pendapatan']['minggu_ini'])</span>
-                        <span>Profit Dalam Seminggu</span>
+                        <span>Pendapatan Dalam Seminggu</span>
                     </p>
                     <p class="ml-auto d-flex flex-column text-right">
                         @if ($informasi['persentasi_pendapatan']['minggu_ini'] < 0)
@@ -64,7 +64,7 @@
                 <div class="d-flex">
                     <p class="d-flex flex-column">
                         <span class="text-bold text-lg">@currency($informasi['total_pendapatan']['bulan_ini'])</span>
-                        <span>Profit Sepanjang Bulan</span>
+                        <span>Pendapatan Sepanjang Bulan</span>
                     </p>
                     <p class="ml-auto d-flex flex-column text-right">
 
@@ -92,7 +92,7 @@
                 <div class="d-flex">
                     <p class="d-flex flex-column">
                         <span class="text-bold text-lg">@currency($informasi['total_pendapatan']['tahun_ini'])</span>
-                        <span> Profit Sepanjang Tahun</span>
+                        <span> Pendapatan Sepanjang Tahun</span>
                     </p>
                     <p class="ml-auto d-flex flex-column text-right">
                         @if ($informasi['persentasi_pendapatan']['tahun_ini'] < 0)

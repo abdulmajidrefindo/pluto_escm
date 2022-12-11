@@ -1,12 +1,3 @@
-@php
-
-    $heads = ['ID', 'Pemasok', 'Total Harga', 'Taggal Transaksi', ['label' => 'Aksi', 'no-export' => true]];
-    $config = [
-        'order' => [[1, 'asc']],
-        'columns' => [null, null, null, null, ['orderable' => false]],
-    ];
-@endphp
-
 @extends('adminlte::page')
 
 @section('title', 'Transaksi')
@@ -50,51 +41,24 @@
             <div class="tab-content" id="transaksiPemasokTabContent">
                 <div class="tab-pane active show" id="transaksiPemasok-tabs-table" role="tabpanel"
                     aria-labelledby="transaksiPemasok-tabs-table-tab">
-                    <x-adminlte-datatable id="transaksiPemasok-table" :heads="$heads" theme="light" :config="$config"
-                        striped hoverable beautify>
-                        @foreach ($transaksiPemasok as $transaksiPemasok)
-                            <tr>
-                                <td>
-                                    {{ $transaksiPemasok->id }}
-                                </td>
-                                <td>
-                                    {{ $transaksiPemasok->pemasok->nama_pemasok }}
-                                </td>
-                                <td>
-                                    {{ $transaksiPemasok->total_harga }}
-                                </td>
-                                <td>
-                                    {{ $transaksiPemasok->created_at }}
-                                </td>
 
-                                <td>
-                                    <nobr>
-                                        <a href="{{ route('transaksiPemasok.edit', $transaksiPemasok->id) }}"
-                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
-                                            <i class="fa fa-sm fa-fw fa-pen"></i> Edit
-                                        </a>
-                                        <button data-toggle="modal" data-target="#modalTransaksiPemasokDetail"
-                                            data-id="{{ $transaksiPemasok->id }}"
-                                            data-total-harga="{{ $transaksiPemasok->total_harga }}"
-                                            data-created-at="{{ $transaksiPemasok->created_at }}"
-                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
-                                            <i class="fa fa-sm fa-fw fa-eye"></i> Detail
-                                        </button>
-                                        <?php //  <a href="{{ route('transaksiPemasok.show', $transaksiPemasok->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        ?> </a>
+                    <!-- table from yajra datatable -->
+                    <div class="table-responsive">
+                        <table id="transaksiPemasok-table" class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Kode Transaksi</th>
+                                    <th>Tanggal Transaksi</th>
+                                    <th>Pemasok</th>
+                                    <th>Total Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
 
-                                        <button data-toggle="modal" data-target="#modalTransaksiPemasok"
-                                            data-id="{{ $transaksiPemasok->id }}"
-                                            data-total-harga="{{ $transaksiPemasok->total_harga }}"
-                                            data-created-at="{{ $transaksiPemasok->created_at }}" id="deleteData"
-                                            class="btn btn-sm btn-danger mx-1 shadow" title="Hapus">
-                                            <i class="fa fa-sm fa-fw fa-trash"></i> Hapus
-                                        </button>
-                                    </nobr>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-adminlte-datatable>
+
+
                 </div>
                 <div class="tab-pane fade" id="transaksiPemasok-tabs-add" role="tabpanel"
                     aria-labelledby="transaksiPemasok-tabs-add-tab">
@@ -130,8 +94,7 @@
                                 fgroup-class="col-3" data-placeholder="Pilih produk...">
                                 <option />
                                 @foreach ($barang as $barang)
-                                    <option data-harga="{{ $barang->harga }}"
-                                        data-merek="{{ $barang->merek->nama_merek }}"
+                                    <option data-harga="{{ $barang->harga }}" data-merek="{{ $barang->merek->nama_merek }}"
                                         data-unit="{{ $barang->produk->unit }}" data-stok="{{ $barang->total_stok }}"
                                         value="{{ $barang->id }}">
                                         {{ $barang->produk->nama_produk }}
@@ -321,11 +284,18 @@
         <script>
             $(document).ready(function() {
 
+
+
+
+                // CSRF Token
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+
 
                 var totalHarga = 0;
 
@@ -340,9 +310,10 @@
                             title: 'Peringatan! Kuantitas Barang Tidak Boleh Kosong',
                             icon: 'warning',
                             iconColor: '#fff',
+                            color: '#fff',
                             toast: true,
-                            background: '#f8bb86',
-                            position: 'center-end',
+                            background: '#CB1C8D',
+                            position: 'top',
                             showConfirmButton: false,
                             timer: 3000,
                             timerProgressBar: true,
@@ -447,9 +418,10 @@
                             title: 'Peringatan! Tidak Ada Barang Yang Ditambahkan',
                             icon: 'warning',
                             iconColor: '#fff',
+                            color: '#fff',
                             toast: true,
-                            background: '#f8bb86',
-                            position: 'center-end',
+                            background: '#CB1C8D',
+                            position: 'top',
                             showConfirmButton: false,
                             timer: 3000,
                             timerProgressBar: true,
@@ -468,9 +440,10 @@
                             title: 'Peringatan! Pemasok Belum Dipilih',
                             icon: 'warning',
                             iconColor: '#fff',
+                            color: '#fff',
                             toast: true,
-                            background: '#f8bb86',
-                            position: 'center-end',
+                            background: '#CB1C8D',
+                            position: 'top',
                             showConfirmButton: false,
                             timer: 3000,
                             timerProgressBar: true,
@@ -537,31 +510,22 @@
                                     icon: 'success',
                                     iconColor: '#fff',
                                     toast: true,
-                                    background: '#a5dc86',
-                                    position: 'center-end',
+                                    color: '#fff',
+                                    background: '#8D72E1',
+                                    position: 'top',
                                     showConfirmButton: false,
                                     timer: 3000,
                                     timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal
-                                            .stopTimer)
-                                        toast.addEventListener('mouseleave', Swal
-                                            .resumeTimer)
-                                    }
+
                                 });
-                                $('#tabelAddBarang tbody').empty();
-                                $('#selectBarang').empty();
-                                $('#selectPemasok').val('');
-                                $('#totalHarga').val('');
-                                $('#tambahBarang').attr('disabled', true);
-                                $('#tambahBarang').text('Tambahkan Ke Daftar');
-                                $('#kuantitas').attr('disabled', true);
-                                $('#kuantitas').val('');
-                                $('#harga').val('');
-                                $('#unitBarang').html('');
-                                $('#merek').val('');
-                                totalHarga = 0;
-                                $('.total-harga').text(totalHarga);
+
+                                //populate select barang
+                                populateSelectBarang();
+                                resetForm();
+                                $('#transaksiPemasok-table').DataTable().ajax
+                                        .reload();
+
+
                             }
                         },
                         errors: function(data) {
@@ -576,10 +540,7 @@
                                 showConfirmButton: false,
                                 timer: 3000,
                                 timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
+
                             });
 
                         }
@@ -592,7 +553,172 @@
 
 
             });
+
+            //populate select barang
+            function populateSelectBarang() {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('fetchAllBarang') }}',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            let html = '';
+                            html += '<option ';
+                            html += 'value="' + value.id + '"';
+                            html += 'data-merek="' + value.merek.nama_merek + '"';
+                            html += 'data-unit="' + value.produk.unit + '"';
+                            html += 'data-harga="' + value.harga + '"';
+                            html += 'data-stok="' + value.stok + '"';
+
+                            html += '>';
+                            html += value.produk.nama_produk;
+                            html += '</option>';
+                            $('#selectBarang').append(html);
+
+
+                        });
+                    }
+                });
+            }
+
+            function resetForm() {
+                //kosongkan form
+                $('#tabelAddBarang tbody').empty();
+                $('#selectBarang').empty();
+                $('#selectPemasok').val('');
+                $('#totalHarga').val('');
+                $('#tambahBarang').attr('disabled', true);
+                $('#tambahBarang').text('Tambahkan Ke Daftar');
+                $('#kuantitas').attr('disabled', true);
+                $('#kuantitas').val('');
+                $('#harga').val('');
+                $('#unitBarang').html('');
+                $('#merek').val('');
+                totalHarga = 0;
+                $('.total-harga').text(totalHarga);
+            }
         </script>
+
+        <!-- data table -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#transaksiPemasok-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('transaksiPemasok.getTableTransaksiPemasok') }}",
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'pemasok.nama_pemasok',
+                            name: 'pemasok.nama_pemasok'
+                        },
+                        {
+                            data: 'total_harga',
+                            name: 'total_harga'
+                        },
+
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+
+                    ]
+                })
+            });
+
+            //delete button click
+            $(document).on('click', '.delete', function() {
+                let id = $(this).attr('data-id');
+                deleteData(id);
+            });
+
+            //delete data
+            function deleteData(id) {
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Data yang di hapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '{{ route('transaksiPemasok.index') }}' + '/' + id,
+                            dataType: 'json',
+                            success: function(data) {
+                                if (data.success != null) {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Data Berhasil Dihapus',
+                                        icon: 'success',
+                                        iconColor: '#fff',
+                                        color: '#fff',
+                                        toast: true,
+                                        background: '#8D72E1',
+                                        position: 'top',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+
+                                    });
+                                    $('#transaksiPemasok-table').DataTable().ajax
+                                        .reload();
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Data Gagal Dihapus',
+                                        icon: 'error',
+                                        iconColor: '#fff',
+                                        toast: true,
+                                        background: '#f8bb86',
+                                        position: 'center-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+
+                                    });
+                                }
+
+                            },
+                            errors: function(data) {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: 'Data Gagal Dihapus',
+                                    icon: 'error',
+                                    iconColor: '#fff',
+                                    toast: true,
+                                    background: '#f8bb86',
+                                    position: 'center-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal
+                                            .resumeTimer)
+                                    }
+                                });
+                            }
+
+                        });
+
+                    }
+                })
+            }
+        </script>
+
 
 
 

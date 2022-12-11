@@ -169,4 +169,13 @@ class BarangController extends Controller
         //return response()->json("Berhasil Dihapus");
         return redirect('/barang')->with('completed', 'Data barang berhasil dihapus!');
     }
+
+    //fetch semua barang
+    public function fetchAllBarang()
+    {
+        $barang = Barang::with('produk','merek')->get();
+        return response()->json($barang);
+    }
+
+
 }
