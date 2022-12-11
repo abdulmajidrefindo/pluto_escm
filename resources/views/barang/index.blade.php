@@ -95,18 +95,11 @@
                                             class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
                                             <i class="fa fa-fw fa-pen"></i> Edit
                                         </a>
-                                        <button data-toggle="modal" data-target="#modalBarangDetail"
-                                            data-id="{{ $barang->id }}" data-sku="{{ $barang->sku }}"
-                                            data-harga="{{ $barang->harga }}"
-                                            data-total-terjual="{{ $barang->total_terjual }}"
-                                            data-total-masuk="{{ $barang->total_masuk }}"
-                                            data-total-stok="{{ $barang->total_masuk }}"
-                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
-                                            <i class="fa fa-fw fa-eye"></i> Detail
                                         </button>
-                                        <?php //  <a href="{{ route('barang.show', $barang->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        ?> </a>
-
+                                        <a href="{{ route('barang.show', $barang->id) }}" 
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Details"> 
+                                            <i class="fas fa-sm fa-fw fa-eye"></i> Detail
+                                        </a>
                                         <button data-toggle="modal" data-target="#modalbarang"
                                             data-id="{{ $barang->id }}" data-sku="{{ $barang->sku }}"
                                             data-harga="{{ $barang->harga }}"

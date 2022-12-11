@@ -66,8 +66,8 @@ class PelangganController extends Controller
     public function show(Pelanggan $pelanggan)
     {
         //untuk testing
-        return response()->json($pelanggan);
-        //return view('pelanggan.index', compact('pelanggan'));
+        //return response()->json($pelanggan);
+        return view('pelanggan.show', compact('pelanggan'));
     }
 
     /**
