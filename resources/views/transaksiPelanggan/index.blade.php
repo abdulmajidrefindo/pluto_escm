@@ -153,12 +153,7 @@
                                 </x-slot>
                             </x-adminlte-input>
 
-                            <x-adminlte-input id="merek" name="merek" placeholder="Merek" fgroup-class="col-3"
-                                disabled />
-
-
-
-                            <x-adminlte-input id="harga" name="harga" placeholder="Harga" fgroup-class="col-3"
+                            <x-adminlte-input id="harga" name="harga" placeholder="Harga" fgroup-class="col-2"
                                 disabled>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text text-blue">
@@ -167,9 +162,19 @@
                                 </x-slot>
                             </x-adminlte-input>
 
+                            <x-adminlte-input id="stok" name="stok" placeholder="Stok" fgroup-class="col-2"
+                                disabled>
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text text-blue">
+                                        Tersisa
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-input>
 
+                            <x-adminlte-input id="merek" name="merek" placeholder="Merek" fgroup-class="col-2"
+                                disabled>
 
-
+                            </x-adminlte-input>
 
                         </div>
 
@@ -354,6 +359,7 @@
                     let produk = $('#selectBarang').find(":selected").text();
                     let merek = $('#merek').val();
                     let kuantitas = $('#kuantitas').val();
+                    let stok = $('#selectBarang').find(":selected").attr('data-stok');
                     let unit = $('#unitBarang').text();
                     let harga = $('#harga').val();
                     let total = kuantitas * harga;
@@ -364,7 +370,7 @@
                     html += '<td>' + id + '</td>';
                     html += '<td>' + produk + '</td>';
                     html += '<td>' + merek + '</td>';
-                    html += '<td>' + kuantitas + '</td>';
+                    html += '<td data-stok = "'+ stok + '">' + kuantitas + '</td>';
                     html += '<td>' + unit + '</td>';
                     html += '<td>' + harga + '</td>';
                     html += '<td class = "total">' + total + '</td>';
@@ -394,15 +400,15 @@
                             let id = $(this).text();
                             let produk = $(this).closest('tr').find('td').eq(2).text();
                             let merek = $(this).closest('tr').find('td').eq(3).text();
+                            let stok =  $(this).closest('tr').find('td').eq(4).attr('data-stok');
                             let unit = $(this).closest('tr').find('td').eq(5).text();
                             let harga = $(this).closest('tr').find('td').eq(6).text();
                             totalHarga -= parseInt($(this).closest('tr').find('td').eq(7).text());
 
                             let html = '';
-                            html += '<option value="' + id + '" data-merek="' + merek +
-                                '" data-harga="' + harga +
-                                '" data-unit="' + unit + '">' + produk + '</option>';
+                            html += '<option value="' + id + '" data-stok="' + stok + '" data-merek="' + merek + '" data-unit="' + unit + '" data-harga="' + harga + '">' + produk + '</option>';
                             $('#selectBarang').append(html);
+
                         }
                     });
                     $('.total-harga').text(totalHarga);
@@ -426,20 +432,20 @@
                     $('#kuantitas').attr('placeholder', 'Maksimal ' + stok);
                     $('#kuantitas').attr('disabled', false);
 
+                    $('#kuantitas').val('');
 
+                    $('#stok').val(stok);
 
                     $('#harga').val(harga);
                     $('#unitBarang').html(unit);
                     $('#merek').val(merek);
+
                 });
 
 
 
                 //prevent input number outside range
                 $('#kuantitas').on('input', function() {
-
-
-
                     if (parseInt(this.value) > this.max) {
                         this.value = this.max;
                         Swal.fire({
@@ -459,6 +465,7 @@
                             }
                         });
                     }
+                    $('#stok').val(this.max - this.value);
                 });
 
 
@@ -531,6 +538,7 @@
                     });
                     $('#dataBarang').val(JSON.stringify(data_barang));
                     $('#totalHarga').val(totalHarga);
+                    console.log(data_barang);
 
                     //ajax submit data
 
