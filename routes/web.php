@@ -45,6 +45,7 @@ Route::resource('pemasok', PemasokController::class);
 Route::resource('produk', ProdukController::class);
 Route::resource('transaksiPelanggan', TransaksiPelangganController::class);
 Route::resource('transaksiPemasok', TransaksiPemasokController::class);
+Route::get('/getTableTransaksiPemasok', [TransaksiPemasokController::class, 'getTableTransaksiPemasok'])->name('transaksiPemasok.getTableTransaksiPemasok');
 
 Route::get('users/{id}', function ($id) {
     return response()->json(['id'=>$id]);

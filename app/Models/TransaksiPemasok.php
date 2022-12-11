@@ -30,4 +30,22 @@ class TransaksiPemasok extends Model
     {
         return $this->belongsToMany(User::class, 'transaksi_barang_pemasok', 'transaksi_pemasok_id', 'user_id');
     }
+
+    //delete with all relation to barang and update its stock
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($transaksiPemasok) {
+            foreach ($transaksiPemasok->barang as $barang) {
+                $barang->update([
+                    'total_stok' => $barang->total_stok - $barang->pivot->kuantitas,
+                    'total_masuk' => $barang->total_masuk - $barang->pivot->kuantitas
+                ]);
+            }
+            $transaksiPemasok->barang()->detach();
+        });
+    }
+
+
+
 }

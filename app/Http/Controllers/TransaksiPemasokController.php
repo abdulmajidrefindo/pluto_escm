@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateTransaksiPemasokRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Utilities\Request;
 
 class TransaksiPemasokController extends Controller
 {
@@ -164,9 +166,28 @@ class TransaksiPemasokController extends Controller
      */
     public function destroy(TransaksiPemasok $transaksiPemasok)
     {
+        //delete from ajax and return response
         $transaksiPemasok->delete();
-        //return response()->json('Berhasil Dihapus');
-        return redirect('/transaksiPemasok')->with('completed', 'Data berhasil dihapus!');
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+
+
+    }
+
+    //get data transaksi pemasok for yajra datatable
+    public function getTableTransaksiPemasok(Request $request){
+        if($request->ajax()){
+            $data = TransaksiPemasok::with('pemasok')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fa fa-sm fa-fw fa-trash"></i> Hapus</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
 
