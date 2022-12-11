@@ -14,7 +14,7 @@ class TransaksiPemasok extends Model
 
     public function barang()
     {
-        return $this->belongsToMany(Barang::class,'transaksi_barang_pemasok')->with('produk')->withPivot('total_harga');
+        return $this->belongsToMany(Barang::class,'transaksi_barang_pemasok')->with('produk')->withPivot('kuantitas');
         //return $this->belongsToMany(Barang::class,'transaksi_barang_pemasok','transaksi_pemasok_id','barang_id')->with('produk')->withPivot('kuantitas');
     }
 

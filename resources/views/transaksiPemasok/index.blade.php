@@ -99,8 +99,9 @@
                 <div class="tab-pane fade" id="transaksiPemasok-tabs-add" role="tabpanel"
                     aria-labelledby="transaksiPemasok-tabs-add-tab">
 
-                    <form action="{{ route('transaksiPemasok.store') }}" method="POST" enctype="multipart/form-data">
+                    <form>
                         @csrf
+
                         <div class="row">
                             <x-adminlte-input id="idTransaksi" name="transaksi_id" label="Kode Transaksi"
                                 label-class="text-lightblue" fgroup-class="col-6" data-placeholder="Pilih pemasok..."
@@ -122,6 +123,7 @@
                         <h4 class="text-lightblue"> Form Barang </h4>
                         <div class="row">
 
+                            <input type="hidden" name="data_barang" id="dataBarang" value="" />
 
 
                             <x-adminlte-select2 id="selectBarang" name="barang_id" label-class="text-lightblue"
@@ -179,9 +181,6 @@
 
                             </div>
                         </div>
-
-
-
                         <div class="row">
                             <div class="col-12">
                                 <table id="tabelAddBarang" class="table table-striped">
@@ -195,14 +194,9 @@
                                             <th>Unit</th>
                                             <th>Harga</th>
                                             <th>Total</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
-
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -216,6 +210,17 @@
                                     </tfoot>
                                 </table>
                             </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button id="submitTransaksi" type="submit"
+                                    class="btn btn-primary btn-block">Simpan</button>
+                            </div>
+                        </div>
+
 
                     </form>
                 </div>
@@ -312,6 +317,12 @@
 
         <script>
             $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
                 var totalHarga = 0;
 
                 $('#tambahBarang').text('Mohon Isi Data Barang Terlebih Dahulu');
@@ -388,16 +399,16 @@
                             totalHarga -= parseInt($(this).closest('tr').find('td').eq(7).text());
 
                             let html = '';
-                            html += '<option value="' + id + '" data-merek="' + merek + '" data-harga="' + harga +
+                            html += '<option value="' + id + '" data-merek="' + merek +
+                                '" data-harga="' + harga +
                                 '" data-unit="' + unit + '">' + produk + '</option>';
                             $('#selectBarang').append(html);
                         }
                     });
                     $('.total-harga').text(totalHarga);
-
-
-
                 });
+
+
 
                 //Mengambil Data Barang
                 $('#selectBarang').change(function() {
@@ -432,7 +443,8 @@
                     if (parseInt(this.value) > this.max) {
                         this.value = this.max;
                         Swal.fire({
-                            title: 'Peringatan! Sisa stok hanya tersedia ' + this.max + ' ' + $('#unitBarang').text(),
+                            title: 'Peringatan! Sisa stok hanya tersedia ' + this.max + ' ' + $(
+                                '#unitBarang').text(),
                             icon: 'warning',
                             iconColor: '#fff',
                             toast: true,
@@ -451,6 +463,177 @@
 
 
 
+                //fungsi ajax submit data
+                //Submit Data
+                $('#submitTransaksi').click(function(e) {
+                    e.preventDefault();
+
+                    //periksa apakah tabel kosong
+                    if ($('#tabelAddBarang tbody').find('tr').length == 0) {
+
+                        Swal.fire({
+                            title: 'Peringatan! Tidak Ada Barang Yang Ditambahkan',
+                            icon: 'warning',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+                        return; //Jika Tidak Ada Barang, Maka Tidak Melanjutkan
+                    }
+
+
+                    //periksa apakah pemasok sudah dipilih
+                    if ($('#selectPemasok').val() == '') {
+                        Swal.fire({
+                            title: 'Peringatan! Pemasok Belum Dipilih',
+                            icon: 'warning',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        });
+                        return; //Jika Tidak Ada Barang, Maka Tidak Melanjutkan
+                    }
+
+                    let data_barang = [];
+                    let pemasok_id = $('#selectPemasok').val();
+                    $('#tabelAddBarang').find('tr').each(function() {
+                        $(this).find('td').each(function() {
+                            if ($(this).index() == 1) {
+                                let id = $(this).text();
+                                let kuantitas = $(this).closest('tr').find('td').eq(4).text();
+                                let harga = $(this).closest('tr').find('td').eq(6).text();
+                                let total = $(this).closest('tr').find('td').eq(7).text();
+                                let obj = {
+                                    id: id,
+                                    kuantitas: kuantitas,
+                                    harga: harga,
+                                    total: total
+                                };
+                                data_barang.push(obj);
+                            }
+                        });
+                    });
+                    $('#dataBarang').val(JSON.stringify(data_barang));
+                    $('#totalHarga').val(totalHarga);
+
+                    //ajax submit data
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('transaksiPemasok.store') }}',
+                        data: {
+                            pemasok_id: pemasok_id,
+                            data_barang: data_barang,
+                            total_harga: totalHarga
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if(data != null && data.success){
+                                console.log(data);
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: data.message,
+                                    icon: 'success',
+                                    iconColor: '#fff',
+                                    toast: true,
+                                    background: '#a5dc86',
+                                    position: 'center-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                });
+
+                            } else {
+                                Swal.fire({
+                                    title: 'Peringatan!',
+                                    text: data.message,
+                                    icon: 'warning',
+                                    iconColor: '#fff',
+                                    toast: true,
+                                    background: '#f8bb86',
+                                    position: 'center-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                });
+                            }
+                        },
+                        errors: function(data) {
+                           if(data.status === 422){
+                            var errors = $.parseJson(data.responseText);
+                            $.each(errors.errors, function(key, value){
+                                Swal.fire({
+                                    title: 'Peringatan!',
+                                    text: value,
+                                    icon: 'warning',
+                                    iconColor: '#fff',
+                                    toast: true,
+                                    background: '#f8bb86',
+                                    position: 'center-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                });
+                            });
+                           } else {
+                            Swal.fire({
+                                title: 'Peringatan!',
+                                text: 'Data Gagal Disimpan',
+                                icon: 'warning',
+                                iconColor: '#fff',
+                                toast: true,
+                                background: '#f8bb86',
+                                position: 'center-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            });
+                           }
+
+                        }
+                    });
+
+
+
+                });
+
+
+
             });
         </script>
+
+
+
     @stop

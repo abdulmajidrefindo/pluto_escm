@@ -9,5 +9,6 @@ class TransaksiBarangPemasok extends Model
 {
     use HasFactory;
     protected $table = "transaksi_barang_pemasok";
+    public $timestamps = true;
 
 }
