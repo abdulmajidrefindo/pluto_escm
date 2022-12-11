@@ -145,7 +145,7 @@
                             </x-adminlte-select2>
 
                             <x-adminlte-input name="kuantitas" placeholder="Jumlah Barang" fgroup-class="col-3"
-                                type="number" min=0 max=10 disabled>
+                                type="number" min=0 disabled>
                                 <x-slot name="appendSlot">
                                     <div id="unitBarang" class="input-group-text text-blue">
                                         Kg
@@ -421,9 +421,6 @@
                     let unit = $(this).find(":selected").attr('data-unit');
                     let merek = $(this).find(":selected").attr('data-merek');
                     let stok = $(this).find(":selected").attr('data-stok');
-
-                    $('#kuantitas').attr('max', stok);
-                    $('#kuantitas').attr('placeholder', 'Maksimal ' + stok);
                     $('#kuantitas').attr('disabled', false);
 
 
@@ -432,36 +429,6 @@
                     $('#unitBarang').html(unit);
                     $('#merek').val(merek);
                 });
-
-
-
-                //prevent input number outside range
-                $('#kuantitas').on('input', function() {
-
-
-
-                    if (parseInt(this.value) > this.max) {
-                        this.value = this.max;
-                        Swal.fire({
-                            title: 'Peringatan! Sisa stok hanya tersedia ' + this.max + ' ' + $(
-                                '#unitBarang').text(),
-                            icon: 'warning',
-                            iconColor: '#fff',
-                            toast: true,
-                            background: '#f8bb86',
-                            position: 'center-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        });
-                    }
-                });
-
-
 
                 //fungsi ajax submit data
                 //Submit Data
