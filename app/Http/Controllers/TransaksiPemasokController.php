@@ -85,8 +85,7 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok = TransaksiPemasok::latest()->first();
         foreach ($request->get('data_barang') as $data) {
             $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
-            DB::table('barang')
-                ->where('id', $data['id'])
+            Barang::find($data['id'])
                 ->update([
                     'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),
                     'total_masuk' => DB::raw('total_masuk + ' . $data['kuantitas'])
@@ -170,11 +169,6 @@ class TransaksiPemasokController extends Controller
         return redirect('/transaksiPemasok')->with('completed', 'Data berhasil dihapus!');
     }
 
-    //fetch barang
-    public function fetchBarang(Request $request)
-    {
-        $id = $request->get('id');
-        $barang = Barang::with('produk', 'merek')->where('id', $id)->first();
-        return response()->json($barang);
-    }
+
+
 }

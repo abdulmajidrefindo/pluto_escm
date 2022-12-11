@@ -321,11 +321,18 @@
         <script>
             $(document).ready(function() {
 
+
+
+
+                // CSRF Token
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+
 
                 var totalHarga = 0;
 
@@ -340,7 +347,7 @@
                             title: 'Peringatan! Kuantitas Barang Tidak Boleh Kosong',
                             icon: 'warning',
                             iconColor: '#fff',
-                            color : '#fff',
+                            color: '#fff',
                             toast: true,
                             background: '#CB1C8D',
                             position: 'top',
@@ -448,7 +455,7 @@
                             title: 'Peringatan! Tidak Ada Barang Yang Ditambahkan',
                             icon: 'warning',
                             iconColor: '#fff',
-                            color : '#fff',
+                            color: '#fff',
                             toast: true,
                             background: '#CB1C8D',
                             position: 'top',
@@ -470,7 +477,7 @@
                             title: 'Peringatan! Pemasok Belum Dipilih',
                             icon: 'warning',
                             iconColor: '#fff',
-                            color : '#fff',
+                            color: '#fff',
                             toast: true,
                             background: '#CB1C8D',
                             position: 'top',
@@ -541,7 +548,7 @@
                                     iconColor: '#fff',
                                     toast: true,
                                     background: '#a5dc86',
-                                    position: 'center-end',
+                                    position: 'center',
                                     showConfirmButton: false,
                                     timer: 3000,
                                     timerProgressBar: true,
@@ -552,19 +559,12 @@
                                             .resumeTimer)
                                     }
                                 });
-                                $('#tabelAddBarang tbody').empty();
-                                $('#selectBarang').empty();
-                                $('#selectPemasok').val('');
-                                $('#totalHarga').val('');
-                                $('#tambahBarang').attr('disabled', true);
-                                $('#tambahBarang').text('Tambahkan Ke Daftar');
-                                $('#kuantitas').attr('disabled', true);
-                                $('#kuantitas').val('');
-                                $('#harga').val('');
-                                $('#unitBarang').html('');
-                                $('#merek').val('');
-                                totalHarga = 0;
-                                $('.total-harga').text(totalHarga);
+
+                                //populate select barang
+                                populateSelectBarang();
+                                resetForm();
+
+
                             }
                         },
                         errors: function(data) {
@@ -581,7 +581,8 @@
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
                                     toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    toast.addEventListener('mouseleave', Swal
+                                        .resumeTimer)
                                 }
                             });
 
@@ -595,7 +596,53 @@
 
 
             });
+
+            //populate select barang
+            function populateSelectBarang() {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('fetchAllBarang') }}',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            let html = '';
+                            html += '<option ';
+                            html += 'value="' + value.id + '"';
+                            html += 'data-merek="' + value.merek.nama_merek + '"';
+                            html += 'data-unit="' + value.produk.unit + '"';
+                            html += 'data-harga="' + value.harga + '"';
+                            html += 'data-stok="' + value.stok + '"';
+
+                            html += '>';
+                            html += value.produk.nama_produk;
+                            html += '</option>';
+                            $('#selectBarang').append(html);
+
+
+                        });
+                    }
+                });
+            }
+
+            function resetForm(){
+                //kosongkan form
+                $('#tabelAddBarang tbody').empty();
+                                $('#selectBarang').empty();
+                                $('#selectPemasok').val('');
+                                $('#totalHarga').val('');
+                                $('#tambahBarang').attr('disabled', true);
+                                $('#tambahBarang').text('Tambahkan Ke Daftar');
+                                $('#kuantitas').attr('disabled', true);
+                                $('#kuantitas').val('');
+                                $('#harga').val('');
+                                $('#unitBarang').html('');
+                                $('#merek').val('');
+                                totalHarga = 0;
+                                $('.total-harga').text(totalHarga);
+            }
+
         </script>
+
 
 
 
