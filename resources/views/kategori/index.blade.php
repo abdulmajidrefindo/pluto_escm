@@ -69,8 +69,8 @@
                                             <i class="fa fa-sm fa-fw fa-pen"></i> Edit
                                         </a>
                                         </button>
-                                        <a href="{{ route('kategori.show', $kategori->id) }}" 
-                                            class="btn btn-sm btn-success mx-1 shadow" title="Details"> 
+                                        <a href="{{ route('kategori.show', $kategori->id) }}"
+                                            class="btn btn-sm btn-success mx-1 shadow" title="Details">
                                             <i class="fas fa-sm fa-fw fa-eye"></i> Detail
                                         </a>
                                         <button  data-toggle="modal" data-target="#modalKategori"

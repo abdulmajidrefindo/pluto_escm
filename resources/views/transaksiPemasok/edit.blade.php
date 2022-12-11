@@ -6,9 +6,9 @@
 @stop
 
 @section('content')
-    <form>
+    <form action="{{ route('transaksiPemasok.update', $transaksiPemasok->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-
+        @method('PATCH')
         <div class="row">
             <x-adminlte-input id="idTransaksi" name="transaksi_id" label="Kode Transaksi"
                 label-class="text-lightblue" fgroup-class="col-6" data-placeholder="Pilih pemasok..."
