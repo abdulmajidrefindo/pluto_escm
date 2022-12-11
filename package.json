@@ -13,5 +13,9 @@
         "postcss": "^8.1.14",
         "sass": "^1.56.1",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "composer": "^4.1.0",
+        "vuetify": "^2.6.12"
     }
 }
