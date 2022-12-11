@@ -112,7 +112,7 @@
                                     label-class="" fgroup-class="col-md-6" data-placeholder="Pilih kategori...">
                                     <option />
                                     @foreach ($kategori as $kategori)
-                                        <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                        <option value="{{ $kategori->id }}">{{ $kategori->first()->nama_kategori }}</option>
                                     @endforeach
                                 </x-adminlte-select2>
 

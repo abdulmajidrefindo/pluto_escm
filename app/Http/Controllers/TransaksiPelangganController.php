@@ -8,6 +8,8 @@ use App\Models\Barang;
 
 use App\Http\Requests\StoreTransaksiPelangganRequest;
 use App\Http\Requests\UpdateTransaksiPelangganRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TransaksiPelangganController extends Controller
 {
@@ -18,10 +20,11 @@ class TransaksiPelangganController extends Controller
      */
     public function index()
     {
-        $transaksiPelanggan=TransaksiPelanggan::with('pelanggan')->get();
+        $transaksiPelanggan = TransaksiPelanggan::with('pelanggan')->get();
         //return response()->json($transaksiPelanggan);
-        $pelanggan = Pelanggan::all('id','nama_pelanggan');
-        return view('transaksiPelanggan.index',compact('transaksiPelanggan', 'pelanggan'));
+        $pelanggan = Pelanggan::all('id', 'nama_pelanggan');
+        $barang = Barang::with('produk', 'merek')->get();
+        return view('transaksiPelanggan.index', compact('transaksiPelanggan', 'pelanggan', 'barang'));
     }
 
     /**
@@ -33,7 +36,8 @@ class TransaksiPelangganController extends Controller
     {
         $pelanggan = Pelanggan::all();
         $barang = Barang::all();
-        return view('transaksiPelanggan', compact('pelanggan','barang'));
+
+        //return view('transaksiPelanggan/create',compact('pelanggan','barang'));
     }
 
     /**
@@ -44,23 +48,56 @@ class TransaksiPelangganController extends Controller
      */
     public function store(StoreTransaksiPelangganRequest $request)
     {
-        $validationData = $request->validate([
-            'pelanggan_id' => 'required|numeric',
-            'total_harga' => 'required|numeric'
-        ],
-        [
-            'pelanggan_id.required' => 'Pelanggan harus diisi',
-            'pelanggan_id.numeric' => 'Masukkan pelanggan dengan benar',
-            'total_harga.required' => 'Harga harus diisi',
-            'total_harga.numeric' => 'Harga harus berupa angka'
-        ]);
-        $transaksiPelanggan = TransaksiPelanggan::create([
-            'pelanggan_id' => $request->get('pelanggan_id'),
-            'total_harga' => $request->get('total_harga'),
 
+        $validationData = Validator::make(
+            $request->all(),
+            [
+                'pelanggan_id' => 'required',
+                'total_harga' => 'required',
+            ],
+            [
+                'pelanggan_id.required' => 'Pelanggan harus diisi',
+                'pelanggan_id.numeric' => 'Masukkan pelanggan dengan benar',
+                'total_harga.required' => 'Harga harus diisi',
+                'total_harga.numeric' => 'Harga harus berupa angka'
+            ]
+        );
+
+        //jika ajax error
+        if ($validationData->fails()) {
+            return response()->json(['errors' => $validationData->errors()->all()]);
+        }
+
+        //insert data transaksi pelanggan
+        TransaksiPelanggan::create([
+            'pelanggan_id' => $request->get('pelanggan_id'),
+            'total_harga' => $request->get('total_harga')
         ]);
-        //return response()->json('Berhasil Disimpan');
-        return redirect('transaksiPelanggan')->with('completed','Data berhasil disimpan!');
+
+        //insert data transaksi barang pelanggan
+        $transaksiPelanggan = TransaksiPelanggan::latest()->first();
+        foreach ($request->get('data_barang') as $data) {
+            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+        }
+
+        if($transaksiPelanggan){
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
+
+
+
+
+
+
+
+
+        //insert data transaksi pelanggan
+
+
+        //return response()->json($validationData);
+        //return redirect('/transaksiPelanggan')->with('completed','Data berhasil disimpan!');
     }
 
     /**
@@ -73,9 +110,10 @@ class TransaksiPelangganController extends Controller
     {
         //untuk testing
         $id = $transaksiPelanggan->id;
-        $transaksiPelanggan = TransaksiPelanggan::with('barang')->where('id',$id)->first();
+        $transaksiPelanggan = TransaksiPelanggan::with('barang')->where('id', $id)->first();
+        //$barang = Barang::with('produk')->where('id',$id)->first();
         return response()->json($transaksiPelanggan);
-        //return view('transaksiPelanggan.show',compact('transaksiPelanggan'));
+        //return view('transaksiPelanggan.show', compact('transaksiPelanggan'));
     }
 
     /**
@@ -86,7 +124,8 @@ class TransaksiPelangganController extends Controller
      */
     public function edit(TransaksiPelanggan $transaksiPelanggan)
     {
-        return view('transaksiPelanggan.edit');
+        $pelanggan = Pelanggan::all();
+        return view('transaksiPelanggan.edit', compact('transaksiPelanggan', 'pelanggan'));
     }
 
     /**
@@ -98,22 +137,25 @@ class TransaksiPelangganController extends Controller
      */
     public function update(UpdateTransaksiPelangganRequest $request, TransaksiPelanggan $transaksiPelanggan)
     {
-        $validationData = $request->validate([
-            'pelanggan_id' => 'numeric',
-            'total_harga' => 'numeric'
-        ],
-        [
-            'pelanggan_id.numeric' => 'Masukkan pelanggan dengan benar',
-            'total_harga.numeric' => 'Harga harus berupa angka'
-        ]);
+        $validationData = $request->validate(
+            [
+                'pelanggan_id' => 'numeric',
+                'total_harga' => 'numeric'
+            ],
+            [
+                'pelanggan_id.numeric' => 'Masukkan pelanggan dengan benar',
+                'total_harga.numeric' => 'Harga harus berupa angka'
+            ]
+        );
         $transaksiPelanggan->update([
             'pelanggan_id' => $request->get('pelanggan_id'),
             'total_harga' => $request->get('total_harga'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
+            'created_at' => $request->get('created_at'),
+            'updated_at' => $request->get('updated_at'),
         ]);
-        return response()->json('Berhasil diupdate');
-        return redirect('/transaksiPelanggan')->with('completed','Data berhasil diupdate!');
+        $transaksiPelanggan->pelanggan_id = $request->pelanggan_id;
+        //return response()->json('Berhasil Diupdate');
+        return redirect('/transaksiPelanggan')->with('completed', 'Data berhasil Diupdate!');
     }
 
     /**
@@ -125,7 +167,15 @@ class TransaksiPelangganController extends Controller
     public function destroy(TransaksiPelanggan $transaksiPelanggan)
     {
         $transaksiPelanggan->delete();
-        return response()->json('Berhasil dihapus');
-        return redirect('/transaksiPelanggan')->with('completed','Data berhasil dihapus!');
+        //return response()->json('Berhasil Dihapus');
+        return redirect('/transaksiPelanggan')->with('completed', 'Data berhasil dihapus!');
+    }
+
+    //fetch barang
+    public function fetchBarang(Request $request)
+    {
+        $id = $request->get('id');
+        $barang = Barang::with('produk', 'merek')->where('id', $id)->first();
+        return response()->json($barang);
     }
 }

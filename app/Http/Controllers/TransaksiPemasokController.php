@@ -149,8 +149,8 @@ class TransaksiPemasokController extends Controller
         $transaksiPemasok->update([
             'pemasok_id' => $request->get('pemasok_id'),
             'total_harga' => $request->get('total_harga'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
+            'created_at' => $request->get('created_at'),
+            'updated_at' => $request->get('updated_at'),
         ]);
         $transaksiPemasok->pemasok_id = $request->pemasok_id;
         //return response()->json('Berhasil Diupdate');
