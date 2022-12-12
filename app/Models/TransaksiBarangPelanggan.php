@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransaksiBarangPelanggan extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = "transaksi_barang_pelanggan";
     public $timestamps = true;
 

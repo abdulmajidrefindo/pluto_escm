@@ -6,8 +6,10 @@ use App\Models\TransaksiBarangPemasok;
 use App\Http\Requests\StoreTransaksiBarangPemasokRequest;
 use App\Http\Requests\UpdateTransaksiBarangPemasokRequest;
 
+
 class TransaksiBarangPemasokController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *

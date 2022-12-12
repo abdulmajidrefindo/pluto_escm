@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('unit',10);
             $table->string('keterangan',100);
             $table->timestamps();
+            $table->softDeletes();
             });
     }
 

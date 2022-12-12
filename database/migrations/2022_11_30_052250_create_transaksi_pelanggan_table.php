@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('transaksi_pelanggan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pelanggan_id')->constrained('pelanggan');
+            $table->foreignId('pelanggan_id')->constrained('pelanggan')->onDelete('cascade');
             $table->integer('total_harga')->length(20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

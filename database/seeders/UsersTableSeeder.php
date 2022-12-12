@@ -14,16 +14,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('users')->delete();
-        
+
         \DB::table('users')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
-                'nama_user' => 'Dio Refin Bintang Cahya Purnama',
-                'nomor_telepon' => '8812377123',
+                'name' => 'Dio Refin Bintang Cahya Purnama',
                 'email' => 'mutiarahitam@gmail.com',
                 'username' => 'voyeurism',
                 'password' => 'belum ada password',
@@ -32,7 +31,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2022-12-31 16:37:27',
             ),
         ));
-        
-        
+
+
     }
 }

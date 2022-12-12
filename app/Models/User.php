@@ -18,8 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama_user',
-        'nomor_telepon',
+        'name',
         'email',
         'username',
         'password',
@@ -28,7 +27,6 @@ class User extends Authenticatable
 
     protected $attributes = [
 
-        'nomor_telepon' => '0'
 
     ];
 
@@ -46,7 +44,7 @@ class User extends Authenticatable
     ];
     public function transaksiPemasok()
     {
-        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok', 'id', 'transaksi_pemasok_id');
+        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok');
     }
     /*public function barang()
     {
@@ -54,6 +52,31 @@ class User extends Authenticatable
     }*/
     public function transaksiPelanggan()
     {
-        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan', 'id', 'transaksi_pelanggan_id');
+        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan');
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    //has one user data
+    public function userData()
+    {
+        return $this->hasOne(UserData::class, 'users_id', 'id');
+    }
+
+    //create user data when created
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function ($user) {
+            $user->userData()->create([
+                'users_id' => $user->id,
+                'nama_lengkap' => $user->name
+            ]);
+
+        });
+    }
+
 }

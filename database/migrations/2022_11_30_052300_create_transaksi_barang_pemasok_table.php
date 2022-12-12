@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('transaksi_barang_pemasok', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_pemasok_id')->constrained('transaksi_pemasok');
-            $table->foreignId('users_id')->constrained('users');
-            $table->foreignId('barang_id')->constrained('barang');
+            $table->foreignId('transaksi_pemasok_id')->constrained('transaksi_pemasok')->onDelete('cascade');
+            $table->foreignId('users_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
             $table->enum('status_transaksi',['Berhasil','Ditolak']);
             $table->integer('kuantitas')->length(7);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

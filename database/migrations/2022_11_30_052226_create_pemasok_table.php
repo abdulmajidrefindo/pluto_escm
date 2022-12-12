@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('alamat_pemasok');
             $table->string('kontak_pemasok',15);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

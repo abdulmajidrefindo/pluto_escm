@@ -175,7 +175,10 @@ class BarangController extends Controller
     public function destroy(Barang $barang)
     {
         $barang = $barang->delete();
-        Barang::where('id', $barang->id)->transaksi_barang_pelanggan()->detach();
+        //return message for ajax
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+
+
 
     }
 

@@ -14,10 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kategori_produk', function (Blueprint $table) {
-            $table->foreignId('kategori_id')->constrained('kategori');
-		    $table->foreignId('produk_id')->constrained('produk');
+            $table->foreignId('kategori_id')->constrained('kategori')->onDelete('cascade');
+		    $table->foreignId('produk_id')->constrained('produk')->onDelete('cascade');
 		    $table->enum('jenis_produk',['Bahan Baku','Barang Jadi', 'Barang Olahan']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
