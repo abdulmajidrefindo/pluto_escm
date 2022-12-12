@@ -266,7 +266,6 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-
                 var totalHarga = 0;
 
                 $('#tambahBarang').text('Mohon Isi Data Barang Terlebih Dahulu');

@@ -41,8 +41,26 @@ class TransaksiPelanggan extends Model
                     'total_terjual' => $barang->total_terjual - $barang->pivot->kuantitas
                 ]);
             }
-            $transaksiPelanggan->barang()->detach();
+
+            if($transaksiPelanggan->forceDeleting){
+                $transaksiPelanggan->barang()->detach();
+            }
+
         });
+
+        static::updating(function ($transaksiPelanggan) {
+            foreach ($transaksiPelanggan->barang as $barang) {
+                $barang->update([
+                    'total_stok' => $barang->total_stok + $barang->pivot->kuantitas,
+                    'total_terjual' => $barang->total_terjual - $barang->pivot->kuantitas
+                ]);
+            }
+        });
+
+
+
+
+
     }
 
 }

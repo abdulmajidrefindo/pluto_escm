@@ -402,6 +402,8 @@
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     window.open('{{ route('transaksiPemasok.index') }}', '_self');
+                                } else {
+                                    window.reload();
                                 }
 
 
@@ -433,54 +435,6 @@
         }); //end document ready
         //Submit Data
 
-
-        //fungsi populateSelectBarang
-        function populateSelectBarang() {
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('fetchAllBarang') }}',
-                dataType: 'json',
-                success: function(data) {
-                    let html = '';
-                    html += '<option/>';
-                    $('#selectBarang').append(html);
-                    $.each(data, function(key, value) {
-
-                        let html = '';
-                        html += '<option ';
-                        html += 'value="' + value.id + '"';
-                        html += 'data-merek="' + value.merek.nama_merek + '"';
-                        html += 'data-unit="' + value.produk.unit + '"';
-                        html += 'data-harga="' + value.harga + '"';
-                        html += 'data-stok="' + value.total_stok + '"';
-                        html += '>';
-                        html += value.produk.nama_produk;
-                        html += '</option>';
-                        $('#selectBarang').append(html);
-
-                    });
-                }
-            });
-        }
-        //end populate select barang
-
-        // fungsi rest form
-        function resetForm() {
-            //kosongkan form
-            $('#tabelAddBarang tbody').empty();
-            $('#selectBarang').empty();
-            $('#selectPemasok').val('');
-            $('#totalHarga').val('');
-            $('#tambahBarang').attr('disabled', true);
-            $('#tambahBarang').text('Tambahkan Ke Daftar');
-            $('#kuantitas').attr('disabled', true);
-            $('#kuantitas').val('');
-            $('#harga').val('');
-            $('#unitBarang').html('');
-            $('#merek').val('');
-            totalHarga = 0;
-            $('.total-harga').text(totalHarga);
-        } //end fungsi reset form
     </script>
 
 

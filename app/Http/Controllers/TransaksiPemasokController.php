@@ -128,9 +128,7 @@ class TransaksiPemasokController extends Controller
         $id = $transaksiPemasok->id;
         $transaksiPemasok = TransaksiPemasok::with('barang')->where('id', $id)->first();
         $pemasok = Pemasok::all();
-        $barang = Barang::whereNotIn('id', function ($query) use ($id) {
-            $query->select('barang_id')->from('transaksi_barang_pemasok')->where('transaksi_pemasok_id', $id);
-        })->get();
+        $barang = Barang::whereNotIn('id', $transaksiPemasok->barang->pluck('id'))->get();
 
         //return response()->json(['transaksiPemasok' => $transaksiPemasok, 'pemasok' => $pemasok, 'barang' => $barang]);
         return view('transaksiPemasok.edit', compact('transaksiPemasok', 'pemasok', 'barang'));
@@ -160,16 +158,9 @@ class TransaksiPemasokController extends Controller
             'total_harga' => $request->get('total_harga')
         ]);
 
-        //update data barang pemasok
-        foreach($transaksiPemasok->barang as $barang){
-            Barang::find($barang->id)
-                ->update([
-                    'total_stok' => DB::raw('total_stok - ' . $barang->pivot->kuantitas),
-                    'total_masuk' => DB::raw('total_masuk - ' . $barang->pivot->kuantitas)
-                ]);
-        }
+
         //updata data ransaksi
-        $transaksiPemasok->barang()->detach();
+
         foreach ($request->get('data_barang') as $data) {
             $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
             Barang::find($data['id'])

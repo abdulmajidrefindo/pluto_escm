@@ -89,18 +89,11 @@ class TransaksiPelangganController extends Controller
             ]);
         }
 
-        if($transaksiPelanggan){
+        if ($transaksiPelanggan) {
             return response()->json(['success' => 'Data berhasil disimpan!']);
         } else {
             return response()->json(['errors' => 'Data gagal disimpan!']);
         }
-
-
-
-
-
-
-
 
         //insert data transaksi pelanggan
 
@@ -133,8 +126,10 @@ class TransaksiPelangganController extends Controller
      */
     public function edit(TransaksiPelanggan $transaksiPelanggan)
     {
+        $transaksiPelanggan = TransaksiPelanggan::with('barang')->where('id', $transaksiPelanggan->id)->first();
         $pelanggan = Pelanggan::all();
-        $barang = Barang::with('produk', 'merek')->get();
+        $barang = Barang::whereNotIn('id', $transaksiPelanggan->barang->pluck('id'))->get();
+        //return response()->json(['transaksiPelanggan' => $transaksiPelanggan, 'pelanggan' => $pelanggan, 'barang' => $barang]);
         return view('transaksiPelanggan.edit', compact('transaksiPelanggan', 'pelanggan', 'barang'));
     }
 
@@ -163,9 +158,21 @@ class TransaksiPelangganController extends Controller
             'created_at' => $request->get('created_at'),
             'updated_at' => $request->get('updated_at'),
         ]);
-        $transaksiPelanggan->pelanggan_id = $request->pelanggan_id;
-        //return response()->json('Berhasil Diupdate');
-        return redirect('/transaksiPelanggan')->with('completed', 'Data berhasil Diupdate!');
+        //update data barang pelanggan
+
+
+        foreach ($request->get('data_barang') as $data) {
+            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
+            Barang::find($data['id'])->update([
+                'total_stok' => DB::raw('total_stok - ' . $data['kuantitas']),
+                'total_terjual' => DB::raw('total_terjual + ' . $data['kuantitas'])
+            ]);
+        }
+        if ($transaksiPelanggan) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -183,21 +190,22 @@ class TransaksiPelangganController extends Controller
     }
 
     //get data transaksi pelanggan for yajra datatable
-    public function getTableTransaksiPelanggan(Request $request){
+    public function getTableTransaksiPelanggan(Request $request)
+    {
 
-        if($request->ajax()){
+        if ($request->ajax()) {
 
             $data = TransaksiPelanggan::with('pelanggan')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = '<a href="'. route('transaksiPelanggan.show', $row->id) .'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
-                    $btn .= '<a href="'. route('transaksiPelanggan.edit', $row->id) .'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
-                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('transaksiPelanggan.show', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    $btn .= '<a href="' . route('transaksiPelanggan.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
 
                     return $btn;
                 })
-                ->editColumn('created_at', function($row){
+                ->editColumn('created_at', function ($row) {
                     return $row->created_at->format('d-m-Y H:i:s');
                 })
 
