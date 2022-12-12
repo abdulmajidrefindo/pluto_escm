@@ -34,6 +34,28 @@ class Barang extends Model
 
         });
 
+        static::created(function ($model) {
+            //Cek sisa stok barang, kalo tinggal dikit kirim notifikasi
+
+            event(new SisaStokEvent($model->id, 20));
+
+        });
+
+        //delete barang and its relationship
+        static::deleting(function ($model) {
+
+            $model->transaksiPemasok()->detach();
+            $model->transaksiPelanggan()->detach();
+
+
+            $model->transaksiPemasok()->delete();
+            $model->transaksiPelanggan()->delete();
+
+
+
+        });
+
+
     }
 
 

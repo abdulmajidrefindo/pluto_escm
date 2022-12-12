@@ -188,6 +188,9 @@ class TransaksiPemasokController extends Controller
 
                     return $btn;
                 })
+                ->editColumn('created_at', function($row){
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }

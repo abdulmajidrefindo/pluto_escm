@@ -197,92 +197,12 @@
             </div>
         </div>
 
-        <x-adminlte-modal id="modalTransaksiPelanggan" title="Hapus Data" theme="danger" icon="fas fa-trash"
-            size='lg'>
-            Anda yakin ingin menghapus data berikut?
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th scope="row">ID</th>
-                        <td id="idTransaksiPelanggan">Mark</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Total Harga</th>
-                        <td id="total_harga">7000</td>
 
-                    </tr>
-                    <tr>
-                        <th scope="row">Tanggal Transaksi</th>
-                        <td id="created_at">08/09/2022/td>
-                    </tr>
-                </tbody>
-            </table>
-            <x-slot name="footerSlot">
-                <form id="deleteForm" method="post">
-                    @csrf
-                    @method('DELETE')
-
-                    <input id="id" name="id" hidden value="">
-                    <x-adminlte-button type="submit" class="mr-auto" theme="danger" label="Iya, hapus data." />
-
-                    <x-adminlte-button theme="success" label="Tidak" data-dismiss="modal" />
-                </form>
-            </x-slot>
-
-        </x-adminlte-modal>
-
-        <x-adminlte-modal id="modalTransaksiPelangganDetail" title="Rincian Data" theme="teal" icon="fas fa-eye"
-            size='lg'>
-            Berikut rincian transaksiPelanggan
-            <table class="table">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th scope="row">ID</th>
-                            <td id="idTransaksiPelanggan">Mark</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Total Harga</th>
-                            <td id="total_harga">7000</td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Tanggal Transaksi</th>
-                            <td id="created_at">08/09/2022/td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-        </x-adminlte-modal>
 
     @stop
 
 
     @section('js')
-        <script>
-            $(document).on('click', '#showData', function() {
-                let id = $(this).attr('data-id');
-                let total_harga = $(this).attr('data-total-harga');
-                let created_at = $(this).attr('data-created-at');
-
-                $('#showForm').attr('action', '/transaksiPelanggan/' + id);
-                document.getElementById("idTransaksiPelanggan").innerHTML = id;
-                document.getElementById("total_harga").innerHTML = total_harga;
-                document.getElementById("created_at").innerHTML = created_at;
-            });
-
-            $(document).on('click', '#deleteData', function() {
-                let id = $(this).attr('data-id');
-                let total_harga = $(this).attr('data-nama-transaksiPelanggan');
-                let created_at = $(this).attr('data-keterangan-transaksiPelanggan');
-
-                $('#deleteForm').attr('action', '/transaksiPelanggan/' + id);
-                document.getElementById("idTransaksiPelanggan").innerHTML = id;
-                document.getElementById("total_harga").innerHTML = total_harga;
-                document.getElementById("created_at").innerHTML = created_at;
-            });
-        </script>
 
         <script>
             $(document).ready(function() {
