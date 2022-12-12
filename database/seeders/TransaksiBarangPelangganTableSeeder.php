@@ -14,12 +14,12 @@ class TransaksiBarangPelangganTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('transaksi_barang_pelanggan')->delete();
-        
+
         \DB::table('transaksi_barang_pelanggan')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'transaksi_pelanggan_id' => 1,
@@ -27,10 +27,11 @@ class TransaksiBarangPelangganTableSeeder extends Seeder
                 'barang_id' => 2,
                 'status_transaksi' => 'Berhasil',
                 'kuantitas' => 2,
+                'total_harga' => 250000,
                 'created_at' => '2022-12-07 17:42:08',
                 'updated_at' => '2022-12-16 17:42:08',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'transaksi_pelanggan_id' => 2,
@@ -38,11 +39,12 @@ class TransaksiBarangPelangganTableSeeder extends Seeder
                 'barang_id' => 5,
                 'status_transaksi' => 'Berhasil',
                 'kuantitas' => 10,
+                'total_harga' => 250000,
                 'created_at' => '2022-12-22 17:50:14',
                 'updated_at' => '2022-12-31 17:50:14',
             ),
         ));
-        
-        
+
+
     }
 }

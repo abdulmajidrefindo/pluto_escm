@@ -82,7 +82,7 @@ class TransaksiPelangganController extends Controller
         //insert data transaksi barang pelanggan
         $transaksiPelanggan = TransaksiPelanggan::latest()->first();
         foreach ($request->get('data_barang') as $data) {
-            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
             Barang::find($data['id'])->update([
                 'total_stok' => DB::raw('total_stok - ' . $data['kuantitas']),
                 'total_terjual' => DB::raw('total_terjual + ' . $data['kuantitas'])

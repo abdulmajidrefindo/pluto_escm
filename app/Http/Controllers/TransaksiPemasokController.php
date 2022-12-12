@@ -125,8 +125,11 @@ class TransaksiPemasokController extends Controller
      */
     public function edit(TransaksiPemasok $transaksiPemasok)
     {
+        $id = $transaksiPemasok->id;
+        $transaksiPemasok = TransaksiPemasok::with('barang')->where('id', $id)->first();
         $pemasok = Pemasok::all();
         $barang = Barang::with('produk', 'merek')->get();
+        //return response()->json($transaksiPemasok);
         return view('transaksiPemasok.edit', compact('transaksiPemasok', 'pemasok', 'barang'));
     }
 
@@ -165,7 +168,7 @@ class TransaksiPemasokController extends Controller
         //updata data ransaksi
         $transaksiPemasok->barang()->detach();
         foreach ($request->get('data_barang') as $data) {
-            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
             Barang::find($data['id'])
                 ->update([
                     'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),

@@ -473,11 +473,8 @@
 
 
                                 populateSelectBarang();
-                                $('#transaksiPelanggan-table').DataTable().ajax
-                                        .reload();
+                                $('#transaksiPelanggan-table').DataTable().ajax.reload();
                                 resetForm();
-
-
                             }
                         },
                         errors: function(data) {

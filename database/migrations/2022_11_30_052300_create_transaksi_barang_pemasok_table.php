@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('barang_id')->constrained('barang')->onDelete('cascade');
             $table->enum('status_transaksi',['Berhasil','Ditolak']);
             $table->integer('kuantitas')->length(7);
+            $table->integer('total_harga')->length(10);
             $table->timestamps();
             $table->softDeletes();
         });

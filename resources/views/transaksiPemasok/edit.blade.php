@@ -6,19 +6,26 @@
 @stop
 
 @section('content')
-    <form action="{{ route('transaksiPemasok.update', $transaksiPemasok->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PATCH')
+    <form>
         <div class="row">
-            <x-adminlte-input id="idTransaksi" name="transaksi_id" label="Kode Transaksi" label-class="text-lightblue"
-                fgroup-class="col-6" data-placeholder="Pilih pemasok..." disabled>
 
-            </x-adminlte-input>
+            <div class="form-group col-6">
+                <label for="selectPemasok" class="text-lightblue">
+                    Kode Transaksi
+                </label>
+                <div class="input-group">
+                    <input id="transaksi_id" name="id_transaksi" value="{{ $transaksiPemasok->id }}" class="form-control" placeholder="ID" disabled="disabled">
+                </div>
+            </div>
+
             <x-adminlte-select2 id="selectPemasok" name="pemasok_id" label="Pemasok" label-class="text-lightblue"
                 fgroup-class="col-6" data-placeholder="Pilih pemasok...">
                 <option />
                 @foreach ($pemasok as $pemasok)
-                    <option value="{{ $pemasok->id }}">{{ $pemasok->nama_pemasok }}</option>
+                    <option value="{{ $pemasok->id }}"
+                        {{ $transaksiPemasok->pemasok_id == $pemasok->id ? 'selected' : '' }}>
+                        {{ $pemasok->nama_pemasok }}
+                    </option>
                 @endforeach
             </x-adminlte-select2>
 
@@ -29,18 +36,14 @@
         <h4 class="text-lightblue"> Form Barang </h4>
         <div class="row">
 
-            <input type="hidden" name="data_barang" id="dataBarang" value="" />
+
 
 
             <x-adminlte-select2 id="selectBarang" name="barang_id" label-class="text-lightblue" fgroup-class="col-3"
                 data-placeholder="Pilih produk...">
                 <option />
                 @foreach ($barang as $barang)
-                    <option data-harga="{{ $barang->harga }}" data-merek="{{ $barang->merek->nama_merek }}"
-                        data-unit="{{ $barang->produk->unit }}" data-stok="{{ $barang->total_stok }}"
-                        value="{{ $barang->id }}">
-                        {{ $barang->produk->nama_produk }}
-                    </option>
+
                 @endforeach
                 <x-slot name="prependSlot">
                     <div class="input-group-text text-blue">
@@ -100,6 +103,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($transaksiPemasok->barang as $barang)
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm btn-hapus-barang"
+                                        data-id="{{ $transaksiPemasok->id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                                <td>{{ $barang->id }}</td>
+                                <td>{{ $barang->produk->nama_produk }}</td>
+                                <td>{{ $barang->merek->nama_merek }}</td>
+                                <td data-stok="{{ $barang->total_stok }}">{{ $barang->pivot->kuantitas }}</td>
+                                <td>{{ $barang->produk->unit }}</td>
+                                <td>{{ $barang->harga }}</td>
+                                <td>{{ $barang->pivot->total_harga }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
@@ -107,7 +127,7 @@
                                 Total :
                             </th>
                             <th class="total-harga">
-                                Rp.,-
+                                {{ $transaksiPemasok->total_harga }}
                             </th>
                         </tr>
                     </tfoot>
@@ -136,6 +156,7 @@
 
         <script>
             $(document).ready(function() {
+                populateSelectBarang();
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -174,6 +195,7 @@
                     //Mengambil Nilai Dari Inputan
                     let id = $('#selectBarang').val();
                     let produk = $('#selectBarang').find(":selected").text();
+                    let stok = $('#stok').val();
                     let merek = $('#merek').val();
                     let kuantitas = $('#kuantitas').val();
                     let unit = $('#unitBarang').text();
@@ -186,7 +208,7 @@
                     html += '<td>' + id + '</td>';
                     html += '<td>' + produk + '</td>';
                     html += '<td>' + merek + '</td>';
-                    html += '<td>' + kuantitas + '</td>';
+                    html += '<td data-stok = "' + stok + '">' + kuantitas + '</td>';
                     html += '<td>' + unit + '</td>';
                     html += '<td>' + harga + '</td>';
                     html += '<td class = "total">' + total + '</td>';
@@ -217,14 +239,15 @@
                             let id = $(this).text();
                             let produk = $(this).closest('tr').find('td').eq(2).text();
                             let merek = $(this).closest('tr').find('td').eq(3).text();
+                            let stok = $(this).closest('tr').find('td').eq(4).attr('data-stok');
                             let unit = $(this).closest('tr').find('td').eq(5).text();
                             let harga = $(this).closest('tr').find('td').eq(6).text();
                             totalHarga -= parseInt($(this).closest('tr').find('td').eq(7).text());
 
                             let html = '';
-                            html += '<option value="' + id + '" data-merek="' + merek +
-                                '" data-harga="' + harga +
-                                '" data-unit="' + unit + '">' + produk + '</option>';
+                            html += '<option value="' + id + '" data-stok="' + stok + '" data-merek="' +
+                                merek + '" data-unit="' + unit + '" data-harga="' + harga + '">' +
+                                produk + '</option>';
                             $('#selectBarang').append(html);
                         }
                     });
@@ -243,7 +266,7 @@
                     let merek = $(this).find(":selected").attr('data-merek');
                     let stok = $(this).find(":selected").attr('data-stok');
                     $('#kuantitas').attr('max', stok);
-                    $('#kuantitas').attr('placeholder', 'Maksimal ' + stok);
+                    $('#kuantitas').attr('placeholder', 'Stok ' + stok);
                     $('#kuantitas').attr('disabled', false);
                     $('#harga').val(harga);
                     $('#unitBarang').html(unit);
@@ -253,8 +276,6 @@
 
 
                 //fungsi ajax submit data
-
-                //Submit Data
                 $('#submitTransaksi').click(function(e) {
                     e.preventDefault();
 
@@ -304,6 +325,7 @@
                     // isi data barang ke array
                     let data_barang = [];
                     let pemasok_id = $('#selectPemasok').val();
+                    let transaksi_id = $('#transaksi_id').val();
                     $('#tabelAddBarang').find('tr').each(function() {
                         $(this).find('td').each(function() {
                             if ($(this).index() == 1) {
@@ -327,8 +349,8 @@
 
                     //ajax submit data
                     $.ajax({
-                        type: 'POST',
-                        url: '{{ route('transaksiPemasok.store') }}',
+                        type: 'PUT',
+                        url: '{{ route('transaksiPemasok.index') }}' + '/' + transaksi_id,
                         data: {
                             pemasok_id: pemasok_id,
                             data_barang: data_barang,
@@ -351,7 +373,7 @@
                             } else {
                                 Swal.fire({
                                     title: 'Berhasil!',
-                                    text: 'Data Berhasil Disimpan',
+                                    text: 'Data Berhasil Diperbaharui',
                                     icon: 'success',
                                     iconColor: '#fff',
                                     toast: true,
@@ -367,7 +389,7 @@
                                 //populate select barang
                                 populateSelectBarang();
                                 resetForm();
-                                $('#transaksiPemasok-table').DataTable().ajax.reload();
+
                             }
                         },
                         errors: function(data) {
@@ -389,6 +411,8 @@
                     //end ajax submit data
                 }); //end button simpan data
             }); //end document ready
+                //Submit Data
+
 
             //fungsi populateSelectBarang
             function populateSelectBarang() {
@@ -401,6 +425,7 @@
                         html += '<option/>';
                         $('#selectBarang').append(html);
                         $.each(data, function(key, value) {
+
                             let html = '';
                             html += '<option ';
                             html += 'value="' + value.id + '"';
@@ -408,21 +433,21 @@
                             html += 'data-unit="' + value.produk.unit + '"';
                             html += 'data-harga="' + value.harga + '"';
                             html += 'data-stok="' + value.total_stok + '"';
-                            if(value.total_stok == 0){
-                                html += 'disabled = "disabled"';
-                            }
                             html += '>';
                             html += value.produk.nama_produk;
-                            if(value.total_stok == 0){
-                                html += ' (Stok Habis)';
-                            }
                             html += '</option>';
-                            $('#selectBarang').append(html);
+                            //append data jika tak terdapat di tabel
+                            if ($('#tabelAddBarang').find('tr').find('td').filter(function() {
+                                    return $(this).text() == value.id;
+                                }).length == 0) {
+                                $('#selectBarang').append(html);
+                            }
+
                         });
                     }
                 });
             }
-             //end populate select barang
+            //end populate select barang
 
             // fungsi rest form
             function resetForm() {
@@ -441,6 +466,7 @@
                 totalHarga = 0;
                 $('.total-harga').text(totalHarga);
             } //end fungsi reset form
+
 
         </script>
 
