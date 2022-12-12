@@ -257,45 +257,15 @@
 
 
     @section('js')
-        <script>
-            $(document).on('click', '#showData', function() {
-                let id = $(this).attr('data-id');
-                let total_harga = $(this).attr('data-total-harga');
-                let created_at = $(this).attr('data-created-at');
-
-                $('#showForm').attr('action', '/transaksiPemasok/' + id);
-                document.getElementById("idTransaksiPemasok").innerHTML = id;
-                document.getElementById("total_harga").innerHTML = total_harga;
-                document.getElementById("created_at").innerHTML = created_at;
-            });
-
-            $(document).on('click', '#deleteData', function() {
-                let id = $(this).attr('data-id');
-                let total_harga = $(this).attr('data-nama-transaksiPemasok');
-                let created_at = $(this).attr('data-keterangan-transaksiPemasok');
-
-                $('#deleteForm').attr('action', '/transaksiPemasok/' + id);
-                document.getElementById("idTransaksiPemasok").innerHTML = id;
-                document.getElementById("total_harga").innerHTML = total_harga;
-                document.getElementById("created_at").innerHTML = created_at;
-            });
-        </script>
 
         <script>
             $(document).ready(function() {
-
-
-
-
                 // CSRF Token
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-
-
 
                 var totalHarga = 0;
 
@@ -390,21 +360,17 @@
 
                     $('#tambahBarang').text('Tambahkan Ke Daftar');
                     $('#tambahBarang').attr('disabled', false);
-                    //$('#tambahBarang').addClass('btn-primary').removeClass('btn-outline-primary');
-
                     let id = $(this).find(":selected").val();
                     let harga = $(this).find(":selected").attr('data-harga');
                     let unit = $(this).find(":selected").attr('data-unit');
                     let merek = $(this).find(":selected").attr('data-merek');
                     let stok = $(this).find(":selected").attr('data-stok');
                     $('#kuantitas').attr('disabled', false);
-
-
-
                     $('#harga').val(harga);
                     $('#unitBarang').html(unit);
                     $('#merek').val(merek);
                 });
+                //end Mengambil Data Barang
 
                 //fungsi ajax submit data
                 //Submit Data
@@ -454,7 +420,9 @@
                         });
                         return; //Jika Tidak Ada Barang, Maka Tidak Melanjutkan
                     }
+                    // end periksa apakah pemasok sudah dipilih
 
+                    // isi data barang dari tabel ke array
                     let data_barang = [];
                     let pemasok_id = $('#selectPemasok').val();
                     $('#tabelAddBarang').find('tr').each(function() {
@@ -476,9 +444,9 @@
                     });
                     $('#dataBarang').val(JSON.stringify(data_barang));
                     $('#totalHarga').val(totalHarga);
+                    // end isi data barang dari tabel ke array
 
                     //ajax submit data
-
                     $.ajax({
                         type: 'POST',
                         url: '{{ route('transaksiPemasok.store') }}',
@@ -499,9 +467,7 @@
                                         delay: 5000,
                                         icon: 'fas fa-exclamation-triangle fa-lg',
                                         position: 'bottomRight'
-
                                     });
-
                                 });
                             } else {
                                 Swal.fire({
@@ -522,10 +488,7 @@
                                 //populate select barang
                                 populateSelectBarang();
                                 resetForm();
-                                $('#transaksiPemasok-table').DataTable().ajax
-                                        .reload();
-
-
+                                $('#transaksiPemasok-table').DataTable().ajax.reload();
                             }
                         },
                         errors: function(data) {
@@ -545,14 +508,15 @@
 
                         }
                     });
+                    //end ajax submit data
 
 
 
-                });
+                }); //end btn simpan click
 
 
 
-            });
+            }); //end document ready
 
             //populate select barang
             function populateSelectBarang() {
@@ -561,6 +525,9 @@
                     url: '{{ route('fetchAllBarang') }}',
                     dataType: 'json',
                     success: function(data) {
+                        let html = '';
+                        html += '<option/>';
+                        $('#selectBarang').append(html);
                         $.each(data, function(key, value) {
                             let html = '';
                             html += '<option ';
@@ -569,18 +536,23 @@
                             html += 'data-unit="' + value.produk.unit + '"';
                             html += 'data-harga="' + value.harga + '"';
                             html += 'data-stok="' + value.total_stok + '"';
-
+                            if(value.total_stok == 0){
+                                html += 'disabled = "disabled"';
+                            }
                             html += '>';
                             html += value.produk.nama_produk;
+                            if(value.total_stok == 0){
+                                html += ' (Stok Habis)';
+                            }
                             html += '</option>';
                             $('#selectBarang').append(html);
-
-
                         });
                     }
                 });
             }
+            //end populate select barang
 
+            // fungsi rest form
             function resetForm() {
                 //kosongkan form
                 $('#tabelAddBarang tbody').empty();
@@ -596,7 +568,7 @@
                 $('#merek').val('');
                 totalHarga = 0;
                 $('.total-harga').text(totalHarga);
-            }
+            } //end fungsi reset form
         </script>
 
         <!-- data table -->

@@ -113,8 +113,8 @@ class TransaksiPemasokController extends Controller
         $id = $transaksiPemasok->id;
         $transaksiPemasok = TransaksiPemasok::with('barang')->where('id', $id)->first();
         //$barang = Barang::with('produk')->where('id',$id)->first();
-        return response()->json($transaksiPemasok);
-        //return view('transaksiPemasok.show', compact('transaksiPemasok'));
+        //return response()->json($transaksiPemasok);
+        return view('transaksiPemasok.show', compact('transaksiPemasok'));
     }
 
     /**
@@ -215,6 +215,15 @@ class TransaksiPemasokController extends Controller
                 ->make(true);
         }
     }
+
+    //get transaksi pemasok by id ajax
+    public function getTransaksiPemasokById(Request $request){
+        if($request->ajax()){
+            $data = TransaksiPemasok::with('barang')->where('id', $request->id)->first();
+            return response()->json($data);
+        }
+    }
+
 
 
 
