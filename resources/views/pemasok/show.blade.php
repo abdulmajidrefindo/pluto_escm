@@ -1,7 +1,7 @@
  @extends('adminlte::page')
 
 @section('content_header')
-    <h1>Rincian Barang</h1>
+    <h1>Rincian Pemasok</h1>
 
 
 @stop
@@ -15,55 +15,30 @@
             <td style="width: 1px"></td>
             <td>ID  :</td>
             <td>
-                {{$barang->id}}
+                {{$pemasok->id}}
             </td>
             <td style="width: 300px"></td>
         </tr>
         <tr>
             <td style="width: 1px"></td>
-            <td>SKU Barang  :</td>
+            <td>Nama Pemasok :</td>
             <td>
-                {{$barang->sku}}
+                {{$pemasok->nama_pemasok}}
             </td>
             <td style="width: 300px"></td>
         </tr>
         <tr>
             <td style="width: 1px"></td>
-            <td>Harga Barang  :</td>
+            <td>Kontak Pemasok :</td>
             <td>
-                {{$barang->harga}}
+                {{$pemasok->kontak_pemasok}}
             </td>
             <td style="width: 300px"></td>
         </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Total Barang Terjual  :</td>
-            <td>
-                {{$barang->total_terjual}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Total Barang Masuk  :</td>
-            <td>
-                {{$barang->total_masuk}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Total Stok Barang  :</td>
-            <td>
-                {{$barang->total_stok}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
             <td style="width: 1px"></td>
             <td>Waktu dibuat    :</td>
             <td>
-                {{$barang->created_at}}
+                {{$pemasok->created_at}}
             </td>
             <td style="width: 300px"></td>
         </tr>
@@ -71,7 +46,7 @@
             <td style="width: 1px"></td>
             <td>Terakhir diubah    :</td>
             <td>
-                {{$barang->updated_at}}
+                {{$pemasok->updated_at}}
             </td>
             <td style="width: 300px"></td>
         </tr>
@@ -80,7 +55,7 @@
 </div>
 
 <div>
-    <h4>Daftar Produk dengan Kategori {{$barang->nama_barang}}</h4>
+    <h4>Daftar Produk dengan Kategori {{$pemasok->nama_pemasok}}</h4>
 </div>
 
 <div class="card">
@@ -120,9 +95,40 @@
         </div>
     </div>
 </div>
-<!-- /.card --
+<div class="text-center">
+    <a href="{{route('pemasok.index')}}" class="btn btn-primary">Kembali</a>
+</div>
+@stop
 
-
-<!-- /.card -->
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+@section('js')
+    <script> console.log('Hi!'); </script>
+    <script>
+        function myFunction() {
+          // Declare variables
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+        
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+    </script>
+</div>
 
 @stop
+
