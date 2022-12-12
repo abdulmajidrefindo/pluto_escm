@@ -100,13 +100,7 @@
                             <x-adminlte-select2 id="selectBarang" name="barang_id" label-class="text-lightblue"
                                 fgroup-class="col-3" data-placeholder="Pilih produk...">
                                 <option />
-                                @foreach ($barang as $barang)
-                                    <option data-harga="{{ $barang->harga }}" data-merek="{{ $barang->merek->nama_merek }}"
-                                        data-unit="{{ $barang->produk->unit }}" data-stok="{{ $barang->total_stok }}"
-                                        value="{{ $barang->id }}">
-                                        {{ $barang->produk->nama_produk }}
-                                    </option>
-                                @endforeach
+
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text text-blue">
                                         <i class="fas fa-box"></i>
@@ -298,6 +292,7 @@
                     }
                 });
 
+                populateSelectBarang();
                 var totalHarga = 0;
 
                 $('#tambahBarang').text('Mohon Isi Data Barang Terlebih Dahulu');
@@ -524,46 +519,45 @@
                         },
                         dataType: 'json',
                         success: function(data) {
-                            if (data != null && data.success) {
-                                console.log(data);
+                            if (data.errors) {
+                                $.each(data.errors, function(key, value) {
+                                    $(document).Toasts('create', {
+                                        title: 'Harap isi data dengan benar!',
+                                        body: value,
+                                        class: 'bg-danger',
+                                        autohide: true,
+                                        delay: 5000,
+                                        icon: 'fas fa-exclamation-triangle fa-lg',
+                                        position: 'bottomRight'
+
+                                    });
+
+                                });
+                            } else {
                                 Swal.fire({
                                     title: 'Berhasil!',
-                                    text: data.message,
+                                    text: 'Data Berhasil Disimpan',
                                     icon: 'success',
                                     iconColor: '#fff',
                                     toast: true,
-                                    background: '#a5dc86',
-                                    position: 'center-end',
+                                    color: '#fff',
+                                    background: '#8D72E1',
+                                    position: 'top',
                                     showConfirmButton: false,
                                     timer: 3000,
                                     timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal
-                                            .stopTimer)
-                                        toast.addEventListener('mouseleave', Swal
-                                            .resumeTimer)
-                                    }
+
                                 });
 
-                            } else {
-                                Swal.fire({
-                                    title: 'Peringatan!',
-                                    text: data.message,
-                                    icon: 'warning',
-                                    iconColor: '#fff',
-                                    toast: true,
-                                    background: '#f8bb86',
-                                    position: 'center-end',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal
-                                            .stopTimer)
-                                        toast.addEventListener('mouseleave', Swal
-                                            .resumeTimer)
-                                    }
-                                });
+                                //populate select barang
+
+
+                                populateSelectBarang();
+                                $('#transaksiPelanggan-table').DataTable().ajax
+                                        .reload();
+                                resetForm();
+
+
                             }
                         },
                         errors: function(data) {
@@ -620,6 +614,59 @@
 
 
             });
+
+            function populateSelectBarang() {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('fetchAllBarang') }}',
+                    dataType: 'json',
+                    success: function(data) {
+                        let html = '';
+                        html += '<option/>';
+                        $('#selectBarang').append(html);
+                        $.each(data, function(key, value) {
+
+                            let html = '';
+                            html += '<option ';
+                            html += 'value="' + value.id + '"';
+                            html += 'data-merek="' + value.merek.nama_merek + '"';
+                            html += 'data-unit="' + value.produk.unit + '"';
+                            html += 'data-harga="' + value.harga + '"';
+                            html += 'data-stok="' + value.total_stok + '"';
+                            if(value.total_stok == 0){
+                                html += 'disabled = "disabled"';
+                            }
+                            html += '>';
+                            html += value.produk.nama_produk;
+                            if(value.total_stok == 0){
+                                html += ' (Stok Habis)';
+                            }
+                            html += '</option>';
+                            $('#selectBarang').append(html);
+
+
+                        });
+                    }
+                });
+            }
+
+            function resetForm() {
+                //kosongkan form
+                $('#tabelAddBarang tbody').empty();
+                $('#selectBarang').empty();
+                $('#selectPemasok').val('');
+                $('#totalHarga').val('');
+                $('#tambahBarang').attr('disabled', true);
+                $('#tambahBarang').text('Tambahkan Ke Daftar');
+                $('#kuantitas').attr('disabled', true);
+                $('#kuantitas').val('');
+                $('#harga').val('');
+                $('#unitBarang').html('');
+                $('#merek').val('');
+                totalHarga = 0;
+                $('.total-harga').text(totalHarga);
+            }
+
         </script>
 
         <!-- datatable -->

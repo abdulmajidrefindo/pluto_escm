@@ -568,7 +568,7 @@
                             html += 'data-merek="' + value.merek.nama_merek + '"';
                             html += 'data-unit="' + value.produk.unit + '"';
                             html += 'data-harga="' + value.harga + '"';
-                            html += 'data-stok="' + value.stok + '"';
+                            html += 'data-stok="' + value.total_stok + '"';
 
                             html += '>';
                             html += value.produk.nama_produk;
