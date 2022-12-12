@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>Merubah Merek</h1>
+    <h1>Merubah Pelanggan</h1>
 
 @stop
 
