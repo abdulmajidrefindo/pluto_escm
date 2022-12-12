@@ -111,7 +111,10 @@ class BarangController extends Controller
      */
     public function edit(Barang $barang)
     {
-        return view('barang.edit', compact('barang'));
+        $merek = Merek::all('id','nama_merek');
+        $produk = Produk::all('id','nama_produk');
+        $pemasok = Pemasok::all('id','nama_pemasok');
+        return view('barang.edit', compact('barang', 'merek', 'produk', 'pemasok'));
     }
 
     /**
@@ -169,13 +172,4 @@ class BarangController extends Controller
         //return response()->json("Berhasil Dihapus");
         return redirect('/barang')->with('completed', 'Data barang berhasil dihapus!');
     }
-
-    //fetch semua barang
-    public function fetchAllBarang()
-    {
-        $barang = Barang::with('produk','merek')->get();
-        return response()->json($barang);
-    }
-
-
 }

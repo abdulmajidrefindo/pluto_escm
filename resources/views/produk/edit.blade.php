@@ -17,10 +17,16 @@
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
                 <x-adminlte-input type="text" value="{{ $produk->keterangan }}" name="keterangan" label="Keterangan"
                     placeholder="" fgroup-class="col-md-6" disable-feedback />
-                <x-adminlte-select name="kategori" label="Kategori" fgroup-class="col-md-6">
-                    <x-adminlte-options :options="['Option 1', 'Option 2', 'Option 3']" disabled="-1"
-                        empty-option="Pilih kategori.."/>
-                </x-adminlte-select>
+
+                <x-adminlte-select2 id="selectKategori" name="kategori_id" label="Nama Kategori"
+                    label-class="text-lightdark" fgroup-class="col-md-6"
+                    data-placeholder="Pilih kategori...">
+                    <option/>
+                    @foreach ($kategori as $kategori)
+                        <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                    @endforeach
+                </x-adminlte-select2>
+
                 <x-adminlte-button class="btn-lg" type="submit" label="Perbaharui Data" theme="success"
                     icon="fas fa-lg fa-save" />
             </div>

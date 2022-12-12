@@ -88,7 +88,8 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        return view ('produk.edit',compact('produk'));
+        $kategori = Kategori::all();
+        return view ('produk.edit',compact('produk','kategori'));
     }
 
     /**
