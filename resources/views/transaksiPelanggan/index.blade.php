@@ -50,51 +50,22 @@
             <div class="tab-content" id="transaksiPelangganTabContent">
                 <div class="tab-pane active show" id="transaksiPelanggan-tabs-table" role="tabpanel"
                     aria-labelledby="transaksiPelanggan-tabs-table-tab">
-                    <x-adminlte-datatable id="transaksiPelanggan-table" :heads="$heads" theme="light" :config="$config"
-                        striped hoverable beautify>
-                        @foreach ($transaksiPelanggan as $transaksiPelanggan)
-                            <tr>
-                                <td>
-                                    {{ $transaksiPelanggan->id }}
-                                </td>
-                                <td>
-                                    {{ $transaksiPelanggan->pelanggan->nama_pelanggan }}
-                                </td>
-                                <td>
-                                    {{ $transaksiPelanggan->total_harga }}
-                                </td>
-                                <td>
-                                    {{ $transaksiPelanggan->created_at }}
-                                </td>
 
-                                <td>
-                                    <nobr>
-                                        <a href="{{ route('transaksiPelanggan.edit', $transaksiPelanggan->id) }}"
-                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
-                                            <i class="fa fa-sm fa-fw fa-pen"></i> Edit
-                                        </a>
-                                        <button data-toggle="modal" data-target="#modalTransaksiPelangganDetail"
-                                            data-id="{{ $transaksiPelanggan->id }}"
-                                            data-total-harga="{{ $transaksiPelanggan->total_harga }}"
-                                            data-created-at="{{ $transaksiPelanggan->created_at }}"
-                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
-                                            <i class="fa fa-sm fa-fw fa-eye"></i> Detail
-                                        </button>
-                                        <?php //  <a href="{{ route('transaksiPelanggan.show', $transaksiPelanggan->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        ?> </a>
+                    <div class="table-responsive">
+                        <table id="transaksiPelanggan-table" class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Kode Transaksi</th>
+                                    <th>Tanggal Transaksi</th>
+                                    <th>Pelanggan</th>
+                                    <th>Total Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
 
-                                        <button data-toggle="modal" data-target="#modalTransaksiPelanggan"
-                                            data-id="{{ $transaksiPelanggan->id }}"
-                                            data-total-harga="{{ $transaksiPelanggan->total_harga }}"
-                                            data-created-at="{{ $transaksiPelanggan->created_at }}" id="deleteData"
-                                            class="btn btn-sm btn-danger mx-1 shadow" title="Hapus">
-                                            <i class="fa fa-sm fa-fw fa-trash"></i> Hapus
-                                        </button>
-                                    </nobr>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-adminlte-datatable>
+
                 </div>
                 <div class="tab-pane fade" id="transaksiPelanggan-tabs-add" role="tabpanel"
                     aria-labelledby="transaksiPelanggan-tabs-add-tab">
@@ -130,8 +101,7 @@
                                 fgroup-class="col-3" data-placeholder="Pilih produk...">
                                 <option />
                                 @foreach ($barang as $barang)
-                                    <option data-harga="{{ $barang->harga }}"
-                                        data-merek="{{ $barang->merek->nama_merek }}"
+                                    <option data-harga="{{ $barang->harga }}" data-merek="{{ $barang->merek->nama_merek }}"
                                         data-unit="{{ $barang->produk->unit }}" data-stok="{{ $barang->total_stok }}"
                                         value="{{ $barang->id }}">
                                         {{ $barang->produk->nama_produk }}
@@ -336,7 +306,7 @@
                 $('#tambahBarang').click(function() {
                     totalHarga = 0;
 
-                    if ($('#kuantitas').val() == '') {
+                    if ($('#kuantitas').val() == '' || $('#kuantitas').val() == 0) {
                         Swal.fire({
                             title: 'Peringatan! Kuantitas Barang Tidak Boleh Kosong',
                             icon: 'warning',
@@ -370,7 +340,7 @@
                     html += '<td>' + id + '</td>';
                     html += '<td>' + produk + '</td>';
                     html += '<td>' + merek + '</td>';
-                    html += '<td data-stok = "'+ stok + '">' + kuantitas + '</td>';
+                    html += '<td data-stok = "' + stok + '">' + kuantitas + '</td>';
                     html += '<td>' + unit + '</td>';
                     html += '<td>' + harga + '</td>';
                     html += '<td class = "total">' + total + '</td>';
@@ -400,13 +370,15 @@
                             let id = $(this).text();
                             let produk = $(this).closest('tr').find('td').eq(2).text();
                             let merek = $(this).closest('tr').find('td').eq(3).text();
-                            let stok =  $(this).closest('tr').find('td').eq(4).attr('data-stok');
+                            let stok = $(this).closest('tr').find('td').eq(4).attr('data-stok');
                             let unit = $(this).closest('tr').find('td').eq(5).text();
                             let harga = $(this).closest('tr').find('td').eq(6).text();
                             totalHarga -= parseInt($(this).closest('tr').find('td').eq(7).text());
 
                             let html = '';
-                            html += '<option value="' + id + '" data-stok="' + stok + '" data-merek="' + merek + '" data-unit="' + unit + '" data-harga="' + harga + '">' + produk + '</option>';
+                            html += '<option value="' + id + '" data-stok="' + stok + '" data-merek="' +
+                                merek + '" data-unit="' + unit + '" data-harga="' + harga + '">' +
+                                produk + '</option>';
                             $('#selectBarang').append(html);
 
                         }
@@ -552,7 +524,7 @@
                         },
                         dataType: 'json',
                         success: function(data) {
-                            if(data != null && data.success){
+                            if (data != null && data.success) {
                                 console.log(data);
                                 Swal.fire({
                                     title: 'Berhasil!',
@@ -566,8 +538,10 @@
                                     timer: 3000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        toast.addEventListener('mouseenter', Swal
+                                            .stopTimer)
+                                        toast.addEventListener('mouseleave', Swal
+                                            .resumeTimer)
                                     }
                                 });
 
@@ -584,19 +558,41 @@
                                     timer: 3000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        toast.addEventListener('mouseenter', Swal
+                                            .stopTimer)
+                                        toast.addEventListener('mouseleave', Swal
+                                            .resumeTimer)
                                     }
                                 });
                             }
                         },
                         errors: function(data) {
-                           if(data.status === 422){
-                            var errors = $.parseJson(data.responseText);
-                            $.each(errors.errors, function(key, value){
+                            if (data.status === 422) {
+                                var errors = $.parseJson(data.responseText);
+                                $.each(errors.errors, function(key, value) {
+                                    Swal.fire({
+                                        title: 'Peringatan!',
+                                        text: value,
+                                        icon: 'warning',
+                                        iconColor: '#fff',
+                                        toast: true,
+                                        background: '#f8bb86',
+                                        position: 'center-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter',
+                                                Swal.stopTimer)
+                                            toast.addEventListener('mouseleave',
+                                                Swal.resumeTimer)
+                                        }
+                                    });
+                                });
+                            } else {
                                 Swal.fire({
                                     title: 'Peringatan!',
-                                    text: value,
+                                    text: 'Data Gagal Disimpan',
                                     icon: 'warning',
                                     iconColor: '#fff',
                                     toast: true,
@@ -606,29 +602,13 @@
                                     timer: 3000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        toast.addEventListener('mouseenter', Swal
+                                            .stopTimer)
+                                        toast.addEventListener('mouseleave', Swal
+                                            .resumeTimer)
                                     }
                                 });
-                            });
-                           } else {
-                            Swal.fire({
-                                title: 'Peringatan!',
-                                text: 'Data Gagal Disimpan',
-                                icon: 'warning',
-                                iconColor: '#fff',
-                                toast: true,
-                                background: '#f8bb86',
-                                position: 'center-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            });
-                           }
+                            }
 
                         }
                     });
@@ -636,6 +616,133 @@
 
 
                 });
+
+
+
+            });
+        </script>
+
+        <!-- datatable -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#transaksiPelanggan-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "{{ route('transaksiPelanggan.getTableTransaksiPelanggan') }}",
+                    },
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'pelanggan.nama_pelanggan',
+                            name: 'pelanggan.nama_pelanggan'
+                        },
+                        {
+                            data: 'total_harga',
+                            name: 'total_harga',
+                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp. ')
+                        },
+
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    ]
+                });
+
+                //delete data pelanggan
+                $(document).on('click', '.delete', function() {
+                    let id = $(this).attr('data-id');
+                    deleteData(id);
+                });
+
+                //function delete data transaksi
+                //delete data
+                function deleteData(id) {
+                    Swal.fire({
+                        title: 'Apakah anda yakin?',
+                        text: "Data yang di hapus tidak dapat dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '{{ route('transaksiPelanggan.index') }}' + '/' + id,
+                                dataType: 'json',
+                                success: function(data) {
+                                    if (data.success != null) {
+                                        Swal.fire({
+                                            title: 'Berhasil!',
+                                            text: 'Data Berhasil Dihapus',
+                                            icon: 'success',
+                                            iconColor: '#fff',
+                                            color: '#fff',
+                                            toast: true,
+                                            background: '#8D72E1',
+                                            position: 'top',
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true,
+
+                                        });
+                                        $('#transaksiPelanggan-table').DataTable().ajax
+                                            .reload();
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Gagal!',
+                                            text: 'Data Gagal Dihapus',
+                                            icon: 'error',
+                                            iconColor: '#fff',
+                                            toast: true,
+                                            background: '#f8bb86',
+                                            position: 'center-end',
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true,
+
+                                        });
+                                    }
+
+                                },
+                                errors: function(data) {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Data Gagal Dihapus',
+                                        icon: 'error',
+                                        iconColor: '#fff',
+                                        toast: true,
+                                        background: '#f8bb86',
+                                        position: 'center-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal
+                                                .stopTimer)
+                                            toast.addEventListener('mouseleave', Swal
+                                                .resumeTimer)
+                                        }
+                                    });
+                                }
+
+                            });
+
+                        }
+                    })
+                }
 
 
 

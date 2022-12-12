@@ -305,7 +305,7 @@
                 $('#tambahBarang').click(function() {
                     totalHarga = 0;
 
-                    if ($('#kuantitas').val() == '') {
+                    if ($('#kuantitas').val() == '' || $('#kuantitas').val() == 0) {
                         Swal.fire({
                             title: 'Peringatan! Kuantitas Barang Tidak Boleh Kosong',
                             icon: 'warning',
@@ -604,7 +604,7 @@
             $(document).ready(function() {
                 $('#transaksiPemasok-table').DataTable({
                     processing: true,
-                    serverSide: true,
+                    serverSide: false,
                     ajax: "{{ route('transaksiPemasok.getTableTransaksiPemasok') }}",
                     columns: [{
                             data: 'id',
@@ -616,11 +616,13 @@
                         },
                         {
                             data: 'pemasok.nama_pemasok',
-                            name: 'pemasok.nama_pemasok'
+                            name: 'pemasok.nama_pemasok',
                         },
+
                         {
                             data: 'total_harga',
-                            name: 'total_harga'
+                            name: 'total_harga',
+                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp. ')
                         },
 
                         {
@@ -639,6 +641,8 @@
                 let id = $(this).attr('data-id');
                 deleteData(id);
             });
+
+
 
             //delete data
             function deleteData(id) {

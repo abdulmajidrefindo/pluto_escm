@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "composer": "^4.1.0",
+        "moment": "^2.29.4",
         "vuetify": "^2.6.12"
     }
 }

@@ -11,6 +11,9 @@ use App\Http\Requests\UpdateTransaksiPelangganRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use SebastianBergmann\Environment\Console;
+use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Utilities\Request;
 
 class TransaksiPelangganController extends Controller
 {
@@ -172,15 +175,32 @@ class TransaksiPelangganController extends Controller
     public function destroy(TransaksiPelanggan $transaksiPelanggan)
     {
         $transaksiPelanggan->delete();
-        //return response()->json('Berhasil Dihapus');
-        return redirect('/transaksiPelanggan')->with('completed', 'Data berhasil dihapus!');
+        //return response for ajax
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+
     }
 
-    //fetch barang
-    public function fetchBarang(Request $request)
-    {
-        $id = $request->get('id');
-        $barang = Barang::with('produk', 'merek')->where('id', $id)->first();
-        return response()->json($barang);
+    //get data transaksi pelanggan for yajra datatable
+    public function getTableTransaksiPelanggan(Request $request){
+
+        if($request->ajax()){
+
+            $data = TransaksiPelanggan::with('pelanggan')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fa fa-sm fa-fw fa-edit"></i> Edit</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fa fa-sm fa-fw fa-trash"></i> Hapus</a>';
+                    return $btn;
+                })
+                ->editColumn('created_at', function($row){
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
     }
+
 }
