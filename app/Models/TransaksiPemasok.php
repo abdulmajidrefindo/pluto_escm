@@ -10,7 +10,7 @@ class TransaksiPemasok extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "transaksi_pemasok";
-    protected $fillable = ['pemasok_id','total_harga','createdAt','updatedAt'];
+    protected $fillable = ['pemasok_id','total_harga'];
     public $timestamps = true;
 
     public function barang()
@@ -43,8 +43,24 @@ class TransaksiPemasok extends Model
                     'total_masuk' => $barang->total_masuk - $barang->pivot->kuantitas
                 ]);
             }
-            $transaksiPemasok->barang()->detach();
+            if($transaksiPemasok->forceDeleting){
+                $transaksiPemasok->barang()->detach();
+            }
         });
+
+        static::updating(function ($transaksiPemasok) {
+            foreach ($transaksiPemasok->barang as $barang) {
+                $barang->update([
+                    'total_stok' => $barang->total_stok - $barang->pivot->kuantitas,
+                    'total_masuk' => $barang->total_masuk - $barang->pivot->kuantitas
+                ]);
+            }
+        });
+
+
+
+
+
     }
 
 

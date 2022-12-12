@@ -446,6 +446,7 @@
                     // end isi data barang dari tabel ke array
 
                     //ajax submit data
+                    console.log(totalHarga);
                     $.ajax({
                         type: 'POST',
                         url: '{{ route('transaksiPemasok.store') }}',

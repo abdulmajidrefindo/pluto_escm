@@ -73,16 +73,22 @@ class TransaksiPelangganController extends Controller
             return response()->json(['errors' => $validationData->errors()->all()]);
         }
 
+        //sum of total harga barang
+        $total_harga_barang = 0;
+        foreach ($request->get('data_barang') as $data) {
+            $total_harga_barang += $data['kuantitas'] * $data['harga'];
+        }
+
         //insert data transaksi pelanggan
         TransaksiPelanggan::create([
             'pelanggan_id' => $request->get('pelanggan_id'),
-            'total_harga' => $request->get('total_harga')
+            'total_harga' => $total_harga_barang
         ]);
 
         //insert data transaksi barang pelanggan
         $transaksiPelanggan = TransaksiPelanggan::latest()->first();
         foreach ($request->get('data_barang') as $data) {
-            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
+            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['kuantitas'] * $data['harga']]);
             Barang::find($data['id'])->update([
                 'total_stok' => DB::raw('total_stok - ' . $data['kuantitas']),
                 'total_terjual' => DB::raw('total_terjual + ' . $data['kuantitas'])
@@ -152,17 +158,27 @@ class TransaksiPelangganController extends Controller
                 'total_harga.numeric' => 'Harga harus berupa angka'
             ]
         );
+
+        //jika ajax error
+        if ($validationData->fails()) {
+            return response()->json(['errors' => 'Tolong isi data dengan benar!']);
+        }
+
+        //sum of total harga barang
+        $total_harga_barang = 0;
+        foreach ($request->get('data_barang') as $data) {
+            $total_harga_barang += $data['kuantitas'] * $data['harga'];
+        }
+
         $transaksiPelanggan->update([
             'pelanggan_id' => $request->get('pelanggan_id'),
-            'total_harga' => $request->get('total_harga'),
-            'created_at' => $request->get('created_at'),
-            'updated_at' => $request->get('updated_at'),
+            'total_harga' => $total_harga_barang,
         ]);
         //update data barang pelanggan
 
-
+        $transaksiPelanggan->barang()->detach();
         foreach ($request->get('data_barang') as $data) {
-            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
+            $transaksiPelanggan->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['kuantitas'] * $data['harga'] ]);
             Barang::find($data['id'])->update([
                 'total_stok' => DB::raw('total_stok - ' . $data['kuantitas']),
                 'total_terjual' => DB::raw('total_terjual + ' . $data['kuantitas'])

@@ -432,7 +432,7 @@
                                 background: '#8D72E1',
                                 position: 'center',
                                 showCancelButton: true,
-                                confirmButtonColor: '#F3CCFF',
+                                confirmButtonColor: '#541690',
                                 cancelButtonColor: '#d33',
                                 confirmButtonText: 'Kembali Ke Daftar Transaksi',
                                 cancelButtonText: 'Tutup',
@@ -440,7 +440,7 @@
                                 if (result.isConfirmed) {
                                     window.open('{{ route('transaksiPelanggan.index') }}', '_self');
                                 } else {
-                                    window.reload();
+                                    location.reload();
                                 }
                             });
                     }

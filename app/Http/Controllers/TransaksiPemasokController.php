@@ -78,16 +78,24 @@ class TransaksiPemasokController extends Controller
             return response()->json(['errors' => $validationData->errors()->all()]);
         }
 
+        //sum of total harga barang
+        $total_harga_barang = 0;
+        foreach ($request->get('data_barang') as $data) {
+            $total_harga_barang += $data['kuantitas'] * $data['harga'];
+        }
+
+
+
         //insert data transaksi pemasok
         TransaksiPemasok::create([
             'pemasok_id' => $request->get('pemasok_id'),
-            'total_harga' => $request->get('total_harga')
+            'total_harga' => $total_harga_barang
         ]);
 
         //insert data transaksi barang pemasok
         $transaksiPemasok = TransaksiPemasok::latest()->first();
         foreach ($request->get('data_barang') as $data) {
-            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['kuantitas'] * $data['harga']]);
             Barang::find($data['id'])
                 ->update([
                     'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),
@@ -153,16 +161,24 @@ class TransaksiPemasokController extends Controller
                 'total_harga.numeric' => 'Harga harus berupa angka'
             ]
         );
+
+        $total_harga_barang = 0;
+        foreach ($request->get('data_barang') as $data) {
+            $total_harga_barang += $data['kuantitas'] * $data['harga'];
+        }
+
         $transaksiPemasok->update([
             'pemasok_id' => $request->get('pemasok_id'),
-            'total_harga' => $request->get('total_harga')
+            'total_harga' => $total_harga_barang
         ]);
 
 
-        //updata data ransaksi
 
+
+        //updata data ransaksi
+        $transaksiPemasok->barang()->detach();
         foreach ($request->get('data_barang') as $data) {
-            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['total']]);
+            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas'], 'total_harga' => $data['kuantitas'] * $data['harga']]);
             Barang::find($data['id'])
                 ->update([
                     'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),

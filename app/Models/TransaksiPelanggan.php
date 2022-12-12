@@ -10,7 +10,7 @@ class TransaksiPelanggan extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "transaksi_pelanggan";
-    protected $fillable = ['pelanggan_id','total_harga','createdAt','updatedAt'];
+    protected $fillable = ['pelanggan_id','total_harga'];
     public $timestamps = true;
 
     public function pelanggan()
