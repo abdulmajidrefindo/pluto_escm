@@ -302,31 +302,16 @@ return [
         ],
 
         // Sidebar items:
+        ['header' => 'HOME'],
         [
             'text' => 'Dashboard',
-            'url'  => '/index',
+            'url'  => '/',
             'icon' => 'nav-icon fas fa-tachometer-alt',
         ],
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        ['header' => 'account_settings'],
         [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-
         ],
         ['header' => 'MASTER'],
         [
@@ -341,16 +326,6 @@ return [
         ],
         ['header' => 'KOMODITAS'],
         [
-            'text'       => 'Barang',
-            'icon_color' => '#',
-            'url'        => '/barang',
-        ],
-        [
-            'text'       => 'Produk',
-            'icon_color' => '#',
-            'url'        => '/produk',
-        ],
-        [
             'text'       => 'Kategori',
             'icon_color' => '#',
             'url'        => '/kategori',
@@ -359,6 +334,16 @@ return [
             'text'       => 'Merek',
             'icon_color' => '#',
             'url'        => '/merek',
+        ],
+        [
+            'text'       => 'Produk',
+            'icon_color' => '#',
+            'url'        => '/produk',
+        ],
+        [
+            'text'       => 'Barang',
+            'icon_color' => '#',
+            'url'        => '/barang',
         ],
         ['header' => 'TRANSAKSI'],
         [

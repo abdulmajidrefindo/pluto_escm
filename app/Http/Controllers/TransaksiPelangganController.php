@@ -133,7 +133,8 @@ class TransaksiPelangganController extends Controller
     public function edit(TransaksiPelanggan $transaksiPelanggan)
     {
         $pelanggan = Pelanggan::all();
-        return view('transaksiPelanggan.edit', compact('transaksiPelanggan', 'pelanggan'));
+        $barang = Barang::with('produk', 'merek')->get();
+        return view('transaksiPelanggan.edit', compact('transaksiPelanggan', 'pelanggan', 'barang'));
     }
 
     /**
