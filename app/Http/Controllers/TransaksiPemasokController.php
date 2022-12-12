@@ -128,8 +128,11 @@ class TransaksiPemasokController extends Controller
         $id = $transaksiPemasok->id;
         $transaksiPemasok = TransaksiPemasok::with('barang')->where('id', $id)->first();
         $pemasok = Pemasok::all();
-        $barang = Barang::with('produk', 'merek')->get();
-        //return response()->json($transaksiPemasok);
+        $barang = Barang::whereNotIn('id', function ($query) use ($id) {
+            $query->select('barang_id')->from('transaksi_barang_pemasok')->where('transaksi_pemasok_id', $id);
+        })->get();
+
+        //return response()->json(['transaksiPemasok' => $transaksiPemasok, 'pemasok' => $pemasok, 'barang' => $barang]);
         return view('transaksiPemasok.edit', compact('transaksiPemasok', 'pemasok', 'barang'));
     }
 
@@ -226,6 +229,13 @@ class TransaksiPemasokController extends Controller
             return response()->json($data);
         }
     }
+
+
+
+
+
+
+
 
 
 
