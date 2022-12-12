@@ -58,8 +58,8 @@
 
                                     <th>Harga</th>
                                     <th>Total Terjual</th>
-
                                     <th>Total Stok</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                         </table>
@@ -153,6 +153,11 @@
                     {
                         data: 'produk.nama_produk',
                         name: 'produk.nama_produk'
+                    },
+                    {
+                        data: 'merek.nama_merek',
+                        name: 'merek.nama_merek'
+
                     },
                     {
                         data: 'pemasok.nama_pemasok',
