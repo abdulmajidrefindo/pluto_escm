@@ -12,6 +12,9 @@
 
 
 
+
+
+
     <div class="card card-dark card-tabs">
         <div class="card-header p-0 pt-1">
             <div class="card-tools">
@@ -64,6 +67,8 @@
                             </thead>
                         </table>
                     </div>
+
+
 
                 </div>
                 <div class="tab-pane fade" id="barang-tabs-add" role="tabpanel" aria-labelledby="barang-tabs-add-tab">
@@ -122,8 +127,14 @@
             </div>
         </div>
 
+
+
     </div>
 
+
+    <!-- End of card barang -->
+
+    <!-- Modal -->
 
 
 
@@ -148,7 +159,9 @@
                 ajax: "{{ route('barang.getTableBarang') }}",
                 columns: [{
                         data: 'id',
-                        name: 'id'
+                        name: 'id',
+                        width: '5%',
+                        sClass: 'text-center'
                     },
                     {
                         data: 'produk.nama_produk',
@@ -156,7 +169,8 @@
                     },
                     {
                         data: 'merek.nama_merek',
-                        name: 'merek.nama_merek'
+                        name: 'merek.nama_merek',
+
 
                     },
                     {
@@ -167,6 +181,7 @@
                     {
                         data: 'harga',
                         name: 'harga'
+
                     },
                     {
                         data: 'total_terjual',
@@ -180,7 +195,8 @@
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        sClass: 'text-center'
                     },
                 ]
             });
@@ -287,5 +303,16 @@
                 }
             })
         }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            //open edit form through iframe
+            $(document).on('click', '.edit', function(){
+                let id = $(this).attr('data-id');
+                $('#edit-modal').modal('show');
+                $('#edit-modal').find('.modal-body').load('{{ route('barang.index') }}' + '/' + id + '/edit');
+            });
+        })
     </script>
 @stop

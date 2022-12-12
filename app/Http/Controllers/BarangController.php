@@ -33,7 +33,7 @@ class BarangController extends Controller
         $produk = Produk::all('id', 'nama_produk');
         $pemasok = Pemasok::all('id', 'nama_pemasok');
         $merek = Merek::all('id', 'nama_merek');
-        //return response()->json($barang);
+
         return view('barang.index', compact('barang', 'produk', 'pemasok', 'merek'));
     }
 

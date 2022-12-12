@@ -151,13 +151,32 @@ class TransaksiPemasokController extends Controller
         );
         $transaksiPemasok->update([
             'pemasok_id' => $request->get('pemasok_id'),
-            'total_harga' => $request->get('total_harga'),
-            'created_at' => $request->get('created_at'),
-            'updated_at' => $request->get('updated_at'),
+            'total_harga' => $request->get('total_harga')
         ]);
-        $transaksiPemasok->pemasok_id = $request->pemasok_id;
-        //return response()->json('Berhasil Diupdate');
-        return redirect('/transaksiPemasok')->with('completed', 'Data berhasil Diupdate!');
+
+        //update data barang pemasok
+        foreach($transaksiPemasok->barang as $barang){
+            Barang::find($barang->id)
+                ->update([
+                    'total_stok' => DB::raw('total_stok - ' . $barang->pivot->kuantitas),
+                    'total_masuk' => DB::raw('total_masuk - ' . $barang->pivot->kuantitas)
+                ]);
+        }
+        //updata data ransaksi
+        $transaksiPemasok->barang()->detach();
+        foreach ($request->get('data_barang') as $data) {
+            $transaksiPemasok->barang()->attach($data['id'], ['users_id' => Auth::user()->id, 'kuantitas' => $data['kuantitas']]);
+            Barang::find($data['id'])
+                ->update([
+                    'total_stok' => DB::raw('total_stok + ' . $data['kuantitas']),
+                    'total_masuk' => DB::raw('total_masuk + ' . $data['kuantitas'])
+                ]);
+        }
+        if($transaksiPemasok){
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -191,6 +210,7 @@ class TransaksiPemasokController extends Controller
                 ->editColumn('created_at', function($row){
                     return $row->created_at->format('d-m-Y H:i:s');
                 })
+
                 ->rawColumns(['action'])
                 ->make(true);
         }

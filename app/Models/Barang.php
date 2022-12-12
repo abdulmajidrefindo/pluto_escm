@@ -28,7 +28,9 @@ class Barang extends Model
 
     public function merek()
     {
-        return $this->belongsTo(Merek::class);
+        return $this->belongsTo(Merek::class)->withDefault([
+            'nama_merek' => 'Merek tidak ditemukan'
+        ]);
     }
 
 
