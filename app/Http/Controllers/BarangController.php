@@ -178,8 +178,6 @@ class BarangController extends Controller
         Barang::where('id', $barang->id)->transaksi_barang_pelanggan()->detach();
 
     }
-<<<<<<< HEAD
-=======
 
     //fetch semua barang
     public function fetchAllBarang()
@@ -210,5 +208,4 @@ class BarangController extends Controller
     }
 
 
->>>>>>> main
 }
