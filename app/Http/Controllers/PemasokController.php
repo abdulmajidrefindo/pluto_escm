@@ -71,8 +71,8 @@ class PemasokController extends Controller
         //untuk testing
         $id = $pemasok->id;
         $pemasok = Pemasok::with('barang')->where('id', $id)->first();
-        return response()->json($pemasok);
-        //return view('pemasok.show',compact('pemasok'));
+        //return response()->json($pemasok);
+        return view('pemasok.show',compact('pemasok'));
     }
 
     /**

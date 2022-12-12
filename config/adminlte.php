@@ -315,12 +315,12 @@ return [
         ],
         ['header' => 'MASTER'],
         [
-            'text'       => 'Customer',
+            'text'       => 'Pelanggan',
             'icon_color' => '#',
             'url'        => '/pelanggan',
         ],
         [
-            'text'       => 'Supplier',
+            'text'       => 'Pemasok',
             'icon_color' => '#',
             'url'        => '/pemasok',
         ],
@@ -347,12 +347,12 @@ return [
         ],
         ['header' => 'TRANSAKSI'],
         [
-            'text'       => 'Transaksi Customer',
+            'text'       => 'Transaksi Pelanggan',
             'icon_color' => '#',
             'url'        => '/transaksiPelanggan',
         ],
         [
-            'text'       => 'Transaksi Supplier',
+            'text'       => 'Transaksi Pemasok',
             'icon_color' => '#',
             'url'        => '/transaksiPemasok',
         ],
