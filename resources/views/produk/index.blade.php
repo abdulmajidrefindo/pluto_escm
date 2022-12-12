@@ -71,18 +71,10 @@
                                             class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
                                             <i class="fa fa-fw fa-pen"></i> Edit
                                         </a>
-                                        <button data-toggle="modal" data-target="#modalProdukDetail"
-                                            data-id="{{ $produk->id }}" data-sku="{{ $produk->sku }}"
-                                            data-harga="{{ $produk->harga }}"
-                                            data-total-terjual="{{ $produk->total_terjual }}"
-                                            data-total-masuk="{{ $produk->total_masuk }}"
-                                            data-total-stok="{{ $produk->total_masuk }}"
+                                        <a href="{{ route('produk.show', $produk->id) }}"
                                             class="btn btn-sm btn-success mx-1 shadow" title="Detail">
                                             <i class="fa fa-fw fa-eye"></i> Detail
-                                        </button>
-                                        <?php //  <a href="{{ route('produk.show', $produk->id) }}" class="btn btn-sm btn-default text-teal mx-1 shadow" title="Details"> <i class="fa fa-lg fa-fw fa-eye"></i>
-                                        ?> </a>
-
+                                        </a>
                                         <button data-toggle="modal" data-target="#modalProduk"
                                             data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}"
                                             data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"

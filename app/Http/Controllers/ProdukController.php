@@ -76,8 +76,8 @@ class ProdukController extends Controller
         //untuk testing
         $id = $produk->id;
         $produk = Produk::with('kategori')->where('id',$id)->first();
-        return response()->json($produk);
-        //return view('produk.show',compact('produk'));
+        //return response()->json($produk);
+        return view('produk.show',compact('produk'));
     }
 
     /**

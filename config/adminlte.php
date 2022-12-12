@@ -310,7 +310,7 @@ return [
         ],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'MASTER'],

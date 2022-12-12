@@ -60,42 +60,41 @@
 </div>
 
 <div class="card">
-    <div class="card-body">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-        <table id="myTable" class="table">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Umur</th>
-                    <th>Alamat</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rizki</td>
-                    <td>23</td>
-                    <td>Jakarta</td>
-                </tr>
-                <tr>
-                    <td>Adi</td>
-                    <td>25</td>
-                    <td>Bogor</td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        <div class="text-center">
-            <ul class="pagination pagination-centered">
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">1</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">2</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">3</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">4</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">5</a></li>
-            </ul>
-            <br>
-        </div>
-    </div>
-</div>
+  <div class="card-header">
+    <h3 class="card-title">Daftar Produk</h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>                  
+        <tr>
+          <th style="width: 10px">ID</th>
+          <th>Nama Produk</th>
+          <th>Harga</th>
+          <th>Stok</th>
+          <th>Dibuat</th>
+          <th>Terakhir Diubah</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($kategori->produk as $produk)
+        <tr>
+          <td>{{$produk->id}}</td>
+          <td>{{$produk->nama_produk}}</td>
+          <td>{{$produk->harga}}</td>
+          <td>{{$produk->stok}}</td>
+          <td>{{$produk->created_at}}</td>
+          <td>{{$produk->updated_at}}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer clearfix">
+    <ul class="pagination
+
+
 <!-- /.card --
 
 
