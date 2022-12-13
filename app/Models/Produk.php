@@ -24,4 +24,16 @@ class Produk extends Model
         return $this->belongsToMany(Kategori::class,'kategori_produk')->withPivot('jenis_produk');
 
     }
+
+    //on deleted set barang
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function($produk) {
+            $produk->barang()->delete();
+        });
+    }
+
+    //on restored
+
 }

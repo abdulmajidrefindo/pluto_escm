@@ -201,7 +201,7 @@ class TransaksiPelangganController extends Controller
     }
 
     //get data transaksi pelanggan for yajra datatable
-    public function getTableTransaksiPelanggan(Request $request)
+    public function getTable(Request $request)
     {
 
         if ($request->ajax()) {
@@ -216,6 +216,7 @@ class TransaksiPelangganController extends Controller
 
                     return $btn;
                 })
+
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->format('d-m-Y H:i:s');
                 })

@@ -35,9 +35,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/transaksi', [HomeController::class, 'transaksi'])->name('transaksi');
 
-Route::get('/fetchBarang',[BarangController::class, 'fetchAllBarang'])->name('fetchAllBarang');
-Route::get('/fetchPelanggan',[PelangganController::class, 'fetchAllPelanggan'])->name('fetchAllPelanggan');
-Route::get('/fetchPemasok',[PemasokController::class, 'fetchAllPemasok'])->name('fetchAllPemasok');
+Route::get('/fetchBarang',[BarangController::class, 'fetchAll'])->name('barang.fetchAll');
+Route::get('/fetchPelanggan',[PelangganController::class, 'fetchAll'])->name('pelanggan.fetchAll');
+Route::get('/fetchPemasok',[PemasokController::class, 'fetchAll'])->name('pemasok.fetchAll');
 
 
 
@@ -50,25 +50,25 @@ Route::resource('produk', ProdukController::class);
 Route::resource('transaksiPelanggan', TransaksiPelangganController::class);
 Route::resource('transaksiPemasok', TransaksiPemasokController::class);
 
-Route::get('/getTableTransaksiPemasok', [TransaksiPemasokController::class, 'getTableTransaksiPemasok'])->name('transaksiPemasok.getTableTransaksiPemasok');
-Route::get('/getTableTransaksiPelanggan', [TransaksiPelangganController::class, 'getTableTransaksiPelanggan'])->name('transaksiPelanggan.getTableTransaksiPelanggan');
-Route::get('/getTableBarang', [BarangController::class, 'getTableBarang'])->name('barang.getTableBarang');
-Route::get('/getTablePelanggan', [PelangganController::class, 'getTablePelanggan'])->name('pelanggan.getTablePelanggan');
-Route::get('/getTablePemasok', [PemasokController::class, 'getTablePemasok'])->name('pemasok.getTablePemasok');
-Route::get('/getTableKategori', [KategoriController::class, 'getTableKategori'])->name('kategori.getTableKategori');
-Route::get('/getTableMerek', [MerekController::class, 'getTableMerek'])->name('merek.getTableMerek');
-Route::get('/getTableProduk', [ProdukController::class, 'getTableProduk'])->name('produk.getTableProduk');
+Route::get('/getTableTransaksiPemasok', [TransaksiPemasokController::class, 'getTable'])->name('transaksiPemasok.getTable');
+Route::get('/getTableTransaksiPelanggan', [TransaksiPelangganController::class, 'getTable'])->name('transaksiPelanggan.getTable');
+Route::get('/getTableBarang', [BarangController::class, 'getTable'])->name('barang.getTable');
+Route::get('/getTablePelanggan', [PelangganController::class, 'getTable'])->name('pelanggan.getTable');
+Route::get('/getTablePemasok', [PemasokController::class, 'getTable'])->name('pemasok.getTable');
+Route::get('/getTableKategori', [KategoriController::class, 'getTable'])->name('kategori.getTable');
+Route::get('/getTableMerek', [MerekController::class, 'getTable'])->name('merek.getTable');
+Route::get('/getTableProduk', [ProdukController::class, 'getTable'])->name('produk.getTable');
 
 
 
-Route::get('/getTransaksiPemasokById/{id}', [TransaksiPemasokController::class, 'getTransaksiPemasokById'])->name('transaksiPemasok.getTransaksiPemasokById');
-Route::get('/getTransaksiPelangganById/{id}', [TransaksiPelangganController::class, 'getTransaksiPelangganById'])->name('transaksiPelanggan.getTransaksiPelangganById');
-Route::get('/getBarangById/{id}', [BarangController::class, 'getBarangById'])->name('barang.getBarangById');
-Route::get('/getPelangganById/{id}', [PelangganController::class, 'getPelangganById'])->name('pelanggan.getPelangganById');
-Route::get('/getPemasokById/{id}', [PemasokController::class, 'getPemasokById'])->name('pemasok.getPemasokById');
-Route::get('/getKategoriById/{id}', [KategoriController::class, 'getKategoriById'])->name('kategori.getKategoriById');
-Route::get('/getMerekById/{id}', [MerekController::class, 'getMerekById'])->name('merek.getMerekById');
-Route::get('/getProdukById/{id}', [ProdukController::class, 'getProdukById'])->name('produk.getProdukById');
+Route::get('/getTransaksiPemasokById/{id}', [TransaksiPemasokController::class, 'getById'])->name('transaksiPemasok.getById');
+Route::get('/getTransaksiPelangganById/{id}', [TransaksiPelangganController::class, 'getById'])->name('transaksiPelanggan.getById');
+Route::get('/getBarangById/{id}', [BarangController::class, 'getById'])->name('barang.getById');
+Route::get('/getPelangganById/{id}', [PelangganController::class, 'getById'])->name('pelanggan.getById');
+Route::get('/getPemasokById/{id}', [PemasokController::class, 'getById'])->name('pemasok.getById');
+Route::get('/getKategoriById/{id}', [KategoriController::class, 'getById'])->name('kategori.getById');
+Route::get('/getMerekById/{id}', [MerekController::class, 'getById'])->name('merek.getId');
+Route::get('/getProdukById/{id}', [ProdukController::class, 'getById'])->name('produk.getById');
 
 
 Route::get('users/{id}', function ($id) {

@@ -80,13 +80,8 @@ class Barang extends Model
         //delete barang and its relationship
         static::deleting(function ($model) {
             if($model->isForceDeleting()){
-                $model->transaksiPemasok()->forceDelete();
-                $model->transaksiPelanggan()->forceDelete();
                 $model->transaksiPemasok()->detach();
                 $model->transaksiPelanggan()->detach();
-            } else {
-                $model->transaksiPemasok()->delete();
-                $model->transaksiPelanggan()->delete();
             }
         });
 

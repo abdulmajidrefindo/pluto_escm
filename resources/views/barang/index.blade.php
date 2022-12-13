@@ -140,12 +140,7 @@
         <div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header bg">
-                        <h5 class="modal-title">Edit Barang</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
+
                     <div class="modal-body">
 
                                 <form id="form_update_barang">
@@ -165,7 +160,7 @@
                                             </x-adminlte-select2>
 
                                             <x-adminlte-select2  name="update_merek_id" label="Merek Barang"
-                                                label-class="text-lightdark" fgroup-class="col-sm-5 col-md-4 col-lg-5"
+                                                label-class="text-lightdark" fgroup-class="col-sm-5 col-md-5 col-lg-5"
                                                 data-placeholder="Pilih merek...">
                                                 <option/>
                                                 @foreach ($merek as $updateMerek)
@@ -177,7 +172,7 @@
 
 
                                             <x-adminlte-select2  name="update_pemasok_id" label="Nama Pemasok"
-                                                label-class="text-lightdark" fgroup-class="col-md-4 col-lg-12"
+                                                label-class="text-lightdark" fgroup-class="col-sm-12 col-md-12 col-lg-12"
                                                 data-placeholder="Pilih pemasok...">
                                                 <option/>
                                                 @foreach ($pemasok as $updatePemasok)
@@ -187,27 +182,34 @@
                                             </x-adminlte-select2>
 
                                             <x-adminlte-input type="number" value="" name="update_sku" label="Nomor SKU (Stok Keeping Unit)"
-                                                placeholder="" fgroup-class="col-md-4 col-lg-12"  />
+                                                placeholder="" fgroup-class="col-md-12 col-lg-12"  />
 
                                             <x-adminlte-input type="number" value="" name="update_harga" label="Harga Barang"
-                                                placeholder="" fgroup-class="col-sm-6 col-md-3 3 col-lg-6"  />
+                                                placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6"  />
 
                                             <x-adminlte-input type="number" value="" name="update_total_terjual" label="Total Barang Terjual"
-                                                placeholder="" fgroup-class="col-sm-6 col-md-3 col-lg-6"  />
+                                                placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6"  />
 
                                             <x-adminlte-input type="number" value="" name="update_total_masuk" label="Total Barang Masuk"
-                                                placeholder="" fgroup-class="col-sm-6 col-md-3 3 col-lg-6"  />
+                                                placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6"  />
 
                                             <x-adminlte-input type="number" value="" name="update_total_stok" label="Total Stok Barang"
-                                                placeholder="" fgroup-class="col-sm-6 col-md-3 3 col-lg-6"  />
+                                                placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6"  />
 
 
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <x-adminlte-button class="btn col-12" name="update_barang" type="submit" label="Update" theme="primary"
-                                                icon="fas fa-lg fa-save" />
+                                    <div class="row d-grid gap-2">
+                                        <div class="col-md-6 d-grid gap-2">
+                                            <x-adminlte-button class="btn col-12 rounded-0" name="update_barang" type="submit" label="Update" theme="primary"
+                                                icon="fas fa-fw fa-sm fa-save" />
+
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <x-adminlte-button data-dismiss="modal" class="btn btn-block col-12 rounded-0" name="update_barang" type="submit" label="Cancel" theme="danger"
+                                                icon="fas fa-fw fa-sm fa-window-close" />
 
                                         </div>
                                     </div>
@@ -215,10 +217,7 @@
                                 </form>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -244,7 +243,7 @@
             $('#barang-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('barang.getTableBarang') }}",
+                ajax: "{{ route('barang.getTable') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
@@ -373,14 +372,7 @@
                                         showConfirmButton: false,
                                         timer: 3000,
                                         timerProgressBar: true,
-                                        didOpen: (toast) => {
-                                            toast.addEventListener('mouseenter',
-                                                Swal
-                                                .stopTimer)
-                                            toast.addEventListener('mouseleave',
-                                                Swal
-                                                .resumeTimer)
-                                        }
+
                                     });
                                 }
 

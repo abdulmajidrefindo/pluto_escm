@@ -22,13 +22,10 @@ class UsersTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'name' => 'Dio Refin Bintang Cahya Purnama',
-                'email' => 'mutiarahitam@gmail.com',
-                'username' => 'voyeurism',
-                'password' => 'belum ada password',
-                'remember_token' => 'belum tau',
-                'created_at' => '2022-12-14 16:37:27',
-                'updated_at' => '2022-12-31 16:37:27',
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'username' => 'kedaireka',
+                'password' => bcrypt('adminkedaireka'),
             ),
         ));
 

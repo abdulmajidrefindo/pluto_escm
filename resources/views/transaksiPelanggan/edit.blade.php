@@ -503,7 +503,7 @@
     function populateSelectBarang() {
         $.ajax({
             type: 'GET',
-            url: '{{ route('fetchAllBarang') }}',
+            url: '{{ route('barang.fetchAll') }}',
             dataType: 'json',
             success: function(data) {
                 let html = '';

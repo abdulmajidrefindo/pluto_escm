@@ -208,7 +208,7 @@ class TransaksiPemasokController extends Controller
     }
 
     //get data transaksi pemasok for yajra datatable
-    public function getTableTransaksiPemasok(Request $request){
+    public function getTable(Request $request){
         if($request->ajax()){
             $data = TransaksiPemasok::with('pemasok')->get();
             return DataTables::of($data)
@@ -230,7 +230,7 @@ class TransaksiPemasokController extends Controller
     }
 
     //get transaksi pemasok by id ajax
-    public function getTransaksiPemasokById(Request $request){
+    public function getById(Request $request){
         if($request->ajax()){
             $data = TransaksiPemasok::with('barang')->where('id', $request->id)->first();
             return response()->json($data);

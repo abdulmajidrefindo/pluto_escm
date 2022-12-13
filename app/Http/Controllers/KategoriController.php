@@ -16,7 +16,7 @@ class KategoriController extends Controller
     public function index()
     {
         // Menampilkan data kategori
-        $kategori = Kategori::with('produk')->get();
+        $kategori = Kategori::all()->skip(1);
         //return response()->json($kategori);
         return view('kategori.index', compact('kategori'));
     }

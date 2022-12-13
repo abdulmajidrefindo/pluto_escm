@@ -29,19 +29,19 @@
                         @if ($transaksi->jenis_transaksi === 'Masuk')
                             <?php
                             $badge = 'badge-success';
-                            $kode = 'OR';
+
                             $routeTransaksi = route('transaksiPemasok.show', $transaksi->id);
                             ?>
                         @else
                             <?php
                             $badge = 'badge-danger';
-                            $kode = 'IN';
+
                             $routeTransaksi =  route('transaksiPelanggan.show', $transaksi->id);
                             ?>
                         @endif
 
                         <tr>
-                            <td><a href="{{$routeTransaksi}}">{{$kode}}{{ $transaksi->id }}</a></td>
+                            <td><a href="{{$routeTransaksi}}">{{ $transaksi->id }}</a></td>
                             <td>@datetime($transaksi->created_at)</td>
                             <td>{{ $transaksi->nama }}</td>
                             <td>

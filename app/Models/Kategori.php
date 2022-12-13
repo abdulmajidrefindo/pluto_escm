@@ -18,5 +18,14 @@ class Kategori extends Model
     {
         return $this->belongsToMany(Produk::class,'kategori_produk');
     }
+
+    //set produk kategori to default when deleted
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function($kategori) {
+            $kategori->produk()->update(['kategori_id' => 1]);
+        });
+    }
 }
 

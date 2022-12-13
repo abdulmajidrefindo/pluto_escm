@@ -1,12 +1,3 @@
-@php
-
-    $heads = ['ID', 'Nama Produk', 'Kategori', ['label' => 'Aksi', 'no-export' => true]];
-    $config = [
-        'order' => [[1, 'asc']],
-        'columns' => [null, null, null, ['orderable' => false]],
-    ];
-@endphp
-
 @extends('adminlte::page')
 
 @section('title', 'Dashboard')
@@ -50,42 +41,21 @@
                 <div class="tab-pane active show" id="produk-tabs-table" role="tabpanel"
                     aria-labelledby="produk-tabs-table-tab">
 
-                    <x-adminlte-datatable id="produk-table" :heads="$heads" theme="light" :config="$config" striped
-                        hoverable with-footer footer-theme="light" beautify>
-                        @foreach ($produk as $produk)
-                            <tr>
-                                <td>
-                                    {{ $produk->id }}
-                                </td>
-                                <td>
-                                    {{ $produk->nama_produk }}
-                                </td>
+                    <!-- Table barang -->
+                    <div class="table-responsive">
+                        <table id="produk-table" class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Produk</th>
+                                    <th>Unit</th>
+                                    <th>Keterangan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
 
-                                <td>
-                                    {{ $produk->kategori->first()->nama_kategori }}
-                                </td>
-
-                                <td>
-                                    <nobr>
-                                        <a href="{{ route('produk.edit', $produk->id) }}"
-                                            class="btn btn-sm btn-primary mx-1 shadow" title="Edit">
-                                            <i class="fa fa-fw fa-pen"></i> Edit
-                                        </a>
-                                        <a href="{{ route('produk.show', $produk->id) }}"
-                                            class="btn btn-sm btn-success mx-1 shadow" title="Detail">
-                                            <i class="fa fa-fw fa-eye"></i> Detail
-                                        </a>
-                                        <button data-toggle="modal" data-target="#modalProduk"
-                                            data-id="{{ $produk->id }}" data-nama-produk="{{ $produk->nama_produk }}"
-                                            data-unit="{{ $produk->unit }}" data-keterangan="{{ $produk->keterangan }}"
-                                            class="delete btn btn-sm btn-danger mx-1 shadow" title="Hapus">
-                                            <i class="fa fa-fw fa-trash"></i> Hapus
-                                        </button>
-                                    </nobr>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </x-adminlte-datatable>
                 </div>
 
                 <div class="tab-pane fade" id="produk-tabs-add" role="tabpanel" aria-labelledby="produk-tabs-add-tab">
@@ -216,5 +186,127 @@
             document.getElementById("keterangan").innerHTML = keterangan;
             document.getElementById("kategori").innerHTML = kategori;
         });
+    </script>
+
+    <script>
+        //document ready
+        $(document).ready(function() {
+
+
+            //datatable
+            $('#produk-table').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                ajax: {
+                    url: "{{ route('produk.getTable') }}",
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                    },
+
+                    {
+                        data: 'nama_produk',
+                        name: 'nama_produk'
+                    },
+                    {
+                        data: 'unit',
+                        name: 'unit'
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan',
+                    },
+
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                ]
+            }); //end of datatable
+
+            $(document).on('click', '.delete', function() {
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "SEMUA data ITEM BARANG dan TRANSAKSI yang berkaitan dengan produk ini akan terhapus!!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        let id = $(this).attr('data-id');
+                        deleteData(id);
+                    }
+                });
+            });
+
+
+        });
+
+        //delete data with ajax
+        function deleteData(id) {
+            $.ajax({
+                url: "{{ route('produk.index') }}" + '/' + id,
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    if (response.success != null) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Data Berhasil Dihapus',
+                            icon: 'success',
+                            iconColor: '#fff',
+                            color: '#fff',
+                            toast: true,
+                            background: '#8D72E1',
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
+                        $('#produk-table').DataTable().ajax.reload();
+                    } else {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Data Gagal Dihapus',
+                            icon: 'error',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
+                    }
+                },
+                error: function(response) {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'Data Gagal Dihapus',
+                        icon: 'error',
+                        iconColor: '#fff',
+                        toast: true,
+                        background: '#f8bb86',
+                        position: 'center-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                }
+            });
+        }
+
+
+        //end of document ready
     </script>
 @stop

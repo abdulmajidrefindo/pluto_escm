@@ -55,7 +55,7 @@
                         <table id="transaksiPelanggan-table" class="table table-striped table-hover table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Kode Transaksi</th>
+                                    <th>Kode</th>
                                     <th>Tanggal Transaksi</th>
                                     <th>Pelanggan</th>
                                     <th>Total Harga</th>
@@ -535,7 +535,7 @@
             function populateSelectBarang() {
                 $.ajax({
                     type: 'GET',
-                    url: '{{ route('fetchAllBarang') }}',
+                    url: '{{ route("barang.fetchAll") }}',
                     dataType: 'json',
                     success: function(data) {
                         let html = '';
@@ -593,11 +593,13 @@
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        url: "{{ route('transaksiPelanggan.getTableTransaksiPelanggan') }}",
+                        url: "{{ route('transaksiPelanggan.getTable') }}",
                     },
                     columns: [{
                             data: 'id',
-                            name: 'id'
+                            name: 'id',
+                            sClass: 'text-center',
+                            width: '5%'
                         },
                         {
                             data: 'created_at',
@@ -617,7 +619,8 @@
                             data: 'action',
                             name: 'action',
                             orderable: false,
-                            searchable: false
+                            searchable: false,
+                            sClass: 'text-center'
                         },
                     ]
                 });
