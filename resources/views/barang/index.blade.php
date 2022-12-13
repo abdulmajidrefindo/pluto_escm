@@ -78,9 +78,9 @@
                     <form id="form_tambah_barang">
 
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-sm-6">
                                 <x-adminlte-select2 name="produk_id" label="Produk" label-class="text-lightdark"
-                                    fgroup-class="col-md-6" data-placeholder="Pilih produk...">
+                                    fgroup-class="col-md-12" data-placeholder="Pilih produk...">
                                     <option />
                                     @foreach ($produk as $tambahProduk)
                                         <option value="{{ $tambahProduk->id }}">{{ $tambahProduk->nama_produk }}</option>
@@ -88,7 +88,7 @@
                                 </x-adminlte-select2>
 
                                 <x-adminlte-select2 name="merek_id" label="Merek Barang" label-class="text-lightdark"
-                                    fgroup-class="col-md-6" data-placeholder="Pilih merek...">
+                                    fgroup-class="col-md-12" data-placeholder="Pilih merek...">
                                     <option />
                                     @foreach ($merek as $tambahMerek)
                                         <option value="{{ $tambahMerek->id }}">{{ $tambahMerek->nama_merek }}</option>
@@ -96,7 +96,7 @@
                                 </x-adminlte-select2>
 
                                 <x-adminlte-select2 name="pemasok_id" label="Pemasok" label-class="text-lightdark"
-                                    fgroup-class="col-md-6" data-placeholder="Pilih pemasok...">
+                                    fgroup-class="col-md-12" data-placeholder="Pilih pemasok...">
                                     <option />
                                     @foreach ($pemasok as $tambahPemasok)
                                         <option value="{{ $tambahPemasok->id }}">{{ $tambahPemasok->nama_pemasok }}</option>
@@ -104,17 +104,24 @@
                                 </x-adminlte-select2>
 
                                 <x-adminlte-input name="sku" label="SKU Barang" label-class="text-lightdark"
-                                    placeholder="Stock Keeping Unit." fgroup-class="col-md-6" disable-feedback />
+                                    placeholder="Stock Keeping Unit." fgroup-class="col-md-12" disable-feedback />
 
                                 <x-adminlte-input name="harga" label="Harga Barang" label-class="text-lightdark"
-                                    placeholder="Rp.-  " fgroup-class="col-md-6"
+                                    placeholder="Rp.-  " fgroup-class="col-md-12"
                                     disable-feedback />
 
                                 <x-adminlte-input name="total_stok" label="Total Stok Barang" label-class="text-lightdark"
-                                    placeholder="Banyaknya stok yang tersedia." fgroup-class="col-md-6" disable-feedback />
+                                    placeholder="Banyaknya stok yang tersedia." fgroup-class="col-md-12" disable-feedback />
 
-                                <x-adminlte-button class="btn" type="submit" name="tambah_barang" label="Simpan Data"
-                                    theme="info" icon="fas fa-lg fa-save" />
+                                    <x-adminlte-button class="btn bg-purple col-12" type="submit" label="Simpan Data"
+                                    icon="fas fa-sm fa-fw fa-save" />
+                            </div>
+                            <div class="col-sm-6 border-left d-flex align-items-center justify-content-center">
+                                <span class="fa-stack fa-10x">
+
+                                <i class="d-none d-sm-block fas fa-cart-flatbed fa-bounce text-purple disabled fa-stack-1x" style="--fa-beat-scale: 1.1;"></i>
+
+                                </span>
                             </div>
                         </div>
                     </form>
@@ -140,35 +147,25 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-
                 <div class="modal-body">
-
                     <form id="form_update_barang">
                         <div class="row">
-
                             <x-adminlte-input type="text" value="ITM" name="update_id" label="ID Barang"
                                 placeholder="" fgroup-class="col-md-6 col-lg-12" disabled />
-
                             <x-adminlte-select2 name="update_produk_id" label="Nama Produk" label-class="text-lightdark"
                                 fgroup-class="col-sm-7 col-md-6 col-lg-7" data-placeholder="Pilih produk...">
                                 <option />
                                 @foreach ($produk as $updateProduk)
                                     <option value="{{ $updateProduk->id }}">{{ $updateProduk->nama_produk }}</option>
                                 @endforeach
-
                             </x-adminlte-select2>
-
                             <x-adminlte-select2 name="update_merek_id" label="Merek Barang" label-class="text-lightdark"
                                 fgroup-class="col-sm-5 col-md-5 col-lg-5" data-placeholder="Pilih merek...">
                                 <option />
                                 @foreach ($merek as $updateMerek)
                                     <option value="{{ $updateMerek->id }}">{{ $updateMerek->nama_merek }}</option>
                                 @endforeach
-
                             </x-adminlte-select2>
-
-
-
                             <x-adminlte-select2 name="update_pemasok_id" label="Nama Pemasok"
                                 label-class="text-lightdark" fgroup-class="col-sm-12 col-md-12 col-lg-12"
                                 data-placeholder="Pilih pemasok...">
@@ -176,48 +173,32 @@
                                 @foreach ($pemasok as $updatePemasok)
                                     <option value="{{ $updatePemasok->id }}">{{ $updatePemasok->nama_pemasok }}</option>
                                 @endforeach
-
                             </x-adminlte-select2>
-
                             <x-adminlte-input type="number" value="" name="update_sku"
                                 label="Nomor SKU (Stok Keeping Unit)" placeholder=""
                                 fgroup-class="col-md-12 col-lg-12" />
-
                             <x-adminlte-input type="number" value="" name="update_harga" label="Harga Barang"
                                 placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6" />
-
                             <x-adminlte-input type="number" value="" name="update_total_terjual"
                                 label="Total Barang Terjual" placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6" />
-
                             <x-adminlte-input type="number" value="" name="update_total_masuk"
                                 label="Total Barang Masuk" placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6" />
-
                             <x-adminlte-input type="number" value="" name="update_total_stok"
                                 label="Total Stok Barang" placeholder="" fgroup-class="col-sm-6 col-md-6 col-lg-6" />
-
-
                         </div>
-
                         <div class="row d-grid gap-2">
                             <div class="col-md-6 d-grid gap-2">
-                                <x-adminlte-button class="btn col-12 rounded-0" name="update_barang" type="submit"
-                                    label="Update" theme="primary" icon="fas fa-fw fa-sm fa-save" />
-
-
+                                <x-adminlte-button class="btn col-12 bg-purple rounded-0" name="update_barang" type="submit"
+                                    label="Simpan Data" theme="primary" icon="fas fa-fw fa-sm fa-save" />
                             </div>
-
                             <div class="col-md-6">
-                                <x-adminlte-button data-dismiss="modal" class="btn btn-block col-12 rounded-0"
-                                    name="update_barang" type="button" label="Cancel" theme="danger"
+                                <x-adminlte-button data-dismiss="modal" class="btn btn-block col-12 rounded-0 bg-maroon"
+                                    name="close_produk" type="button" label="Cancel"
                                     icon="fas fa-fw fa-sm fa-window-close" />
-
                             </div>
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
         </div>
     </div>

@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('kategori_produk', function (Blueprint $table) {
             $table->foreignId('kategori_id')->constrained('kategori')->default(1)->onDelete('cascade');
 		    $table->foreignId('produk_id')->constrained('produk')->onDelete('cascade');
-		    $table->enum('jenis_produk',['Bahan Baku','Barang Jadi', 'Barang Olahan']);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -23,7 +23,6 @@ class KategoriProdukTableSeeder extends Seeder
             array (
                 'kategori_id' => 1,
                 'produk_id' => 4,
-                'jenis_produk' => 'Barang Jadi',
                 'created_at' => '2022-12-01 16:10:13',
                 'updated_at' => '2022-12-07 16:10:13',
             ),
@@ -31,7 +30,6 @@ class KategoriProdukTableSeeder extends Seeder
             array (
                 'kategori_id' => 5,
                 'produk_id' => 1,
-                'jenis_produk' => 'Barang Jadi',
                 'created_at' => '2022-12-01 16:10:13',
                 'updated_at' => '2022-12-02 16:10:13',
             ),
@@ -39,7 +37,6 @@ class KategoriProdukTableSeeder extends Seeder
             array (
                 'kategori_id' => 1,
                 'produk_id' => 3,
-                'jenis_produk' => 'Barang Jadi',
                 'created_at' => '2022-12-01 16:11:21',
                 'updated_at' => '2022-12-16 16:11:21',
             ),
@@ -47,7 +44,6 @@ class KategoriProdukTableSeeder extends Seeder
             array (
                 'kategori_id' => 4,
                 'produk_id' => 2,
-                'jenis_produk' => 'Barang Jadi',
                 'created_at' => '2022-12-22 16:11:21',
                 'updated_at' => '2022-12-31 16:11:21',
             ),
@@ -55,7 +51,6 @@ class KategoriProdukTableSeeder extends Seeder
             array (
                 'kategori_id' => 5,
                 'produk_id' => 5,
-                'jenis_produk' => 'Barang Jadi',
                 'created_at' => '2022-12-01 16:30:07',
                 'updated_at' => '2022-12-10 16:30:07',
             ),
@@ -63,7 +58,6 @@ class KategoriProdukTableSeeder extends Seeder
             array (
                 'kategori_id' => 1,
                 'produk_id' => 6,
-                'jenis_produk' => 'Barang Jadi',
                 'created_at' => '2022-12-13 16:30:07',
                 'updated_at' => '2022-12-07 16:30:07',
             ),

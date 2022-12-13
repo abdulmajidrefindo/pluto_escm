@@ -154,7 +154,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button id="submitTransaksi" type="submit" class="btn btn-primary btn-block">Simpan</button>
+                        <button id="submitTransaksi" type="submit" class="btn bg-purple btn-block">Simpan</button>
                     </div>
                 </div>
 
@@ -165,9 +165,7 @@
             <table>
 
         </div>
-        <div class="card-footer text-muted">
-            Footer
-        </div>
+
     </div>
 @stop
 

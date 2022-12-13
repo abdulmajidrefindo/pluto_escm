@@ -11,8 +11,14 @@ class Produk extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "produk";
-    protected $fillable = ['nama_produk', 'keterangan', 'unit'];
+    protected $fillable = ['nama_produk', 'keterangan', 'unit','jenis_produk'];
     public $timestamps = true;
+
+    //default value for keterangan if null
+    protected $attributes = [
+        'keterangan' => 'Tidak ada keterangan',
+        'jenis_produk' => 'Bahan Jadi'
+    ];
 
     public function barang()
     {
@@ -21,7 +27,7 @@ class Produk extends Model
 
     public function kategori(): BelongsToMany
     {
-        return $this->belongsToMany(Kategori::class,'kategori_produk')->withPivot('jenis_produk');
+        return $this->belongsToMany(Kategori::class,'kategori_produk');
 
     }
 

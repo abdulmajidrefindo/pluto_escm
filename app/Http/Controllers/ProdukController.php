@@ -50,26 +50,44 @@ class ProdukController extends Controller
     {
         $validationData = $request->validate([
             'nama_produk' => 'required',
-            'unit' => 'required',
-            'keterangan' => 'required'
+            'unit' => 'required|max:20',
+            'keterangan' => 'nullable|max:100',
+
         ],
         [
-            'nama_produk.required' => 'Nama pemasok harus diisi',
-            'unit.required' => 'Keterangan harus diisi',
-            'keterangan.required' => 'Kontak pemasok harus diisi'
+            'nama_produk.required' => 'Nama produk harus diisi',
+            'unit.required' => 'Unit satuan produk harus diisi',
+            'unit.max' => 'Unit satuan produk maksimal 20 karakter',
+            'keterangan.max' => 'Keterangan produk maksimal 100 karakter',
+
+
         ]);
+
+
         $produk = Produk::create([
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
             'keterangan' => $request->get('keterangan'),
+
         ]);
 
-        KategoriProduk::create([
-            'kategori_id' => $request->get('kategori_id'),
-            'produk_id' => $produk->id
-        ]);
-        //return response()->json('Berhasil Disimpan');
-        return redirect('/produk')->with('completed','Data berhasil disimpan!');
+        //attach to kategori
+        $kategori = $request->get('kategori_id');
+        if($kategori){
+            foreach($kategori as $k){
+                $produk->kategori()->attach($k);
+            }
+        } else {
+            $produk->kategori()->attach(1);
+        }
+
+
+
+        if($produk){
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -95,8 +113,11 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        $kategori = Kategori::all();
-        return view ('produk.edit',compact('produk','kategori'));
+        $id = $produk->id;
+        //return json value for ajax
+        $produk = Produk::with('kategori')->where('id',$id)->first();
+        return response()->json($produk);
+
     }
 
     /**
@@ -108,13 +129,48 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Produk $produk)
     {
+        $validationData = $request->validate([
+            'nama_produk' => 'required',
+            'unit' => 'required|max:20',
+            'keterangan' => 'nullable|max:100',
+
+        ],
+        [
+            'nama_produk.required' => 'Nama produk harus diisi',
+            'unit.required' => 'Unit satuan produk harus diisi',
+            'unit.max' => 'Unit satuan produk maksimal 20 karakter',
+            'keterangan.max' => 'Keterangan produk maksimal 100 karakter',
+
+
+        ]);
+
+
+        //update
         $produk->update([
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
             'keterangan' => $request->get('keterangan'),
+
         ]);
-        //return response()->json('Berhasil Disimpan');
-        return redirect('/produk')->with('completed','Data berhasil diupdate!');
+
+        //attach to kategori
+        $kategori = $request->get('kategori_id');
+        if($kategori){
+            $produk->kategori()->detach();
+            foreach($kategori as $k){
+                $produk->kategori()->attach($k);
+            }
+        } else {
+            $produk->kategori()->attach(1);
+        }
+
+
+
+        if($produk){
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**

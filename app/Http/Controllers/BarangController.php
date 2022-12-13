@@ -95,9 +95,9 @@ class BarangController extends Controller
         ]);
 
         if($barang){
-            return response()->json(['success' => 'Data berhasil diupdate!']);
+            return response()->json(['success' => 'Data berhasil disimpan!']);
         } else {
-            return response()->json(['errors' => 'Data gagal diupdate!']);
+            return response()->json(['errors' => 'Data gagal disimpan!']);
         }
     }
 
