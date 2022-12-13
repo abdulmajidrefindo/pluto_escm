@@ -400,7 +400,7 @@
 
             $.ajax({
                 type: 'PUT',
-                url: '{{ route('transaksiPelanggan.store') }}' + '/' + transaksi_id,
+                url: '{{ route('transaksiPelanggan.index') }}' + '/' + transaksi_id,
                 data: {
                     pelanggan_id: pelanggan_id,
                     data_barang: data_barang,

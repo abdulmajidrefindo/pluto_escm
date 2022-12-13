@@ -115,6 +115,12 @@ class BarangController extends Controller
      */
     public function edit(Barang $barang)
     {
+
+        if(request()->ajax()){
+            $data = Barang::with('produk', 'pemasok', 'merek')->where('id', $barang->id)->first();
+            return response()->json($data);
+        }
+
         $merek = Merek::all('id','nama_merek');
         $produk = Produk::all('id','nama_produk');
         $pemasok = Pemasok::all('id','nama_pemasok');
@@ -132,20 +138,28 @@ class BarangController extends Controller
     {
         $validationData = $request->validate(
             [
-                'merek_id' => 'numeric',
-                'produk_id' => 'numeric',
-                'pemasok_id' => 'numeric',
-                'sku' => 'numeric',
-                'harga' => 'numeric',
-                'total_stok' => 'numeric'
+                'merek_id' => 'required|numeric',
+                'produk_id' => 'required|numeric',
+                'pemasok_id' => 'required|numeric',
+                'harga' => 'numeric|required',
+                'total_stok' => 'numeric|required',
+                'total_terjual' => 'numeric|required',
+                'total_masuk' => 'numeric|required'
             ],
             [
+                'merek_id.required' => 'Merek harus diisi',
                 'merek_id.numeric' => 'Masukkan merek dengan benar',
+                'produk_id.required' => 'Produk harus diisi',
                 'produk_id.numeric' => 'Masukkan produk dengan benar',
+                'pemasok_id.required' => 'Pemasok harus diisi',
                 'pemasok_id.numeric' => 'Masukkan pemasok dengan benar',
+                'sku.required' => 'SKU harus diisi',
                 'sku.numeric' => 'SKU harus berupa angka',
+                'harga.required' => 'Harga harus diisi',
                 'harga.numeric' => 'Harga harus berupa angka',
+                'total_stok.required' => 'Stok harus diisi. Masukkan angka 0 jika tidak ada stok!',
                 'total_stok.numeric' => 'Stok harus berupa angka'
+
             ]
         );
         $barang->update([
@@ -163,7 +177,15 @@ class BarangController extends Controller
 
         //Cek sisa stok barang, kalo tinggal dikit kirim notifikasi
         //event(new SisaStokEvent($barang->id,20));
-        return redirect('/barang')->with('completed', 'Data barang berhasil diperbaharui!');
+
+        //return jsone if success
+        if($barang){
+            return response()->json(['success' => 'Data berhasil diupdate!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal diupdate!']);
+        }
+
+
     }
 
     /**
@@ -196,8 +218,8 @@ class BarangController extends Controller
             return DataTables::of($barang)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('barang.show', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
-                    $btn .= '<a href="' . route('barang.edit', $row->id) . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
+                    $btn = '<a href="" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
                     $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
 
                     return $btn;
@@ -207,6 +229,14 @@ class BarangController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
+        }
+    }
+
+    public function getBarangById($id)
+    {
+        if (request()->ajax()) {
+            $barang = Barang::with('produk', 'merek', 'pemasok')->where('id', $id)->first();
+            return response()->json($barang);
         }
     }
 

@@ -110,4 +110,6 @@ class KategoriController extends Controller
         //return response()->json("Terhapus");
         return redirect('/kategori')->with('message', 'Data kategori berhasil terhapus!');
     }
+
+
 }

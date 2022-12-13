@@ -69,9 +69,7 @@ class TransaksiPelangganController extends Controller
         );
 
         //jika ajax error
-        if ($validationData->fails()) {
-            return response()->json(['errors' => $validationData->errors()->all()]);
-        }
+
 
         //sum of total harga barang
         $total_harga_barang = 0;
@@ -159,10 +157,7 @@ class TransaksiPelangganController extends Controller
             ]
         );
 
-        //jika ajax error
-        if ($validationData->fails()) {
-            return response()->json(['errors' => 'Tolong isi data dengan benar!']);
-        }
+
 
         //sum of total harga barang
         $total_harga_barang = 0;

@@ -75,23 +75,23 @@
 
                     <!-- Form input barang -->
 
-                    <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="tambahBarang" action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-sm">
                                 <x-adminlte-select2 id="selectProduk" name="produk_id" label="Produk"
                                     label-class="text-lightblue" fgroup-class="col-md-6" data-placeholder="Pilih produk...">
                                     <option />
-                                    @foreach ($produk as $produk)
-                                        <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
+                                    @foreach ($produk as $tambahProduk)
+                                        <option value="{{ $tambahProduk->id }}">{{ $tambahProduk->nama_produk }}</option>
                                     @endforeach
                                 </x-adminlte-select2>
 
                                 <x-adminlte-select2 id="selectMerek" name="merek_id" label="Merek Barang"
                                     label-class="text-lightblue" fgroup-class="col-md-6" data-placeholder="Pilih merek...">
                                     <option />
-                                    @foreach ($merek as $merek)
-                                        <option value="{{ $merek->id }}">{{ $merek->nama_merek }}</option>
+                                    @foreach ($merek as $tambahMerek)
+                                        <option value="{{ $tambahMerek->id }}">{{ $tambahMerek->nama_merek }}</option>
                                     @endforeach
                                 </x-adminlte-select2>
 
@@ -99,8 +99,8 @@
                                     label-class="text-lightblue" fgroup-class="col-md-6"
                                     data-placeholder="Pilih pemasok...">
                                     <option />
-                                    @foreach ($pemasok as $pemasok)
-                                        <option value="{{ $pemasok->id }}">{{ $pemasok->nama_pemasok }}</option>
+                                    @foreach ($pemasok as $tambahPemasok)
+                                        <option value="{{ $tambahPemasok->id }}">{{ $tambahPemasok->nama_pemasok }}</option>
                                     @endforeach
                                 </x-adminlte-select2>
 
@@ -133,7 +133,95 @@
 
 
     <!-- End of card barang -->
+        <!-- Button trigger modal -->
 
+
+        <!-- Modal -->
+        <div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg">
+                        <h5 class="modal-title">Edit Barang</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+
+                                <form id="form_update_barang">
+                                    <div class="row">
+
+                                        <x-adminlte-input type="text" value="ITM" name="update_id" label="ID Barang"
+                                            placeholder="" fgroup-class="col-md-6 col-lg-12" disabled/>
+
+                                        <x-adminlte-select2 name="update_produk_id" label="Nama Produk"
+                                                label-class="text-lightdark" fgroup-class="col-sm-7 col-md-6 col-lg-7"
+                                                data-placeholder="Pilih produk...">
+                                                <option/>
+                                                @foreach ($produk as $updateProduk)
+                                                    <option value="{{ $updateProduk->id }}">{{ $updateProduk->nama_produk }}</option>
+                                                @endforeach
+
+                                            </x-adminlte-select2>
+
+                                            <x-adminlte-select2  name="update_merek_id" label="Merek Barang"
+                                                label-class="text-lightdark" fgroup-class="col-sm-5 col-md-4 col-lg-5"
+                                                data-placeholder="Pilih merek...">
+                                                <option/>
+                                                @foreach ($merek as $updateMerek)
+                                                    <option value="{{ $updateMerek->id }}">{{ $updateMerek->nama_merek }}</option>
+                                                @endforeach
+
+                                            </x-adminlte-select2>
+
+
+
+                                            <x-adminlte-select2  name="update_pemasok_id" label="Nama Pemasok"
+                                                label-class="text-lightdark" fgroup-class="col-md-4 col-lg-12"
+                                                data-placeholder="Pilih pemasok...">
+                                                <option/>
+                                                @foreach ($pemasok as $updatePemasok)
+                                                    <option value="{{ $updatePemasok->id }}">{{ $updatePemasok->nama_pemasok }}</option>
+                                                @endforeach
+
+                                            </x-adminlte-select2>
+
+                                            <x-adminlte-input type="number" value="" name="update_sku" label="Nomor SKU (Stok Keeping Unit)"
+                                                placeholder="" fgroup-class="col-md-4 col-lg-12"  />
+
+                                            <x-adminlte-input type="number" value="" name="update_harga" label="Harga Barang"
+                                                placeholder="" fgroup-class="col-sm-6 col-md-3 3 col-lg-6"  />
+
+                                            <x-adminlte-input type="number" value="" name="update_total_terjual" label="Total Barang Terjual"
+                                                placeholder="" fgroup-class="col-sm-6 col-md-3 col-lg-6"  />
+
+                                            <x-adminlte-input type="number" value="" name="update_total_masuk" label="Total Barang Masuk"
+                                                placeholder="" fgroup-class="col-sm-6 col-md-3 3 col-lg-6"  />
+
+                                            <x-adminlte-input type="number" value="" name="update_total_stok" label="Total Stok Barang"
+                                                placeholder="" fgroup-class="col-sm-6 col-md-3 3 col-lg-6"  />
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <x-adminlte-button class="btn col-12" name="update_barang" type="submit" label="Update" theme="primary"
+                                                icon="fas fa-lg fa-save" />
+
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- Modal -->
 
 
@@ -305,14 +393,130 @@
         }
     </script>
 
+
     <script>
-        $(document).ready(function(){
-            //open edit form through iframe
-            $(document).on('click', '.edit', function(){
-                let id = $(this).attr('data-id');
-                $('#edit-modal').modal('show');
-                $('#edit-modal').find('.modal-body').load('{{ route('barang.index') }}' + '/' + id + '/edit');
+
+        $(document).on('click', '.edit', function() {
+            //update
+            //populate form
+            let id = $(this).attr('data-id');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('barang.index') }}' + '/' + id + '/edit',
+                dataType: 'json',
+                success: function(data) {
+
+                    $('#update_id').val(data.id);
+
+                    $('#update_produk_id').val(data.produk.id).trigger('change');
+                    $('#update_merek_id').val(data.merek.id).trigger('change');
+                    $('#update_pemasok_id').val(data.pemasok.id).trigger('change');
+                    $('#update_harga').val(data.harga);
+                    $('#update_sku').val(data.sku);
+                    $('#update_total_masuk').val(data.total_masuk);
+                    $('#update_total_terjual').val(data.total_terjual);
+                    $('#update_total_stok').val(data.total_stok);
+                    $('#update-modal').modal('show');
+
+                }
             });
-        })
+            //end populate form
+        });
+
+        //update ajax
+        $('#form_update_barang').on('submit', function(e) {
+                e.preventDefault();
+                let id = $('#update_id').val();
+                let produk_id = $('#update_produk_id').val();
+                let merek_id = $('#update_merek_id').val();
+                let pemasok_id = $('#update_pemasok_id').val();
+                let harga = $('#update_harga').val();
+                let sku = $('#update_sku').val();
+                let total_masuk = $('#update_total_masuk').val();
+                let total_terjual = $('#update_total_terjual').val();
+                let total_stok = $('#update_total_stok').val();
+
+                $.ajax({
+                    type: 'PUT',
+                    url: '{{ route('barang.index') }}' + '/' + id,
+                    data: {
+                        id: id,
+                        produk_id: produk_id,
+                        merek_id: merek_id,
+                        pemasok_id: pemasok_id,
+                        harga: harga,
+                        sku: sku,
+                        total_masuk: total_masuk,
+                        total_terjual: total_terjual,
+                        total_stok: total_stok,
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.success != null) {
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Data Berhasil Diubah',
+                                icon: 'success',
+                                iconColor: '#fff',
+                                color: '#fff',
+                                toast: true,
+                                background: '#8D72E1',
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+
+                            });
+                            $('#barang-table').DataTable().ajax.reload();
+                            $('#update-modal').modal('hide');
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Data Gagal Diubah',
+                                icon: 'error',
+                                iconColor: '#fff',
+                                toast: true,
+                                background: '#f8bb86',
+                                position: 'center-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+
+                            });
+                        }
+
+                    },
+                    errors: function(data) {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Data Gagal Diubah',
+                            icon: 'error',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal
+                                    .stopTimer)
+                                toast.addEventListener('mouseleave', Swal
+                                    .resumeTimer)
+                            }
+                        });
+                    }
+
+                });
+
+
+
+
+            });
+            //end update ajax
+
+
+
+
     </script>
 @stop
