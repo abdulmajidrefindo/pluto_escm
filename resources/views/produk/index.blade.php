@@ -245,8 +245,8 @@
 
             $(document).on('click', '.delete', function() {
                 Swal.fire({
-                    title: 'Apakah anda yakin?',
-                    text: "SEMUA data ITEM BARANG dan TRANSAKSI yang berkaitan dengan produk ini akan terhapus!!",
+                    title: 'SEMUA ITEM BARANG dan TRANSAKSI yang berkaitan akan terhapus!!',
+                    text: "Apakah anda yakin?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

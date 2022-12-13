@@ -36,7 +36,9 @@ class Barang extends Model
 
     public function pemasok()
     {
-        return $this->belongsTo(Pemasok::class);
+        return $this->belongsTo(Pemasok::class)->withDefault([
+            'nama_pemasok' => 'Pemasok tidak ditemukan'
+        ]);
     }
 
     public function produk()
