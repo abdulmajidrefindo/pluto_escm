@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Http\Requests\StoreKategoriRequest;
 use App\Http\Requests\UpdateKategoriRequest;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Utilities\Request;
 
 class KategoriController extends Controller
 {
@@ -58,7 +60,11 @@ class KategoriController extends Controller
         ]);
 
         //return response()->json('Kesimpen');
-        return redirect('kategori')->with('message', 'Data kategori berhasil tersimpan!');
+        if ($kategori) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -83,7 +89,9 @@ class KategoriController extends Controller
      */
     public function edit(Kategori $kategori)
     {
-        return view('kategori.edit', compact('kategori'));
+        $id = $kategori->id;
+        $kategori = Kategori::find($id);
+        return response()->json($kategori);
     }
 
     /**
@@ -99,8 +107,11 @@ class KategoriController extends Controller
             'nama_kategori'=>$request->get('nama_kategori'),
             'keterangan'=>$request->get('keterangan')
         ]);
-        //return response()->json("Terupdate");
-        return redirect('/kategori')->with('message', 'Data kategori berhasil diperbaharui!');
+        if ($kategori) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -113,7 +124,25 @@ class KategoriController extends Controller
     {
         $kategori->delete();
         //return response()->json("Terhapus");
-        return redirect('/kategori')->with('message', 'Data kategori berhasil terhapus!');
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+    }
+
+    public function getTable(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Kategori::all();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('barang.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
 

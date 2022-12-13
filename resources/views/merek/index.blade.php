@@ -1,12 +1,3 @@
-@php
-
-    $heads = ['ID', 'Nama Merek', 'Keterangan', ['label' => 'Aksi', 'no-export' => true]];
-    $config = [
-        'order' => [[1, 'asc']],
-        'columns' => [null, null, null, ['orderable' => false]],
-    ];
-@endphp
-
 @extends('adminlte::page')
 
 @section('title', 'Dashboard')
@@ -144,7 +135,7 @@
 
 
     <script>
-        //make datatable for marek
+        //make datatable for merek
         $(document).ready(function() {
             $('#merek-table').DataTable({ //id table
                 processing: true,
