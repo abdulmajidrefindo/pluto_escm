@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pelanggan;
 use App\Http\Requests\StorePelangganRequest;
 use App\Http\Requests\UpdatePelangganRequest;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Utilities\Request;
 
 class PelangganController extends Controller
 {
@@ -53,13 +55,19 @@ class PelangganController extends Controller
             'keterangan.required' => 'Keterangan harus diisi',
             'kontak_pelanggan.required' => 'Kontak pelanggan harus diisi'
         ]);
+
         $pelanggan=Pelanggan::create([
             'nama_pelanggan' => $request->get('nama_pelanggan'),
             'alamat_pelanggan' => $request->get('alamat_pelanggan'),
             'kontak_pelanggan' => $request->get('kontak_pelanggan'),
         ]);
         //return response()->json('Berhasil Disimpan');
-        return redirect('/pelanggan')->with('message', 'Data pelanggan berhasil disimpan!');
+        //return response()->json('Kesimpen');
+        if ($pelanggan) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -83,7 +91,9 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        return view('pelanggan.edit', compact('pelanggan'));
+        $id = $pelanggan->id;
+        $pelanggan = Pelanggan::find($id);
+        return response()->json($pelanggan);
     }
 
     /**
@@ -95,12 +105,29 @@ class PelangganController extends Controller
      */
     public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
     {
+
+        $validationData = $request->validate([
+            'nama_pelanggan' => 'required',
+            'alamat_pelanggan' => 'required',
+            'kontak_pelanggan' => 'required'
+        ],
+        [
+            'nama_pelanggan.required' => 'Nama pelanggan harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi',
+            'kontak_pelanggan.required' => 'Kontak pelanggan harus diisi'
+        ]);
+
         $pelanggan->update([
             'nama_pelanggan' => $request->get('nama_pelanggan'),
             'alamat_pelanggan' => $request->get('alamat_pelanggan'),
             'kontak_pelanggan' => $request->get('kontak_pelanggan'),
         ]);
-        return redirect('/pelanggan')->with('message', 'Data pelanggan berhasil diperbaharui!');
+
+        if ($pelanggan) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -113,6 +140,23 @@ class PelangganController extends Controller
     {
         $pelanggan->delete();
         //return response()->json('Berhasil Dihapus');
-        return redirect('/pelanggan')->with('completed','Data berhasil dihapus!');
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+    }
+
+    public function getTable(Request $request){
+        if ($request->ajax()) {
+            $data = Pelanggan::all();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('barang.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }

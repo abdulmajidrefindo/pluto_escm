@@ -58,9 +58,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <x-adminlte-input name="nama_kategori" label="Nama Kategori" placeholder="Contoh : Minuman"
-                                    fgroup-class="col-md-12" disable-feedback />
+                                    fgroup-class="col-md-12" />
                                 <x-adminlte-input name="keterangan" label="Keterangan"
-                                    placeholder="Contoh : Detail Kategori" fgroup-class="col-md-12" disable-feedback />
+                                    placeholder="Contoh : Detail Kategori" fgroup-class="col-md-12"/>
                                 <x-adminlte-button class="btn bg-purple col-12" type="submit" label="Simpan Data"
                                     icon="fas fa fa-fw fa-save" />
                             </div>
@@ -102,7 +102,7 @@
                         </div>
                         <div class="row d-grid gap-2">
                             <div class="col-md-6 d-grid gap-2">
-                                <x-adminlte-button class="btn col-12 bg-purple rounded-0" name="update_produk"
+                                <x-adminlte-button class="btn col-12 bg-purple rounded-0" name="update_kategori"
                                     type="submit" label="Simpan Data" theme="primary" icon="fas fa-fw fa-sm fa-save" />
                             </div>
                             <div class="col-md-6">
@@ -359,13 +359,13 @@
 
                     if (err.status == 422) {
                         console.log('aa');
-                        $('#form_tambah_kategori').find(".is-invalid").removeClass(
+                        $('#form_update_kategori').find(".is-invalid").removeClass(
                             "is-invalid");
-                        $('#form_tambah_kategori').find('.error').remove();
+                        $('#form_update_kategori').find('.error').remove();
 
                         //send error to adminlte form
                         $.each(err.responseJSON.errors, function(i, error) {
-                            var el = $(document).find('[name="' + i + '"]');
+                            var el = $(document).find('[name="update_' + i + '"]');
 
                             if (el.hasClass('is-invalid')) {
                                 el.removeClass('is-invalid');
