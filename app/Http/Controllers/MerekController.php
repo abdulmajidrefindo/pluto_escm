@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Merek;
 use App\Http\Requests\StoreMerekRequest;
 use App\Http\Requests\UpdateMerekRequest;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Utilities\Request;
 
 class MerekController extends Controller
 {
@@ -45,22 +47,25 @@ class MerekController extends Controller
      */
     public function store(StoreMerekRequest $request)
     {
-        $validationData = $request->validate([
-            'nama_merek' => 'required',
-            'keterangan' => 'required',
-        ],
-        [
-            'nama_merek.required' => 'Nama merek harus diisi',
-            'keterangan.required' => 'Keterangan harus diisi'
-        ]);
+        $validationData = $request->validate(
+            [
+                'nama_merek' => 'required',
+                'keterangan' => 'required',
+            ],
+            [
+                'nama_merek.required' => 'Nama merek harus diisi',
+                'keterangan.required' => 'Keterangan harus diisi'
+            ]
+        );
         $merek = Merek::create([
             'nama_merek' => $request->get('nama_merek'),
             'keterangan' => $request->get('keterangan'),
-            'createdAt' => $request->get('createdAt'),
-            'updatedAt' => $request->get('updatedAt')
         ]);
-        //return response()->json('Berhasil Disimpan');
-        return redirect('/merek')->with('message', 'Data merek berhasil tersimpan!');
+        if ($merek) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -84,7 +89,9 @@ class MerekController extends Controller
      */
     public function edit(Merek $merek)
     {
-        return view('merek.edit', compact('merek'));
+        $id = $merek->id;
+        $merek = Merek::find($id);
+        return response()->json($merek);
     }
 
     /**
@@ -96,11 +103,27 @@ class MerekController extends Controller
      */
     public function update(UpdateMerekRequest $request, Merek $merek)
     {
+        $validationData = $request->validate(
+            [
+                'nama_merek' => 'required',
+                'keterangan' => 'required',
+            ],
+            [
+                'nama_merek.required' => 'Nama merek harus diisi',
+                'keterangan.required' => 'Keterangan harus diisi'
+            ]
+        );
+
         $merek->update([
             'nama_merek' => $request->get('nama_merek'),
             'keterangan' => $request->get('keterangan')
         ]);
-        return redirect('/merek')->with('message', 'Data merek berhasil diperbaharui!');
+
+        if ($merek) {
+            return response()->json(['success' => 'Data berhasil disimpan!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal disimpan!']);
+        }
     }
 
     /**
@@ -112,7 +135,24 @@ class MerekController extends Controller
     public function destroy(Merek $merek)
     {
         $merek->delete();
-        //return response()->json("Terhapus");
-        return redirect('/merek')->with('message', 'Data merek berhasil terhapus!');
+        return response()->json(['success' => 'Data berhasil dihapus!']);
+    }
+
+    public function getTable(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Merek::all();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('barang.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-sm btn-primary mx-1 shadow edit"><i class="fas fa-sm fa-fw fa-edit"></i> Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 }

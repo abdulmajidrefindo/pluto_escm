@@ -64,12 +64,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <x-adminlte-input name="nama_produk" label="Nama Produk"
-                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-12" disable-feedback />
+                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-12"/>
                                 <x-adminlte-input name="unit" label="Unit"
                                     placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-12"
-                                    disable-feedback />
+                                    />
                                 <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Apa saja "
-                                    fgroup-class="col-md-12" disable-feedback />
+                                    fgroup-class="col-md-12" />
                                 <x-adminlte-select2 name="kategori_id" label="Kategori Produk" label-class=""
                                     fgroup-class="col-md-12" data-placeholder="Pilih kategori..." multiple>
                                     <option />
@@ -126,15 +126,15 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <x-adminlte-input name="update_id" label="ID Produk" placeholder="ID"
-                                    fgroup-class="col-md-12" disable-feedback disabled />
+                                    fgroup-class="col-md-12" disabled />
                                 <x-adminlte-input name="update_nama_produk" label="Nama Produk"
                                     placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-12"
-                                    disable-feedback />
+                                    />
                                 <x-adminlte-input name="update_unit" label="Unit"
                                     placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-12"
-                                    disable-feedback />
+                                    />
                                 <x-adminlte-input name="update_keterangan" label="Keterangan"
-                                    placeholder="Contoh : Apa saja " fgroup-class="col-md-12" disable-feedback />
+                                    placeholder="Contoh : Apa saja " fgroup-class="col-md-12" />
                                 <x-adminlte-select2 name="update_kategori_id" label="Kategori Produk" label-class=""
                                     fgroup-class="col-md-12" data-placeholder="Pilih kategori..." multiple>
                                     <option />
@@ -207,8 +207,6 @@
     <script>
         //document ready
         $(document).ready(function() {
-
-
             //datatable
             $('#produk-table').DataTable({
                 processing: true,
@@ -337,13 +335,6 @@
                 let keterangan = $('#keterangan').val();
                 let jenis_produk = $('#jenis_produk').val();
                 let kategori_id = $('#kategori_id').val();
-                console.log(nama_produk);
-                console.log(unit);
-                console.log(keterangan);
-                console.log(jenis_produk);
-
-                let data = new FormData();
-                console.log(kategori_id);
 
                 $.ajax({
                     url: "{{ route('produk.store') }}",

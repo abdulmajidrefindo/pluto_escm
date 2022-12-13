@@ -13,6 +13,11 @@ class Merek extends Model
     protected $table = "merek";
     protected $fillable=['nama_merek','keterangan'];
 
+    //set default for keterangan
+    protected $attributes = [
+        'keterangan' => 'Tidak ada keterangan',
+    ];
+
     /**
     * Get all of the comments for the Merek
     *
