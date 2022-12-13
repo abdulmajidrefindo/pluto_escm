@@ -456,25 +456,36 @@
                             } else {
                                 Swal.fire({
                                     title: 'Berhasil!',
-                                    text: 'Data Berhasil Disimpan',
+                                    text: 'Data Berhasil Ditambahkan!',
                                     icon: 'success',
                                     iconColor: '#fff',
-                                    toast: true,
                                     color: '#fff',
                                     background: '#8D72E1',
-                                    position: 'top',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    timerProgressBar: true,
+                                    position: 'center',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#541690',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Kembali Ke Daftar Transaksi',
+                                    cancelButtonText: 'Tutup',
 
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $('#transaksiPelanggan-table').DataTable().ajax
+                                            .reload();
+
+                                        $('#transaksiPelanggan-tabs-table-tab').trigger(
+                                            'click').delay(1200);
+                                        populateSelectBarang();
+                                        resetForm();
+
+                                    } else {
+                                        $('#transaksiPelanggan-table').DataTable().ajax
+                                            .reload();
+                                        populateSelectBarang();
+                                        resetForm();
+
+                                    }
                                 });
-
-                                //populate select barang
-
-
-                                populateSelectBarang();
-                                $('#transaksiPelanggan-table').DataTable().ajax.reload();
-                                resetForm();
                             }
                         },
                         errors: function(data) {

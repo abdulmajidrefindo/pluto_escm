@@ -12,6 +12,11 @@ use Yajra\DataTables\Utilities\Request;
 
 class ProdukController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,7 @@ class ProdukController extends Controller
     public function index()
     {
         $produk = Produk::with('kategori')->get();
-        $kategori = Kategori::all();
+        $kategori = Kategori::all()->skip(1);
         //return response()->json($produk);
         return view('produk.index', compact('produk','kategori'));
     }

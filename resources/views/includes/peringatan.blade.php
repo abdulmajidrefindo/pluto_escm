@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-12 col-md-6">
-        <div class="card card-danger">
+        <div class="card card-dark">
             <div class="card-header" role="button" data-card-widget="collapse">
                 <h3 class="card-title">
                     <i class="fas fa-exclamation-triangle fa-fw"></i>
@@ -20,7 +20,7 @@
 
             <div class="card-body">
                 @foreach ($notifikasi as $notifikasi)
-                <div class="alert alert-danger alert-dismissible">
+                <div class="alert bg-purple alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <i class="fas fa-exclamation-circle fa-fw"></i> Stok {{$notifikasi->data['nama_barang']}} Hampir Habis!
                     Jumlah stok tersisa {{$notifikasi->data['sisa_stok']}}. <a href="{{route('barang.show',$notifikasi->data['barang_id'])}}">Kunjungi Halaman</a>

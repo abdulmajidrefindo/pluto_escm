@@ -62,27 +62,47 @@
                     <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-sm-6">
                                 <x-adminlte-input name="nama_produk" label="Nama Produk"
-                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6" disable-feedback />
+                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-12" disable-feedback />
                                 <x-adminlte-input name="unit" label="Unit"
-                                    placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
+                                    placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-12"
                                     disable-feedback />
                                 <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Apa saja "
-                                    fgroup-class="col-md-6" disable-feedback />
-                                <x-adminlte-select2 id="selectKategori" name="kategori_id" label="Kategori Produk"
-                                    label-class="" fgroup-class="col-md-6" data-placeholder="Pilih kategori...">
+                                    fgroup-class="col-md-12" disable-feedback />
+                                <x-adminlte-select2 id="selectKategori" name="kategori_id[]" label="Kategori Produk"
+                                    label-class="" fgroup-class="col-md-12" data-placeholder="Pilih kategori..." multiple>
                                     <option />
+                                    <x-slot name="prependSlot">
+                                        <div class="input-group-text bg-purple">
+                                            <i class="fas fa-tag"></i>
+                                        </div>
+                                    </x-slot>
+                                    <x-slot name="appendSlot">
+                                        <x-adminlte-button theme="outline-dark" label="Clear"
+                                             />
+                                    </x-slot>
                                     @foreach ($kategori as $kategori)
-                                        <option value="{{ $kategori->id }}">{{ $kategori->first()->nama_kategori }}</option>
+                                        <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
                                     @endforeach
+
                                 </x-adminlte-select2>
 
-                                <x-adminlte-select name="jenis_produk" label="Jenis Produk" fgroup-class="col-md-6">
-                                    <x-adminlte-options :options="['Bahan Jadi', 'Bahan Baku', 'Bahan Olahan']" disabled="-1" />
-                                </x-adminlte-select>
-                                <x-adminlte-button class="btn" type="submit" label="Simpan Data" theme="info"
+                                <x-adminlte-select2 id="jenis_produk" name="jenis_produk" label="Jenis Produk"
+                                    label-class="" fgroup-class="col-md-12" data-placeholder="Pilih jenis produk...">
+                                    <option />
+                                    <option value="Bahan Jadi">Bahan Jadi</option>
+                                    <option value="Bahan Baku">Bahan Baku</option>
+                                    <option value="Bahan Olahan">Bahan Olahan</option>
+                                </x-adminlte-select2>
+
+
+                                <x-adminlte-button class="btn bg-purple" type="submit" label="Simpan Data"
                                     icon="fas fa-sm fa-fw fa-save" />
+                            </div>
+                            <div class="col-sm-6 border-left d-flex align-items-center justify-content-center">
+                                <i class="fas fa-boxes fa-10x fa-bounce text-muted"></i>
+
                             </div>
                         </div>
                     </form>
@@ -172,19 +192,8 @@
 
 @section('js')
     <script>
-        $(document).on('click', '.delete', function() {
-            let id = $(this).attr('data-id');
-            let namaProduk = $(this).attr('data-nama-produk');
-            let unit = $(this).attr('data-unit');
-            let keterangan = $(this).attr('data-keterangan');
-            let kategori = $(this).attr('data-kategori');
-
-            $('#deleteForm').attr('action', '/produk/' + id);
-            document.getElementById("idProduk").innerHTML = id;
-            document.getElementById("namaProduk").innerHTML = namaProduk;
-            document.getElementById("unit").innerHTML = unit;
-            document.getElementById("keterangan").innerHTML = keterangan;
-            document.getElementById("kategori").innerHTML = kategori;
+        $('jenis_produk').select2({
+            minimumResultsForSearch: -1
         });
     </script>
 

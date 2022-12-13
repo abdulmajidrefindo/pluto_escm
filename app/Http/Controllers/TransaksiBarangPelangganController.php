@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateTransaksiBarangPelangganRequest;
 class TransaksiBarangPelangganController extends Controller
 {
 
+
+
     /**
      * Display a listing of the resource.
      *

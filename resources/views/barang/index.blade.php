@@ -104,14 +104,14 @@
                                 </x-adminlte-select2>
 
                                 <x-adminlte-input name="sku" label="SKU Barang" label-class="text-lightdark"
-                                    placeholder="Contoh : Aqua, Indomie, dll." fgroup-class="col-md-6" disable-feedback />
+                                    placeholder="Stock Keeping Unit." fgroup-class="col-md-6" disable-feedback />
 
                                 <x-adminlte-input name="harga" label="Harga Barang" label-class="text-lightdark"
-                                    placeholder="Contoh : pcs, lusin, botol, dll.   " fgroup-class="col-md-6"
+                                    placeholder="Rp.-  " fgroup-class="col-md-6"
                                     disable-feedback />
 
                                 <x-adminlte-input name="total_stok" label="Total Stok Barang" label-class="text-lightdark"
-                                    placeholder="Contoh : Apa saja " fgroup-class="col-md-6" disable-feedback />
+                                    placeholder="Banyaknya stok yang tersedia." fgroup-class="col-md-6" disable-feedback />
 
                                 <x-adminlte-button class="btn" type="submit" name="tambah_barang" label="Simpan Data"
                                     theme="info" icon="fas fa-lg fa-save" />
@@ -556,7 +556,7 @@
 
                         Swal.fire({
                             title: 'Berhasil!',
-                            text: 'Data Berhasil Diperbaharui',
+                            text: 'Data Berhasil Ditambahkan!',
                             icon: 'success',
                             iconColor: '#fff',
                             color: '#fff',
