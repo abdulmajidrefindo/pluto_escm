@@ -88,8 +88,12 @@ class BarangController extends Controller
             'harga' => $request->get('harga'),
             'total_stok' => $request->get('total_stok')
         ]);
-        //return response()->json('Berhasih Disimpan');
-        return redirect('/barang')->with('message', 'Data kategori berhasil tersimpan!');
+
+        if($barang){
+            return response()->json(['success' => 'Data berhasil diupdate!']);
+        } else {
+            return response()->json(['errors' => 'Data gagal diupdate!']);
+        }
     }
 
     /**
@@ -141,10 +145,11 @@ class BarangController extends Controller
                 'merek_id' => 'required|numeric',
                 'produk_id' => 'required|numeric',
                 'pemasok_id' => 'required|numeric',
-                'harga' => 'numeric|required',
-                'total_stok' => 'numeric|required',
-                'total_terjual' => 'numeric|required',
-                'total_masuk' => 'numeric|required'
+                'harga' => 'required|numeric',
+                'sku' => 'required|numeric',
+                'total_stok' => 'required|numeric',
+                'total_terjual' => 'required|numeric',
+                'total_masuk' => 'required|numeric'
             ],
             [
                 'merek_id.required' => 'Merek harus diisi',
@@ -157,6 +162,10 @@ class BarangController extends Controller
                 'sku.numeric' => 'SKU harus berupa angka',
                 'harga.required' => 'Harga harus diisi',
                 'harga.numeric' => 'Harga harus berupa angka',
+                'total_terjual.required' => 'Total Terjual harus diisi. Masukkan angka 0 jika tidak ada!',
+                'total_terjual.numeric' => 'Total Terjual harus berupa angka',
+                'total_masuk.required' => 'Total Masuk harus diisi. Masukkan angka 0 jika tidak ada!',
+                'total_masuk.numeric' => 'Total Masuk harus berupa angka',
                 'total_stok.required' => 'Stok harus diisi. Masukkan angka 0 jika tidak ada stok!',
                 'total_stok.numeric' => 'Stok harus berupa angka'
 

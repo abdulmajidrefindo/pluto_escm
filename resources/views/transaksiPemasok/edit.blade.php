@@ -409,10 +409,6 @@
 
 
                             });
-
-
-
-
                         }
                     },
                     errors: function(data) {
