@@ -130,7 +130,7 @@ class KategoriController extends Controller
     public function getTable(Request $request)
     {
         if ($request->ajax()) {
-            $data = Kategori::all();
+            $data = Kategori::all()->skip(1);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

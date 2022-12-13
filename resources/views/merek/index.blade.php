@@ -83,7 +83,7 @@
 
     <div class="modal fade" id="modal_update_merek" tabindex="-1" role="dialog" aria-labelledby="updateModal"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <form id="form_update_merek">
@@ -275,8 +275,6 @@
 
     <script>
         //populate update form by ajax
-
-
         $(document).on('click', '.edit', function() {
             let id = $(this).attr('data-id');
             $.ajax({
@@ -293,7 +291,7 @@
     </script>
 
     <script>
-        //populate update form by ajax
+        // update form by ajax
         $(document).ready(function() {
             $('#form_update_merek').on('submit', function(e) {
                 e.preventDefault();

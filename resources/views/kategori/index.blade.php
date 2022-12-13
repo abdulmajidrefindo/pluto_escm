@@ -1,5 +1,3 @@
-
-
 @extends('adminlte::page')
 
 @section('title', 'Dashboard')
@@ -18,8 +16,8 @@
                 <!-- This will cause the card to collapse when clicked -->
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
 
-              </div>
-              <!-- /.card-tools -->
+            </div>
+            <!-- /.card-tools -->
             <ul class="nav nav-tabs" id="katefori-tabs" role="tablist">
 
                 <li class="nav-item">
@@ -55,17 +53,15 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="kategori-tabs-add" role="tabpanel"
-                    aria-labelledby="kategori-tabs-add-tab">
-                    <form id ="form_tambah_kategori">
-
+                <div class="tab-pane fade" id="kategori-tabs-add" role="tabpanel" aria-labelledby="kategori-tabs-add-tab">
+                    <form id="form_tambah_kategori">
                         <div class="row">
                             <div class="col-sm-6">
                                 <x-adminlte-input name="nama_kategori" label="Nama Kategori" placeholder="Contoh : Minuman"
                                     fgroup-class="col-md-12" disable-feedback />
-                                <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Contoh : Detail Kategori"
-                                    fgroup-class="col-md-12" disable-feedback />
-                                    <x-adminlte-button class="btn bg-purple col-12" type="submit" label="Simpan Data"
+                                <x-adminlte-input name="keterangan" label="Keterangan"
+                                    placeholder="Contoh : Detail Kategori" fgroup-class="col-md-12" disable-feedback />
+                                <x-adminlte-button class="btn bg-purple col-12" type="submit" label="Simpan Data"
                                     icon="fas fa fa-fw fa-save" />
                             </div>
                             <div class="col-sm-6 border-left d-flex align-items-center justify-content-center">
@@ -87,21 +83,20 @@
 
     <div class="modal fade" id="modal_update_kategori" tabindex="-1" role="dialog" aria-labelledby="updateModal"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form>
+                    <form id="form_update_kategori">
 
                         <div class="row">
                             <div class="col-sm-12">
                                 <x-adminlte-input name="update_id" label="ID Kategori" placeholder="ID"
                                     fgroup-class="col-md-12" disabled />
-                                <x-adminlte-input name="update_nama_kategori" label="Nama Kategori" placeholder="Contoh : Minuman"
+                                <x-adminlte-input name="update_nama_kategori" label="Nama Kategori"
+                                    placeholder="Contoh : Minuman" fgroup-class="col-md-12" disable-feedback />
+                                <x-adminlte-input name="update_keterangan" label="Keterangan" placeholder="Detail Kategori"
                                     fgroup-class="col-md-12" disable-feedback />
-                                <x-adminlte-input name="keterangan" label="Keterangan" placeholder="Detail Kategori"
-                                    fgroup-class="col-md-12" disable-feedback />
-                                    <x-adminlte-button class="btn bg-purple col-12" type="submit" label="Simpan Data"
-                                    icon="fas fa fa-fw fa-save" />
+
                             </div>
 
                         </div>
@@ -137,55 +132,179 @@
                 }
             });
         });
+
+        function resetForm() {
+            $('#form_tambah_kategori')[0].reset();
+            $('#form_tambah_kategori').find('.is-invalid').removeClass('is-invalid');
+            $('#form_tambah_kategori').find('.error').remove();
+        }
+
+    </script>
+
+    <script>
+        //make datatable for kategori
+        $(document).ready(function() {
+            $('#kategori-table').DataTable({ //id table
+                processing: true,
+                serverSide: true,
+                width: '100%',
+                ajax: {
+                    url: "{{ route('kategori.getTable') }}",
+                    type: 'GET',
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                        sClass: 'text-center',
+                        width: '5%'
+                    },
+                    {
+                        data: 'nama_kategori',
+                        name: 'nama_kategori'
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'keterangan'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        sClass: 'text-center'
+                    }
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        //ajax tambah kategori
+        $(document).ready(function() {
+            $('#form_tambah_kategori').on('submit', function(e) {
+                e.preventDefault();
+                let nama_kategori = $('#nama_kategori').val();
+                let keterangan = $('#keterangan').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('kategori.store') }}",
+                    data: {
+                        nama_kategori: nama_kategori,
+                        keterangan: keterangan
+                    },
+                    dataType: "JSON",
+                    success: function(response) {
+                        if (response.success != null) {
+                            $('#kategori-table').DataTable().ajax.reload();
+                            $('#form_tambah_kategori')[0].reset();
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Data Berhasil Ditambahkan!',
+                                icon: 'success',
+                                iconColor: '#fff',
+                                color: '#fff',
+                                background: '#8D72E1',
+                                position: 'center',
+                                showCancelButton: true,
+                                confirmButtonColor: '#541690',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Kembali Ke Daftar Transaksi',
+                                cancelButtonText: 'Tutup',
+
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#kategori-table').DataTable().ajax.reload();
+                                    $('#kategori-tabs-table-tab').trigger('click')
+                                        .delay(
+                                            1000);
+                                    resetForm();
+
+                                } else {
+                                    $('#kategori-table').DataTable().ajax.reload();
+                                    resetForm();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Data Gagal Disimpan',
+                                icon: 'error',
+                                iconColor: '#fff',
+                                toast: true,
+                                background: '#f8bb86',
+                                position: 'center-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
+                        }
+                    },
+                    error: function(err) {
+
+                        if (err.status == 422) {
+                            console.log('aa');
+                            $('#form_tambah_kategori').find(".is-invalid").removeClass(
+                                "is-invalid");
+                            $('#form_tambah_kategori').find('.error').remove();
+
+                            //send error to adminlte form
+                            $.each(err.responseJSON.errors, function(i, error) {
+                                var el = $(document).find('[name="' + i + '"]');
+                                if (el.hasClass('is-invalid')) {
+                                    el.removeClass('is-invalid');
+                                    el.next().remove();
+                                }
+                                el.addClass('is-invalid');
+                                el.after($('<span class="error invalid-feedback">' +
+                                    error[0] + '</span>'));
+                            });
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Mohon isi data dengan benar!',
+                                icon: 'error',
+                                iconColor: '#fff',
+                                toast: true,
+                                background: '#f8bb86',
+                                position: 'center-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        //populate update form by ajax
+        $(document).on('click', '.edit', function() {
+            let id = $(this).attr('data-id');
+            $.ajax({
+                url: "{{ route('kategori.index') }}/" + id + "/edit",
+                dataType: "json",
+                success: function(data) {
+                    $('#update_id').val(data.id);
+                    $('#update_nama_kategori').val(data.nama_kategori);
+                    $('#update_keterangan').val(data.keterangan);
+                    $('#modal_update_kategori').modal('show');
+                }
+            })
+        });
     </script>
 
 <script>
-    //make datatable for kategori
+    // update form by ajax
     $(document).ready(function() {
-        $('#kategori-table').DataTable({ //id table
-            processing: true,
-            serverSide: true,
-            width: '100%',
-            ajax: {
-                url: "{{ route('kategori.getTable') }}",
-                type: 'GET',
-            },
-            columns: [{
-                    data: 'id',
-                    name: 'id',
-                    sClass: 'text-center',
-                    width: '5%'
-                },
-                {
-                    data: 'nama_kategori',
-                    name: 'nama_kategori'
-                },
-                {
-                    data: 'keterangan',
-                    name: 'keterangan'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    sClass: 'text-center'
-                }
-            ]
-        });
-    });
-</script>
-
-<script>
-    //ajax tambah kategori
-    $(document).ready(function() {
-        $('#form_tambah_kategori').on('submit', function(e) {
+        $('#form_update_kategori').on('submit', function(e) {
             e.preventDefault();
-            let nama_kategori = $('#nama_kategori').val();
-            let keterangan = $('#keterangan').val();
+            let id = $('#update_id').val();
+            let nama_kategori = $('#update_nama_kategori').val();
+            let keterangan = $('#update_keterangan').val();
             $.ajax({
-                type: "POST",
-                url: "{{ route('kategori.store') }}",
+                type: "PUT",
+                url: "{{ route('kategori.index') }}" + "/" + id,
                 data: {
                     nama_kategori: nama_kategori,
                     keterangan: keterangan
@@ -194,7 +313,7 @@
                 success: function(response) {
                     if (response.success != null) {
                         $('#kategori-table').DataTable().ajax.reload();
-                        $('#form_tambah_kategori')[0].reset();
+                        $('#modal_update_kategori').modal('hide');
                         Swal.fire({
                             title: 'Berhasil!',
                             text: 'Data Berhasil Ditambahkan!',
@@ -211,13 +330,13 @@
 
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                $('#kategori-table').DataTable().ajax.reload();
+
                                 $('#kategori-tabs-table-tab').trigger('click').delay(
                                     1000);
                                 resetForm();
 
                             } else {
-                                $('#kategori-table').DataTable().ajax.reload();
+
                                 resetForm();
                             }
                         });
@@ -274,6 +393,61 @@
                 }
 
             });
+        });
+    });
+</script>
+
+<script>
+    //delete via ajax
+    $(document).on('click', '.delete', function() {
+        let id = $(this).attr('data-id');
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+                    text: "Data yang dihapus tak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{ route('kategori.index') }}" + "/" + id,
+                    success: function(response) {
+                        if (response.success != null) {
+                            $('#kategori-table').DataTable().ajax.reload();
+                            Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Data Berhasil Dihapus',
+                            icon: 'success',
+                            iconColor: '#fff',
+                            color: '#fff',
+                            toast: true,
+                            background: '#8D72E1',
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal!',
+                            text: 'Data Gagal Dihapus',
+                            icon: 'error',
+                            iconColor: '#fff',
+                            toast: true,
+                            background: '#f8bb86',
+                            position: 'center-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            });
+                        }
+                    }
+                });
+            }
         });
     });
 </script>
