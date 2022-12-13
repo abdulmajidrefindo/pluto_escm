@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>Merek</h1>
+    <h1>Merubah Merek</h1>
 
 @stop
 
@@ -21,7 +21,7 @@
                             label="Nama Merek" placehsolder="" fgroup-class="col-md-6" disable-feedback />
                         <x-adminlte-input type="text" value="{{ $merek->keterangan }}" name="keterangan"
                             label="Keterangan" placeholder="" fgroup-class="col-md-6" disable-feedback />
-                        <x-adminlte-button class="btn" type="submit" label="Simpan" theme="success"
+                        <x-adminlte-button class="btn" type="submit" label="Perbaharui Data" theme="success"
                             icon="fas fa fa-fw fa-save" />
                     </div>
                 </div>
