@@ -33,6 +33,15 @@ route::get('/about', function () {
     return view('about');
 });
 
+// menentukan route untuk download file PDF
+Route::get('download/pdf', function() {
+    // menentukan path lokasi file PDF
+    $file = public_path('doc/User Manual E-SCM Kedaireka.pdf');
+
+    // mengirim file PDF ke browser untuk didownload
+    return Response::download($file);
+});
+
 //Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

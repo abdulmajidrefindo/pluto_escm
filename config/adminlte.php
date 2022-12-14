@@ -371,6 +371,11 @@ return [
             'url'        => '/about',
 
         ],
+        [
+            'text'       => 'User Manual',
+            'icon'       => 'fas fa-book',
+            'url'        => '/download/pdf',
+        ],
     ],
 
     /*
