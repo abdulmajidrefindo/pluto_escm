@@ -21,19 +21,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call(KategoriTableSeeder::class);
-        $this->call(ProdukTableSeeder::class);
-        $this->call(MerekTableSeeder::class);
-        $this->call(PelangganTableSeeder::class);
-        $this->call(PemasokTableSeeder::class);
-        $this->call(RolesTableSeeder::class);
+
         $this->call(UsersTableSeeder::class);
-        $this->call(KategoriProdukTableSeeder::class);
-        $this->call(BarangTableSeeder::class);
-        $this->call(TransaksiPelangganTableSeeder::class);
-        $this->call(TransaksiPemasokTableSeeder::class);
-        $this->call(TransaksiBarangPelangganTableSeeder::class);
-        $this->call(TransaksiBarangPemasokTableSeeder::class);
-        $this->call(UserRolesTableSeeder::class);
+
 
     }
 }
