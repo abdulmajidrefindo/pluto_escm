@@ -100,10 +100,11 @@
                                 <x-adminlte-button class="btn bg-purple col-12" type="submit" label="Simpan Data"
                                     icon="fas fa-sm fa-fw fa-save" />
                             </div>
-                            <span class="d-none d-sm-block fa-stack fa-8x">
+
                             <div class="col-sm-6 border-left d-flex align-items-center justify-content-center">
-                                <i class="fas fa-boxes fa-10x fa-beat text-purple" style="--fa-beat-scale: 1.1;"></i>
-                            </span>
+                                <span class="d-none d-sm-block fa-stack fa-10x">
+                                    <i class="fas fa-boxes fa-beat fa-stack-1x text-purple" style="--fa-beat-scale: 1.1;"></i>
+                                </span>
 
                             </div>
                         </div>

@@ -80,10 +80,10 @@
                             </div>
                             <div class="col-sm-6 border-left d-flex align-items-center justify-content-center">
                                 <span class="d-none d-sm-block fa-stack fa-8x">
-
-                                    <i class=" fas fa-user-tag fa-shake text-purple fa-stack-1x"
-                                        style="--fa-beat-scale: 1.1;"></i>
-
+                                    <span class="fa-flip" style="--fa-flip-x: 1.5; --fa-flip-y: 0.7; --fa-animation-duration: 3s;">
+                                        <i class="fa-regular fa-circle text-purple fa-stack-2x fa-flip" style="--fa-flip-x: 1; --fa-flip-y: 0.3; --fa-animation-duration: 12s;" ></i>
+                                    </span>
+                                    <i class=" fas fa-user fa-flip text-purple fa-stack-1x" style="--fa-flip-x: 0; --fa-flip-y: 1; --fa-animation-duration: 6s;"></i>
                                 </span>
                             </div>
                         </div>
