@@ -4,6 +4,6 @@
 ## Cara Install
 https://devmarketer.io/learn/setup-laravel-project-cloned-github-com/
 
-1. Pastikan sudah menginstall xampp dan membuka folde htdoc di dalam C:xampp/
+1. Pastikan sudah menginstall xampp dan membuka folder htdoc di dalam C:xampp/
 2. Clone projek ini, ketikkan kode berikut di cmd/command promt: git clone linktogithubrepo.com/ projectName
 3. Buka folder, ketik composer install dll
