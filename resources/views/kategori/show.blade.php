@@ -66,7 +66,7 @@
   <!-- /.card-header -->
   <div class="card-body">
     <table class="table table-bordered">
-      <thead>                  
+      <thead>
         <tr>
           <th style="width: 10px">ID</th>
           <th>Nama Produk</th>
@@ -108,7 +108,7 @@
           filter = input.value.toUpperCase();
           table = document.getElementById("myTable");
           tr = table.getElementsByTagName("tr");
-        
+
           // Loop through all table rows, and hide those who don't match the search query
           for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[0];

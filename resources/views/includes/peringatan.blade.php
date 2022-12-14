@@ -23,7 +23,7 @@
                 <div class="alert bg-purple alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <i class="fas fa-exclamation-circle fa-fw"></i> Stok {{$notifikasi->data['nama_barang']}} Hampir Habis!
-                    Jumlah stok tersisa {{$notifikasi->data['sisa_stok']}}. <a href="{{route('barang.show',$notifikasi->data['barang_id'])}}">Kunjungi Halaman</a>
+                    Jumlah stok tersisa {{$notifikasi->data['sisa_stok']}}. <a href="{{route('barang.edit',$notifikasi->data['barang_id'])}}">Kunjungi Halaman</a>
 
 
 

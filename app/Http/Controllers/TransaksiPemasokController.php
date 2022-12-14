@@ -119,7 +119,7 @@ class TransaksiPemasokController extends Controller
     {
         //untuk testing
         $id = $transaksiPemasok->id;
-        $transaksiPemasok = TransaksiPemasok::with('barang')->where('id', $id)->first();
+        $transaksiPemasok = TransaksiPemasok::with('barang','pemasok')->where('id', $id)->first();
         //$barang = Barang::with('produk')->where('id',$id)->first();
         //return response()->json($transaksiPemasok);
         return view('transaksiPemasok.show', compact('transaksiPemasok'));

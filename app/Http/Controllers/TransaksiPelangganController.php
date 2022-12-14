@@ -121,10 +121,10 @@ class TransaksiPelangganController extends Controller
     {
         //untuk testing
         $id = $transaksiPelanggan->id;
-        $transaksiPelanggan = TransaksiPelanggan::with('barang')->where('id', $id)->first();
+        $transaksiPelanggan = TransaksiPelanggan::with('barang','pelanggan')->where('id', $id)->first();
         //$barang = Barang::with('produk')->where('id',$id)->first();
-        return response()->json($transaksiPelanggan);
-        //return view('transaksiPelanggan.show', compact('transaksiPelanggan'));
+
+        return view('transaksiPelanggan.show', compact('transaksiPelanggan'));
     }
 
     /**
