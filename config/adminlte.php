@@ -356,6 +356,12 @@ return [
             'icon_color' => '#',
             'url'        => '/transaksiPemasok',
         ],
+        ['header' => 'TENTANG APLIKASI'],
+        [
+            'text'       => 'About',
+            'icon'       => 'fas fa-info-circle',
+            'url'        => '/about',
+        ],
     ],
 
     /*
