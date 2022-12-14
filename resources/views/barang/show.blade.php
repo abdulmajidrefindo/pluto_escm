@@ -320,7 +320,19 @@
                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                  }
              });
+
+             //change color of disabled form
+                $('input[disabled]').css('background-color', '#FFFFFF');
+
+            //add border to disabled form
+                $('input[disabled]').css('border-bottom', '1px solid #605ca8');
+
+
+
          });
+
+
+
      </script>
 
      <script>

@@ -36,7 +36,7 @@
             <div class="icon">
               <i class="fas fa-boxes"></i>
             </div>
-            <a href="#" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="{{ route('barang.index') }}" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
@@ -50,7 +50,7 @@
             <div class="icon">
               <i class="fas fa-dolly-flatbed"></i>
             </div>
-            <a href="#" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="{{ route('pemasok.index') }}" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
@@ -63,7 +63,7 @@
             <div class="icon">
               <i class="fas fa-user-tag"></i>
             </div>
-            <a href="#" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="{{ route('pelanggan.index') }}" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="icon">
               <i class="fas fa-file-download"></i>
             </div>
-            <a href="#" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="{{ route('transaksiPemasok.index') }}" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
@@ -89,7 +89,7 @@
             <div class="icon">
               <i class="fas fa-file-upload"></i>
             </div>
-            <a href="#" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="{{ route('transaksiPelanggan.index') }}" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
@@ -103,7 +103,7 @@
             <div class="icon">
               <i class="fas fa-file-invoice-dollar"></i>
             </div>
-            <a href="#" class="small-box-footer">  <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="#" class="small-box-footer"> .
             </a>
           </div>
         </div>
@@ -118,7 +118,7 @@
             <div class="icon">
               <i class="fas fa-file-invoice-dollar"></i>
             </div>
-            <a href="#" class="small-box-footer"> Detail <i class="fas fa-fw fa-xs fa-arrow-circle-right"></i>
+            <a href="#" class="small-box-footer"> .
             </a>
           </div>
         </div>
