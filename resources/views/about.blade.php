@@ -54,7 +54,7 @@
                         </ul>
                       </div>
                       <div class="col-5 text-center">
-                        <img src={{url('/img/kucing.jpg')}} alt="user-avatar" class="img-circle img-fluid">
+                        <img src={{url('/img/nando.jpg')}} alt="user-avatar" class="img-circle img-fluid">
                       </div>
                     </div>
                   </div>
@@ -87,7 +87,7 @@
                         </ul>
                         </div>
                         <div class="col-5 text-center">
-                          <img src={{url('/img/kucing.jpg')}} alt="user-avatar" class="img-circle img-fluid">
+                          <img src={{url('/img/majid.jpg')}} alt="user-avatar" class="img-circle img-fluid">
                         </div>
                       </div>
                     </div>
@@ -122,7 +122,7 @@
                             </ul>
                         </div>
                         <div class="col-5 text-center">
-                          <img src={{url('/img/kucing.jpg')}} alt="user-avatar" class="img-circle img-fluid">
+                          <img src={{url('/img/ivan.jpg')}} alt="user-avatar" class="img-circle img-fluid">
                         </div>
                       </div>
                     </div>
@@ -157,7 +157,7 @@
                               </ul>
                           </div>
                           <div class="col-5 text-center">
-                            <img src={{url('/img/kucing.jpg')}} alt="user-avatar" class="img-circle img-fluid">
+                            <img src={{url('/img/mail.jpg')}} alt="user-avatar" class="img-circle img-fluid">
                           </div>
                         </div>
                       </div>
