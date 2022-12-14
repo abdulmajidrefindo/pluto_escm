@@ -430,7 +430,9 @@
 
                 for (var i = 0; i < kategori.length; i++) {
                     var randomColor = colors[Math.floor(Math.random() * colors.length)];
-                    $('#daftar-kategori').append('<span class="badge bg-' + randomColor + '">' + kategori[i].nama_kategori + '</span> ');
+                    //as link to kategori.show
+                    $('#daftar-kategori').append('<a href="/kategori/' + kategori[i].id + '" class="badge bg-' + randomColor + '">' + kategori[i].nama_kategori + '</a> ');
+
                 }
 
 
