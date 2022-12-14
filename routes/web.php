@@ -28,6 +28,10 @@ Route::get('/testing', function () {
     return view('test');
 });
 
+//route halaman about
+route::get('/about', function () {
+    return view('about');
+});
 
 //Auth::routes();
 
