@@ -13,8 +13,8 @@ class ProfileController extends Controller
 {
     public function index()
     {
-       $user = User::findOrFail(Auth::user()->id);
-         return view('profile.index', compact('user'));
+        $user = User::findOrFail(Auth::user()->id);
+        return view('profile.index', compact('user'));
     }
 
     public function update(Request $request, $id)
@@ -43,10 +43,10 @@ class ProfileController extends Controller
             }
         }
 
-        if (request()->hasFile('photo')) {
-            if($user->photo && file_exists(storage_path('app/public/photos/' . $user->photo))){
-                Storage::delete('app/public/photos/'.$user->photo);
-            }
+    if (request()->hasFile('photo')) {
+        if($user->photo && file_exists(storage_path('app/public/photos/' . $user->photo))){
+            Storage::delete('app/public/photos/'.$user->photo);
+        }
 
             $file = $request->file('photo');
             $fileName = $file->hashName() . '.' . $file->getClientOriginalExtension();
@@ -57,6 +57,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return back()->with('status', 'Profile updated!');
-    }
+    return back()->with('status', 'Profile updated!');
+}
+
 }

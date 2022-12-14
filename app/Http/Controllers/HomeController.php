@@ -36,12 +36,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
-    }
 
-    public function home(SalesChart $chart)
+
+    public function index(SalesChart $chart)
     {
         $informasi = array();
         $getPendapatan = new PendapatanHelper();

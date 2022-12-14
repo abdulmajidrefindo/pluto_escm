@@ -22,7 +22,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'home'])->name('homo');
+Route::get('/', [HomeController::class, 'index'])->name('homo');
 
 Route::get('/testing', function () {
     return view('test');
