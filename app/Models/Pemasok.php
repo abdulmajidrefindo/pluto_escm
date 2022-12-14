@@ -19,6 +19,7 @@ class Pemasok extends Model
         return $this->hasMany(TransaksiPemasok::class);
     }
 
+
     public function barang() {
         return $this->hasMany(Barang::class);
     }

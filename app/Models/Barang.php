@@ -48,18 +48,25 @@ class Barang extends Model
 
     public function transaksiPemasok()
     {
-        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok', 'id', 'transaksi_pemasok_id');
+        return $this->belongsToMany(TransaksiPemasok::class, 'transaksi_barang_pemasok')->with('pemasok')->withPivot('kuantitas', 'total_harga', 'status_transaksi', 'created_at', 'updated_at');
     }
 
     public function transaksiPelanggan()
     {
-        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan', 'id', 'transaksi_pelanggan_id');
+        return $this->belongsToMany(TransaksiPelanggan::class, 'transaksi_barang_pelanggan')->with('pelanggan')->withPivot('kuantitas', 'total_harga', 'status_transaksi', 'created_at', 'updated_at');
     }
 
-    /*public function user()
+    //relation with pivot table transaksi_barang_pelanggan
+    public function transaksiBarangPelanggan()
     {
-    return $this->belongsToMany(User::class, 'transaksi_barang_pemasok', 'id', 'user_id');
-    }*/
+        return $this->hasMany(TransaksiBarangPelanggan::class);
+    }
+
+    //relation
+    public function transaksiBarangPemasok()
+    {
+        return $this->hasMany(TransaksiBarangPemasok::class);
+    }
 
     public static function boot()
     {

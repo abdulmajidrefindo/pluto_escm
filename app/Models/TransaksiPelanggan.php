@@ -30,6 +30,12 @@ class TransaksiPelanggan extends Model
         return $this->belongsToMany(User::class, 'transaksi_barang_pelanggan', 'transaksi_pelanggan_id', 'user_id');
     }
 
+    public function transaksiBarangPelanggan()
+    {
+        return $this->hasMany(TransaksiBarangPelanggan::class);
+    }
+
+
     //delete all related data on delete and update barang stock
     public static function boot()
     {

@@ -12,4 +12,14 @@ class TransaksiBarangPemasok extends Model
     protected $table = "transaksi_barang_pemasok";
     public $timestamps = true;
 
+    public function transaksiPemasok()
+    {
+        return $this->belongsTo(TransaksiPemasok::class)->with('pemasok');
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class)->with('produk');
+    }
+
 }

@@ -7,6 +7,9 @@ use App\Models\Produk;
 use App\Models\Pemasok;
 use App\Models\Merek;
 
+use App\Models\TransaksiBarangPelanggan;
+use App\Models\TransaksiBarangPemasok;
+use App\Models\TransaksiPelanggan;
 use App\Providers\RouteServiceProvider;
 use App\Providers\SisaStokEvent;
 
@@ -111,7 +114,7 @@ class BarangController extends Controller
     {
         //Untuk Testing
         $id = $barang->id;
-        $barang = Barang::with('produk')->where('id', $id)->first();
+        $barang = Barang::with('produk','merek','pemasok')->where('id', $id)->first();
 
         $informasi = [];
 
@@ -273,6 +276,61 @@ class BarangController extends Controller
             return response()->json($barang);
         }
     }
+
+    //get tabel transaksi pelanggan
+    public function getTransaksiPelanggan(Request $request)
+    {
+        $id = $request->id;
+        $transaksi = TransaksiBarangPelanggan::with('transaksiPelanggan', 'barang')->where('barang_id', $id)->get();
+
+        if ($request->ajax()) {
+            return DataTables::of($transaksi)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('transaksiPelanggan.show', $row->transaksiPelanggan->id) .'" data-toggle="tooltip"  data-id="' . $row->transaksiPelanggan->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    return $btn;
+                })
+                ->editColumn('total_harga', function ($row) {
+                    return 'Rp. ' . number_format($row->total_harga, 0, ',', '.');
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return response()->json($transaksi);
+    }
+
+    //get tabel transaksi pemasok
+    public function getTransaksiPemasok(Request $request)
+    {
+        $id = $request->id;
+        $transaksi = TransaksiBarangPemasok::with('transaksiPemasok', 'barang')->where('barang_id', $id)->get();
+
+        if ($request->ajax()) {
+            return DataTables::of($transaksi)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('transaksiPemasok.show', $row->transaksiPemasok->id) . '" data-toggle="tooltip"  data-id="' . $row->transaksiPemasok->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    return $btn;
+                })
+                ->editColumn('total_harga', function ($row) {
+                    return 'Rp. ' . number_format($row->total_harga, 0, ',', '.');
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return response()->json($transaksi);
+    }
+
+
+
+
+
 
 
 }

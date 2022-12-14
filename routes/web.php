@@ -59,6 +59,9 @@ Route::get('/getTableKategori', [KategoriController::class, 'getTable'])->name('
 Route::get('/getTableMerek', [MerekController::class, 'getTable'])->name('merek.getTable');
 Route::get('/getTableProduk', [ProdukController::class, 'getTable'])->name('produk.getTable');
 
+Route::get('/barang/transaksiPelanggan/{id}', [BarangController::class, 'getTransaksiPelanggan'])->name('barang.getTransaksiPelanggan');
+Route::get('/barang/transaksiPemasok/{id}', [BarangController::class, 'getTransaksiPemasok'])->name('barang.getTransaksiPemasok');
+
 
 
 Route::get('/getTransaksiPemasokById/{id}', [TransaksiPemasokController::class, 'getById'])->name('transaksiPemasok.getById');

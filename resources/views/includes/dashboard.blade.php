@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-3">
+      <div class="row row d-flex">
+        <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-dark">
             <div class="inner">
               <h3> {{ $informasi['total_user'] }}</h3>
@@ -27,7 +27,7 @@
             </a>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-dark">
             <div class="inner">
               <h3> {{ $informasi['total_barang'] }}</h3>
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="clearfix hidden-md-up"></div>
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-info">
             <div class="inner">
               <h3> {{ $informasi['total_pemasok'] }}</h3>
@@ -54,7 +54,7 @@
             </a>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-info">
             <div class="inner">
               <h3> {{ $informasi['total_pelanggan'] }}</h3>
@@ -67,7 +67,7 @@
             </a>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-warning">
             <div class="inner">
               <h3> {{ $informasi['total_transaksi_pemasok'] }}</h3>
@@ -80,7 +80,7 @@
             </a>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-warning">
             <div class="inner">
               <h3> {{ $informasi['total_transaksi_pelanggan'] }}</h3>
@@ -94,7 +94,7 @@
           </div>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 flex-fill bd-highlight">
           <div class="small-box bg-success">
             <div class="inner">
               <h3>@currency($informasi['total_pengeluaran'])</h3>
@@ -109,7 +109,7 @@
         </div>
 
 
-        <div class="col-12 col-sm-6 col-md-3">
+        <div class="p-2 flex-fill bd-highlight">
           <div class="small-box bg-success">
             <div class="inner">
               <h3> @currency($informasi['total_pendapatan']['total'])</h3>
