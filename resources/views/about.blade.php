@@ -3,7 +3,10 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1 class="display-10" style="text-align: center" >Halaman Mengenai Applikasi</h1>
+    <h1 class="text-center"
+    style="font-family: 'Times New Roman'"
+    style="text-transform: uppercase"
+    >Halaman Mengenai Applikasi</h1>
 @stop
 
 
@@ -20,7 +23,7 @@
             emand secara efektif. Applikasi E-SCM menggabungkan informasi terdistribusi,
             sistem informasi bisnis, dan jaringan komputer untuk menghubungkan semua anggota rantai pasokan.
       </p>
-      <a href="#" class="btn btn-primary">Download User Manual</a>
+      <a href="/download/pdf" class="btn btn-primary">Download User Manual</a>
     </div>
 </div>
 
