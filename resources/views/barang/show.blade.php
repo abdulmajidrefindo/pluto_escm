@@ -9,110 +9,16 @@
 
  @section('content')
 
-    <div class="row">
-        <div class="col-md-12">
+     <div class="row">
 
-            <div class="card card-dark">
-                <div class="card-header border-transparent" role="button" data-card-widget="collapse">
-                    <h3 class="card-title">Informasi Barang</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row d-flex">
-
-                        <div class="p-2 flex-fill bd-highlight">
-                            <div class="small-box bg-purple">
-                                <div class="inner">
-                                    <h3> {{ $barang->total_stok }}</h3>
-                                    <h4>Total Stok</h4>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-dolly-flatbed"></i>
-                                </div>
-                                <a href="#" class="small-box-footer"> </i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="p-2 flex-fill bd-highlight">
-                            <div class="small-box bg-purple">
-                                <div class="inner">
-                                    <h3> {{ $barang->total_terjual }}</h3>
-                                    <h4>Total Terjual</h4>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-dolly-flatbed"></i>
-                                </div>
-                                <a href="#" class="small-box-footer"> </i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="p-2 flex-fill bd-highlight">
-                            <div class="small-box bg-purple">
-                                <div class="inner">
-                                    <h3> {{ $barang->total_masuk }}</h3>
-                                    <h4>Total Diterima</h4>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-dolly-flatbed"></i>
-                                </div>
-                                <a href="#" class="small-box-footer"> </i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="p-2 flex-fill bd-highlight">
-                            <div class="small-box bg-purple">
-                                <div class="inner">
-                                    <h3>@currency($informasi['pengeluaran'])</h3>
-                                    <h4>Total Pengeluaran</h4>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-dolly-flatbed"></i>
-                                </div>
-                                <a href="#" class="small-box-footer"> </i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="p-2 flex-fill bd-highlight">
-                            <div class="small-box bg-purple">
-                                <div class="inner">
-                                    <h3>@currency($informasi['pemasukan'])</h3>
-                                    <h4>Total Pemasukan</h4>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-dolly-flatbed"></i>
-                                </div>
-                                <a href="#" class="small-box-footer"> </i>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
+     </div>
 
 
      <div class="row">
          <div class="col-12 col-sm-12 col-md-6">
              <div class="card card-dark">
                  <div class="card-header border-transparent" role="button" data-card-widget="collapse">
-                     <h3 class="card-title">Detail Penjualan</h3>
+                     <h3 class="card-title">Detail Barang</h3>
                      <div class="card-tools">
                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
                              <i class="fas fa-minus"></i>
@@ -124,76 +30,77 @@
                  </div>
                  <div class="card-body">
 
-                         <div class="row">
-                             <div class="col-sm-12">
+                     <div class="row">
+                         <div class="col-sm-12">
 
-                                 <div class="form-group col-md-12">
-                                     <label class="text-lightdark">
-                                         ID Barang
-                                     </label>
-                                     <div class="input-group">
-                                         <input id="id" name="id" value="{{ $barang->id }}"
-                                             class="form-control" disabled>
-                                     </div>
+                             <div class="form-group col-md-12">
+                                 <label class="text-lightdark">
+                                     ID Barang
+                                 </label>
+                                 <div class="input-group">
+                                     <input id="id" name="id" value="{{ $barang->id }}" class="form-control"
+                                         disabled>
                                  </div>
-
-                                 <div class="form-group col-md-12">
-                                    <label for="produk" class="text-lightdark">
-                                        Produk
-                                    </label>
-                                    <div class="input-group">
-                                        <input id="group" name="group" value="{{ $barang->produk->nama_produk }}"
-                                            class="form-control" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="merek" class="text-lightdark">
-                                        Merek
-                                    </label>
-                                    <div class="input-group">
-                                        <input id="merek" name="merek" value="{{ $barang->merek->nama_merek }}"
-                                            class="form-control" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="pemasok" class="text-lightdark">
-                                        Pemasok
-                                    </label>
-                                    <div class="input-group">
-                                        <input id="pemasok" name="pemasok" value="{{ $barang->pemasok->nama_pemasok }}"
-                                            class="form-control" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="sku" class="text-lightdark">
-                                        Nomor SKU Barang
-                                    </label>
-                                    <div class="input-group">
-                                        <input id="sku" name="sku" value="{{ $barang->sku }}"
-                                            class="form-control" disabled>
-                                    </div>
-                                </div>
-
-                                <x-adminlte-input name="keterangan" type="text" value="{{ $barang->harga }}" label="Harga" placeholder="Contoh : Apa saja "
-                                    fgroup-class="col-md-12" disabled>
-
-                                    <x-slot name="prependSlot">
-                                        <div class="input-group-text bg-purple">
-                                            Rp.
-                                        </div>
-                                    </x-slot>
-
-                                </x-adminlte-input>
-
-
-
-
-
                              </div>
+
+                             <div class="form-group col-md-12">
+                                 <label for="produk" class="text-lightdark">
+                                     Produk
+                                 </label>
+                                 <div class="input-group">
+                                     <input id="group" name="group" value="{{ $barang->produk->nama_produk }}"
+                                         class="form-control" disabled>
+                                 </div>
+                             </div>
+
+                             <div class="form-group col-md-12">
+                                 <label for="merek" class="text-lightdark">
+                                     Merek
+                                 </label>
+                                 <div class="input-group">
+                                     <input id="merek" name="merek" value="{{ $barang->merek->nama_merek }}"
+                                         class="form-control" disabled>
+                                 </div>
+                             </div>
+
+                             <div class="form-group col-md-12">
+                                 <label for="pemasok" class="text-lightdark">
+                                     Pemasok
+                                 </label>
+                                 <div class="input-group">
+                                     <input id="pemasok" name="pemasok" value="{{ $barang->pemasok->nama_pemasok }}"
+                                         class="form-control" disabled>
+                                 </div>
+                             </div>
+
+                             <div class="form-group col-md-12">
+                                 <label for="sku" class="text-lightdark">
+                                     Nomor SKU Barang
+                                 </label>
+                                 <div class="input-group">
+                                     <input id="sku" name="sku" value="{{ $barang->sku }}" class="form-control"
+                                         disabled>
+                                 </div>
+                             </div>
+
+                             <x-adminlte-input name="keterangan" type="text" value="{{ $barang->harga }}" label="Harga"
+                                 placeholder="Contoh : Apa saja " fgroup-class="col-md-12" disabled>
+
+                                 <x-slot name="prependSlot">
+                                     <div class="input-group-text bg-purple">
+                                         Rp.
+                                     </div>
+                                 </x-slot>
+
+                             </x-adminlte-input>
+
+                             <!-- link to update page -->
+                                <a href="{{ route('barang.edit', $barang->id) }}" class="btn bg-maroon float-right">Ubah Data Barang</a>
+
+
+
                          </div>
+                     </div>
 
                  </div>
                  <div class="card-footer">
@@ -201,9 +108,9 @@
                          <div class="col-12">
 
 
-                            <div id="daftar-kategori" class="float-right">
+                             <div id="daftar-kategori" class="float-right">
 
-                            </div>
+                             </div>
 
                          </div>
                      </div>
@@ -214,24 +121,98 @@
          </div>
 
          <div class="col-12 col-sm-12 col-md-6">
-            <div class="card card-dark">
-                <div class="card-header border-transparent" role="button" data-card-widget="collapse">
-                    <h3 class="card-title">Grafik Penjualan</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
+             <div class="card card-dark">
+                 <div class="card-header border-transparent" role="button" data-card-widget="collapse">
+                     <h3 class="card-title">Informasi Barang</h3>
+                     <div class="card-tools">
+                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                             <i class="fas fa-minus"></i>
+                         </button>
+                         <button type="button" class="btn btn-tool" data-card-widget="remove">
+                             <i class="fas fa-times"></i>
+                         </button>
+                     </div>
+                 </div>
+                 <div class="card-body">
+                     <div class="row d-flex">
 
-                </div>
+                         <div class="p-2 flex-fill bd-highlight">
+                             <div class="small-box bg-purple">
+                                 <div class="inner">
+                                     <h3> {{ $barang->total_stok }}</h3>
+                                     <h4>Total Stok</h4>
+                                 </div>
+                                 <div class="icon">
+                                     <i class="fas fa-dolly-flatbed"></i>
+                                 </div>
+                                 <a href="#" class="small-box-footer"> </i>
+                                 </a>
+                             </div>
+                         </div>
 
-            </div>
-        </div>
+                         <div class="p-2 flex-fill bd-highlight">
+                             <div class="small-box bg-purple">
+                                 <div class="inner">
+                                     <h3> {{ $barang->total_terjual }}</h3>
+                                     <h4>Total Terjual</h4>
+                                 </div>
+                                 <div class="icon">
+                                     <i class="fas fa-dolly-flatbed"></i>
+                                 </div>
+                                 <a href="#" class="small-box-footer"> </i>
+                                 </a>
+                             </div>
+                         </div>
+
+                         <div class="p-2 flex-fill bd-highlight">
+                             <div class="small-box bg-purple">
+                                 <div class="inner">
+                                     <h3> {{ $barang->total_masuk }}</h3>
+                                     <h4>Total Diterima</h4>
+                                 </div>
+                                 <div class="icon">
+                                     <i class="fas fa-dolly-flatbed"></i>
+                                 </div>
+                                 <a href="#" class="small-box-footer"> </i>
+                                 </a>
+                             </div>
+                         </div>
+
+                         <div class="p-2 flex-fill bd-highlight">
+                             <div class="small-box bg-purple">
+                                 <div class="inner">
+                                     <h3>@currency($informasi['pengeluaran'])</h3>
+                                     <h4>Total Pengeluaran</h4>
+                                 </div>
+                                 <div class="icon">
+                                     <i class="fas fa-dolly-flatbed"></i>
+                                 </div>
+                                 <a href="#" class="small-box-footer"> </i>
+                                 </a>
+                             </div>
+                         </div>
+
+                         <div class="p-2 flex-fill bd-highlight">
+                             <div class="small-box bg-purple">
+                                 <div class="inner">
+                                     <h3>@currency($informasi['pemasukan'])</h3>
+                                     <h4>Total Pemasukan</h4>
+                                 </div>
+                                 <div class="icon">
+                                     <i class="fas fa-dolly-flatbed"></i>
+                                 </div>
+                                 <a href="#" class="small-box-footer"> </i>
+                                 </a>
+                             </div>
+                         </div>
+
+                     </div>
+
+
+                 </div>
+
+             </div>
+         </div>
 
      </div>
 
@@ -321,18 +302,11 @@
                  }
              });
 
-             //change color of disabled form
-                $('input[disabled]').css('background-color', '#FFFFFF');
 
-            //add border to disabled form
-                $('input[disabled]').css('border-bottom', '1px solid #605ca8');
 
 
 
          });
-
-
-
      </script>
 
      <script>
@@ -434,22 +408,26 @@
      </script>
 
      <script>
-            $(document).ready(function() {
+         $(document).ready(function() {
 
-                //append bootstrap badge to #id kategori with random color from object
-                var kategori = {!! json_encode($barang->produk->kategori->toArray()) !!};
-                var colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark','indigo','purple','pink','navy','lightblue','teal','olive','lime','orange','fuchsia','maroon','gray'];
+             //append bootstrap badge to #id kategori with random color from object
+             var kategori = {!! json_encode($barang->produk->kategori->toArray()) !!};
+             var colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark', 'indigo',
+                 'purple', 'pink', 'navy', 'lightblue', 'teal', 'olive', 'lime', 'orange', 'fuchsia', 'maroon',
+                 'gray'
+             ];
 
-                for (var i = 0; i < kategori.length; i++) {
-                    var randomColor = colors[Math.floor(Math.random() * colors.length)];
-                    //as link to kategori.show
-                    $('#daftar-kategori').append('<a href="/kategori/' + kategori[i].id + '" class="badge bg-' + randomColor + '">' + kategori[i].nama_kategori + '</a> ');
+             for (var i = 0; i < kategori.length; i++) {
+                 var randomColor = colors[Math.floor(Math.random() * colors.length)];
+                 //as link to kategori.show
+                 $('#daftar-kategori').append('<a href="/kategori/' + kategori[i].id + '" class="badge bg-' +
+                     randomColor + '">' + kategori[i].nama_kategori + '</a> ');
 
-                }
+             }
 
 
 
-            });
-    </script>
+         });
+     </script>
 
  @stop
