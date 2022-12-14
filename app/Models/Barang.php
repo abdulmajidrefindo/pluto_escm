@@ -43,7 +43,7 @@ class Barang extends Model
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(Produk::class)->with('kategori');
     }
 
     public function transaksiPemasok()

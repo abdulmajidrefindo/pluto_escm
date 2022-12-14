@@ -30,8 +30,8 @@
                         <div class="p-2 flex-fill bd-highlight">
                             <div class="small-box bg-purple">
                                 <div class="inner">
-                                    <h3> {{ $barang->total_terjual }}</h3>
-                                    <h4>Total Terjual</h4>
+                                    <h3> {{ $barang->total_stok }}</h3>
+                                    <h4>Total Stok</h4>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-dolly-flatbed"></i>
@@ -123,12 +123,12 @@
                      </div>
                  </div>
                  <div class="card-body">
-                     <form id="form_tambah_barang">
+
                          <div class="row">
                              <div class="col-sm-12">
 
                                  <div class="form-group col-md-12">
-                                     <label for="id" class="text-lightdark">
+                                     <label class="text-lightdark">
                                          ID Barang
                                      </label>
                                      <div class="input-group">
@@ -177,19 +177,37 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-12">
-                                    <label for="harga" class="text-lightdark">
-                                       Harga Barang
-                                    </label>
-                                    <div class="input-group">
-                                        <input id="harga" name="harga" value="{{ $barang->harga }}"
-                                            class="form-control" disabled>
-                                    </div>
-                                </div>
+                                <x-adminlte-input name="keterangan" type="text" value="{{ $barang->harga }}" label="Harga" placeholder="Contoh : Apa saja "
+                                    fgroup-class="col-md-12" disabled>
+
+                                    <x-slot name="prependSlot">
+                                        <div class="input-group-text bg-purple">
+                                            Rp.
+                                        </div>
+                                    </x-slot>
+
+                                </x-adminlte-input>
+
+
+
+
 
                              </div>
                          </div>
-                     </form>
+
+                 </div>
+                 <div class="card-footer">
+                     <div class="row">
+                         <div class="col-12">
+
+
+                            <div id="daftar-kategori" class="float-right">
+
+                            </div>
+
+                         </div>
+                     </div>
+
                  </div>
 
              </div>
@@ -402,5 +420,22 @@
 
          });
      </script>
+
+     <script>
+            $(document).ready(function() {
+
+                //append bootstrap badge to #id kategori with random color from object
+                var kategori = {!! json_encode($barang->produk->kategori->toArray()) !!};
+                var colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark','indigo','purple','pink','navy','lightblue','teal','olive','lime','orange','fuchsia','maroon','gray'];
+
+                for (var i = 0; i < kategori.length; i++) {
+                    var randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    $('#daftar-kategori').append('<span class="badge bg-' + randomColor + '">' + kategori[i].nama_kategori + '</span> ');
+                }
+
+
+
+            });
+    </script>
 
  @stop
