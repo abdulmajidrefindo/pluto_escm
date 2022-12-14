@@ -60,9 +60,9 @@
 
     </div>
 
-    <div class="card-footer clearfix">
-        <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Tambah Transaksi</a>
-        <a href="{{route('transaksi')}}" class="btn btn-sm btn-secondary float-right">Lihat Semua Transaksi</a>
+    <div class="card-footer clearfix d-flex justify-content-end">
+        <a href="{{route('transaksiPelanggan.index')}}" class="btn btn-sm bg-purple rounded-0">Transaksi Penjualan</a>
+        <a href="{{route('transaksiPemasok.index')}}" class="btn btn-sm bg-maroon rounded-0">Transaksi Pemasok</a>
     </div>
 
 </div>
