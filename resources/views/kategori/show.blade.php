@@ -9,7 +9,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-6">
+        <div class="col-12 col-sm-12 col-md-4">
             <div class="card card-dark">
                 <div class="card-header border-transparent">
                     <h3 class="card-title"> {{ $kategori->nama_kategori }} </h3>
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-12 col-md-6">
+        <div class="col-12 col-sm-12 col-md-8">
             <div class="card card-dark">
                 <div class="card-header border-transparent" role="button" data-card-widget="collapse">
                     <h3 class="card-title">Daftar Produk {{ $kategori->nama_kategori }}</h3>

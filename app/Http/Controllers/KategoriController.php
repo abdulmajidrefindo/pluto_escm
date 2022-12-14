@@ -168,5 +168,4 @@ class KategoriController extends Controller
                 ->make(true);
         }
     }
-
 }
