@@ -42,6 +42,10 @@ Route::get('download/pdf', function() {
     return Response::download($file);
 });
 
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+
+Route::patch('/profile/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+
 //Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

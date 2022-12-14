@@ -6,7 +6,7 @@
     <h1 class="text-center"
     style="font-family: 'Times New Roman'"
     style="text-transform: uppercase"
-    >Halaman Mengenai Applikasi</h1>
+    >Halaman Informasi</h1>
 @stop
 
 
