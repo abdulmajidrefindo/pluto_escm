@@ -65,9 +65,9 @@
                                     icon="fas fa fa-fw fa-save" />
                             </div>
                             <div class="col-sm-6 border-left d-flex align-items-center justify-content-center">
-                                <span class="fa-stack fa-8x">
+                                <span class="d-none d-sm-block fa-stack fa-8x">
 
-                                    <i class="d-none d-sm-block fas fa-tags fa-shake text-purple disabled fa-stack-1x"
+                                    <i class=" fas fa-shopping-bag fa-bounce text-purple disabled fa-stack-1x"
                                         style="--fa-beat-scale: 1.1;"></i>
 
                                 </span>

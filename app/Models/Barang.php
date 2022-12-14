@@ -81,18 +81,18 @@ class Barang extends Model
 
         //delete barang and its relationship
         static::deleting(function ($model) {
-            if($model->isForceDeleting()){
-                $model->transaksiPemasok()->detach();
-                $model->transaksiPelanggan()->detach();
+
+            //update transaksi pemasok total harga
+            foreach ($model->transaksiPemasok as $transaksiPemasok) {
+                $transaksiPemasok->update([
+                    'total_harga' => $transaksiPemasok->total_harga - $model->pivot->total_harga
+                ]);
             }
+            $model->transaksiPemasok()->detach();
+            $model->transaksiPelanggan()->detach();
         });
 
         //delete all relation on before force deleting
-
-
-
-
-
     }
 
 }

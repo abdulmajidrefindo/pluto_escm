@@ -112,8 +112,27 @@ class BarangController extends Controller
         //Untuk Testing
         $id = $barang->id;
         $barang = Barang::with('produk')->where('id', $id)->first();
+
+        $informasi = [];
+
+        //check if have relation with transaksi
+        if($barang->transaksiPemasok->count() > 0){
+            $informasi['pengeluaran'] = $barang->transaksiPemasok->sum('total_harga');
+        } else {
+            $informasi['pengeluaran'] = 0;
+        }
+
+        //check if have relation with pelanggan
+        if($barang->transaksiPelanggan->count() > 0){
+            $informasi['pemasukan'] = $barang->transaksiPelanggan->sum('total_harga');
+        } else {
+            $informasi['pemasukan'] = 0;
+        }
+
+
         //return response()->json($barang);
-        return view('barang.show', compact('barang'));
+        return view('barang.show', compact('barang', 'informasi'));
+
     }
 
     /**

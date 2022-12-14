@@ -13,28 +13,27 @@ class Pemasok extends Model
     protected $fillable = ['nama_pemasok','alamat_pemasok','kontak_pemasok','createdAt','updatedAt'];
     public $timestamps = true;
 
-    public function user()
-    {
-        return $this->belongsTo(Barang::class, 'barang_id', 'pemasok_id');
-    }
 
     public function transaksiPemasok()
     {
-        return $this->belongsTo(TransaksiPemasok::class,'transaksi_pemasok_id', 'pemasok_id');
+        return $this->hasMany(TransaksiPemasok::class);
     }
 
     public function barang() {
         return $this->hasMany(Barang::class);
     }
 
-    /**
-     * Get all of the comments for the Pemasok
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments(): HasMany
+    //delete all child on delete
+    public static function boot()
     {
-        return $this->hasMany(Comment::class, 'foreign_key', 'local_key');
+        parent::boot();
+        static::deleting(function($pemasok) {
+            $pemasok->transaksiPemasok()->delete();
+            //$pemasok->barang()->delete();
+        });
     }
+
+
+
 
 }

@@ -1,158 +1,168 @@
  @extends('adminlte::page')
 
-@section('content_header')
-    <h1>Rincian Barang</h1>
+ @section('content_header')
+     <h1>Rincian Barang</h1>
+ @stop
+
+ @section('content')
+
+     <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+             <div class="card card-dark">
+                 <div class="card-header border-transparent" role="button" data-card-widget="collapse">
+                     <h3 class="card-title">Transaksi Terbaru</h3>
+                     <div class="card-tools">
+                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                             <i class="fas fa-minus"></i>
+                         </button>
+                         <button type="button" class="btn btn-tool" data-card-widget="remove">
+                             <i class="fas fa-times"></i>
+                         </button>
+                     </div>
+                 </div>
+                 <div class="card-body p-0">
+                     <div class="table-responsive">
+                         <table class="table table-striped">
+
+                            <tbody>
+                                <tr>
+
+                                    <td class="col-md-4">ID</td>
+                                    <td>
+                                        {{ $barang->id }}
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <td>SKU Barang</td>
+                                    <td>
+                                        {{ $barang->sku }}
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <td>Harga Barang</td>
+                                    <td>
+                                        {{ $barang->harga }}
+                                    </td>
+
+                                </tr>
 
 
-@stop
+                                <tr>
 
-@section('content')
-<div class="card">
-  <!-- /.card-header -->
-  <div class="card-body" >
-    <table class="table table-sm table-striped">
-        <tr>
-            <td style="width: 1px"></td>
-            <td>ID  :</td>
-            <td>
-                {{$barang->id}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>SKU Barang  :</td>
-            <td>
-                {{$barang->sku}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Harga Barang  :</td>
-            <td>
-                {{$barang->harga}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Total Barang Terjual  :</td>
-            <td>
-                {{$barang->total_terjual}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Total Barang Masuk  :</td>
-            <td>
-                {{$barang->total_masuk}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Total Stok Barang  :</td>
-            <td>
-                {{$barang->total_stok}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Waktu dibuat    :</td>
-            <td>
-                {{$barang->created_at}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-        <tr>
-            <td style="width: 1px"></td>
-            <td>Terakhir diubah    :</td>
-            <td>
-                {{$barang->updated_at}}
-            </td>
-            <td style="width: 300px"></td>
-        </tr>
-    </table>
-  </div>
-</div>
+                                    <td>Total Stok Barang</td>
+                                    <td>
+                                        {{ $barang->total_stok }}
+                                    </td>
 
-<div>
-    <h4>Daftar Produk dengan Kategori {{$barang->nama_barang}}</h4>
-</div>
+                                </tr>
+                                <tr>
 
-<div class="card">
-    <div class="card-body">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-        <table id="myTable" class="table">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Umur</th>
-                    <th>Alamat</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rizki</td>
-                    <td>23</td>
-                    <td>Jakarta</td>
-                </tr>
-                <tr>
-                    <td>Adi</td>
-                    <td>25</td>
-                    <td>Bogor</td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        <div class="text-center">
-            <ul class="pagination pagination-centered">
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">1</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">2</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">3</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">4</a></li>
-                <li><a href="#" style="color: black; float: left; padding: 8px 16px; text-decoration: none; transition: background-color .3s; border: 1px solid #ddd; margin: 0 4px;">5</a></li>
-            </ul>
-            <br>
-        </div>
-    </div>
-</div>
-<div class="text-center">
-    <a href="{{route('barang.index')}}" class="btn btn-primary">Kembali</a>
-</div>
-@stop
+                                    <td>Waktu dibuat</td>
+                                    <td>
+                                        {{ $barang->created_at }}
+                                    </td>
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+                                </tr>
+                                <tr>
 
-@section('js')
-    <script> console.log('Hi!'); </script>
-    <script>
-        function myFunction() {
-          // Declare variables
-          var input, filter, table, tr, td, i, txtValue;
-          input = document.getElementById("myInput");
-          filter = input.value.toUpperCase();
-          table = document.getElementById("myTable");
-          tr = table.getElementsByTagName("tr");
-        
-          // Loop through all table rows, and hide those who don't match the search query
-          for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-              } else {
-                tr[i].style.display = "none";
-              }
-            }
-          }
-        }
-    </script>
-</div>
-@stop
+                                    <td>Terakhir diubah</td>
+                                    <td>
+                                        {{ $barang->updated_at }}
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                         </table>
+                     </div>
+                 </div>
+
+             </div>
+         </div>
+
+         <div class="col-md-6">
+
+            <div class="card card-dark">
+                <div class="card-header border-transparent" role="button" data-card-widget="collapse">
+                    <h3 class="card-title">Detail Penjualan</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="small-box bg-purple">
+                              <div class="inner">
+                                <h3> {{ $barang->total_terjual }}</h3>
+                                <h4>Total Terjual</h4>
+                              </div>
+                              <div class="icon">
+                                <i class="fas fa-dolly-flatbed"></i>
+                              </div>
+                              <a href="#" class="small-box-footer">  </i>
+                              </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="small-box bg-purple">
+                              <div class="inner">
+                                <h3> {{ $barang->total_masuk }}</h3>
+                                <h4>Total Diterima</h4>
+                              </div>
+                              <div class="icon">
+                                <i class="fas fa-dolly-flatbed"></i>
+                              </div>
+                              <a href="#" class="small-box-footer">  </i>
+                              </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="small-box bg-purple">
+                              <div class="inner">
+                                <h3>@currency($informasi['pengeluaran'])</h3>
+                                <h4>Total Pengeluaran</h4>
+                              </div>
+                              <div class="icon">
+                                <i class="fas fa-dolly-flatbed"></i>
+                              </div>
+                              <a href="#" class="small-box-footer">  </i>
+                              </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="small-box bg-purple">
+                              <div class="inner">
+                                <h3>@currency($informasi['pemasukan'])</h3>
+                                <h4>Total Pemasukan</h4>
+                              </div>
+                              <div class="icon">
+                                <i class="fas fa-dolly-flatbed"></i>
+                              </div>
+                              <a href="#" class="small-box-footer">  </i>
+                              </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+         </div>
+
+     </div>
+
+ @stop

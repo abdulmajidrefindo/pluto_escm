@@ -14,6 +14,15 @@ class Pelanggan extends Model
     public $timestamps = true;
     public function transaksiPelanggan()
     {
-        return $this->belongsTo(TransaksiPelanggan::class, 'transaksi_pelanggan_id', 'pelanggan_id');
+        return $this->hasMany(TransaksiPelanggan::class);
+    }
+
+    //delete all child on delete
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function($pelanggan) {
+            $pelanggan->transaksiPelanggan()->delete();
+        });
     }
 }

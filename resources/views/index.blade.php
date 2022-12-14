@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard (pre-Alpha)</h1>
+    <h1>Dashboard</h1>
 @stop
 
 @section('content')
@@ -15,11 +15,8 @@
 </div>
 
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-4">
-            @include('includes.aksi-cepat')
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-8">
+        <div class="col-12 col-sm-12 col-md-12">
             @include('includes.peringatan')
         </div>
     </div>

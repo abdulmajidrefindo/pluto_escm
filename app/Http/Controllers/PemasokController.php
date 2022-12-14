@@ -145,6 +145,7 @@ class PemasokController extends Controller
     {
         $pemasok->delete();
         //return response()->json('Berhasil Dihapur');
+
         return response()->json(['success' => 'Data berhasil dihapus!']);
     }
 
