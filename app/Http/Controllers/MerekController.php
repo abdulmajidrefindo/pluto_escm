@@ -155,4 +155,28 @@ class MerekController extends Controller
                 ->make(true);
         }
     }
+
+    //get Produk with this merek
+    public function getBarang(Request $request) {
+
+        if ($request->ajax()) {
+
+            $data = Merek::find($request->id)->barang;
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('barang.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    return $btn;
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->editColumn('updated_at', function ($row) {
+                    return $row->updated_at->format('d-m-Y H:i:s');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
 }

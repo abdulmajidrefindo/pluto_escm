@@ -1,8 +1,9 @@
 @extends('adminlte::page')
 
+@section('title', 'Detail Barang')
+
 @section('content_header')
     <h1>Rincian Kategori</h1>
-
 
 @stop
 
@@ -15,9 +16,7 @@
                     <h3 class="card-title"> {{ $kategori->nama_kategori }} </h3>
                     <div class="card-tools">
                         <!-- button to edit page-->
-                        <a href="{{ route('kategori.edit', $kategori->id) }}" class="btn btn-tool">
-                            <i class="fas fa-edit"></i>
-                        </a>
+
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                         </button>
@@ -46,7 +45,7 @@
                                     Nama kategori
                                 </label>
                                 <div class="input-group">
-                                    <input id="group" name="group" value="{{ $kategori->nama_kategori }}"
+                                    <input id="nama_kategori" name="nama_kategori" value="{{ $kategori->nama_kategori }}"
                                         class="form-control" disabled>
                                 </div>
                             </div>
@@ -56,29 +55,40 @@
                                     Keterangan
                                 </label>
                                 <div class="input-group">
-                                    <input id="merek" name="merek" value="{{ $kategori->keterangan }}"
+                                    <input id="keterangan" name="keterangan" value="{{ $kategori->keterangan }}"
                                         class="form-control" disabled>
                                 </div>
                             </div>
 
 
-                            <x-adminlte-date-range value="{{ $kategori->created_at }}" name="created_at"
-                                label="Waktu Ditambahkan" disabled>
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text bg-purple">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                </x-slot>
-                            </x-adminlte-date-range>
+                            <x-adminlte-input name="created_at" type="text" value="{{ $kategori->created_at }}" label="Waktu Ditambahkan"
+                                fgroup-class="col-md-12" disabled>
 
-                            <x-adminlte-date-range value="{{ $kategori->updated_at }}" name="created_at"
-                                label="Waktu Diperbaharui" disabled>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text bg-purple">
                                         <i class="fas fa-calendar-alt"></i>
                                     </div>
                                 </x-slot>
-                            </x-adminlte-date-range>
+
+                            </x-adminlte-input>
+
+                            <x-adminlte-input name="updated_at" type="text" value="{{ $kategori->updated_at }}" label="Waktu Diperbaharui"
+                                fgroup-class="col-md-12" disabled>
+
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text bg-purple">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </x-slot>
+
+                            </x-adminlte-input>
+
+                            <x-adminlte-button class="btn bg-purple col-12 simpan" type="submit" label="Simpan Data"
+                                    icon="fas fa fa-fw fa-save" hidden/>
+
+                                    <x-adminlte-button class="btn bg-purple col-12 edit" type="submit" label="Edit Data"
+                                    icon="fas fa fa-fw fa-edit" />
+
                         </div>
                     </div>
                 </div>
@@ -94,30 +104,22 @@
                             <i class="fas fa-minus"></i>
                         </button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
+                            <i class="fas fa-times" ></i>
                         </button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table id="tabel-kategori" class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th style="width: 10px">ID</th>
+                                <th>ID</th>
                                 <th>Nama Produk</th>
                                 <th>Dibuat</th>
                                 <th>Terakhir Diubah</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($kategori->produk as $produk)
-                                <tr>
-                                    <td>{{ $produk->id }}</td>
-                                    <td>{{ $produk->nama_produk }}</td>
-                                    <td>{{ $produk->created_at }}</td>
-                                    <td>{{ $produk->updated_at }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+
                     </table>
                 </div>
             </div>
@@ -128,36 +130,120 @@
 
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-@section('js')
-    <script>
-        console.log('Hi!');
-    </script>
-    <script>
-        function myFunction() {
-            // Declare variables
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
 
-            // Loop through all table rows, and hide those who don't match the search query
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
+@section('js')
+
+
+    <script>
+        $(document).ready(function() {
+            //set csrf token
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
-        }
+            });
+        });
     </script>
-    </div>
+
+    <script>
+        $(document).ready(function() {
+            //data table tabel-transaksi-pelanggan
+
+            var tabelProduk = $('#tabel-kategori').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('kategori.getProduk', $kategori->id) }}",
+                    type: 'GET',
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id',
+                        sClass: 'text-center',
+                        width: '5%'
+                    },
+                    {
+                        data: 'nama_produk',
+                        name: 'produk.nama_produk'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at'
+                    },
+
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        sClass: 'text-center'
+                    },
+                ],
+                order: [
+                    [0, 'desc']
+                ]
+            });
+
+
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+
+//make input availabe if edit button clicked
+        $('.edit').click(function() {
+            $('#nama_kategori').prop('disabled', false);
+            $('#keterangan').prop('disabled', false);
+            $('.edit').prop('hidden', true);
+            $('.simpan').prop('hidden', false);
+        });
+
+        $('.simpan').click(function() {
+            //ajax update data
+            $.ajax({
+                url: "{{ route('kategori.update', $kategori->id) }}",
+                type: 'PUT',
+                data: {
+                    nama_kategori: $('#nama_kategori').val(),
+                    keterangan: $('#keterangan').val(),
+                },
+                success: function(data) {
+                    $('#nama_kategori').prop('disabled', true);
+                    $('#keterangan').prop('disabled', true);
+                    $('.edit').prop('hidden', false);
+                    $('.simpan').prop('hidden', true);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Data berhasil diperbaharui',
+                    });
+                },
+                error: function(data) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Data gagal diperbaharui',
+                    });
+                }
+            });
+
+            //set updated_at with now
+            var now = new Date();
+            var date = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+            var time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+            var dateTime = date + ' ' + time;
+            $('#updated_at').val(dateTime);
+
+        });
+
+
+    });
+</script>
+
 
 @stop

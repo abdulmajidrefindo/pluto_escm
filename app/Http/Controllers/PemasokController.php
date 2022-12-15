@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pemasok;
 use App\Http\Requests\StorePemasokRequest;
 use App\Http\Requests\UpdatePemasokRequest;
+use App\Models\TransaksiPemasok;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Utilities\Request;
 
@@ -178,6 +179,31 @@ class PemasokController extends Controller
                     $btn .= '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger mx-1 shadow delete"><i class="fas fa-sm fa-fw fa-trash"></i> Delete</a>';
 
                     return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    //get all transaksi pemasok with this id
+    public function getTransaksi(Request $request){
+
+        if ($request->ajax()) {
+            $id = $request->id;
+            $data = TransaksiPemasok::with('pemasok')->where('pemasok_id', $id)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('transaksiPemasok.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+
+
+                    return $btn;
+                })
+                ->editColumn('total_harga', function ($row) {
+                    return 'Rp. '. number_format($row->total_harga, 0, ',', '.');
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
                 })
                 ->rawColumns(['action'])
                 ->make(true);

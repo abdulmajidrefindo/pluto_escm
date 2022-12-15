@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pelanggan;
 use App\Http\Requests\StorePelangganRequest;
 use App\Http\Requests\UpdatePelangganRequest;
+use App\Models\TransaksiPelanggan;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Utilities\Request;
 
@@ -159,4 +160,29 @@ class PelangganController extends Controller
                 ->make(true);
         }
     }
+
+    public function getTransaksi(Request $request){
+
+        if ($request->ajax()) {
+            $id = $request->id;
+            $data = TransaksiPelanggan::with('pelanggan')->where('pelanggan_id', $id)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('transaksiPelanggan.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+
+
+                    return $btn;
+                })
+                ->editColumn('total_harga', function ($row) {
+                    return 'Rp. '. number_format($row->total_harga, 0, ',', '.');
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
 }

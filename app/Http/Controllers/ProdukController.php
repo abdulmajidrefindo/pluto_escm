@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\KategoriProduk;
 use App\Models\Produk;
 use App\Models\Kategori;
@@ -67,6 +68,7 @@ class ProdukController extends Controller
         $produk = Produk::create([
             'nama_produk' => $request->get('nama_produk'),
             'unit' => $request->get('unit'),
+            'jenis_produk' => $request->get('jenis_produk'),
             'keterangan' => $request->get('keterangan'),
 
         ]);
@@ -101,8 +103,9 @@ class ProdukController extends Controller
         //untuk testing
         $id = $produk->id;
         $produk = Produk::with('kategori')->where('id',$id)->first();
+        $kategori = Kategori::all()->skip(1);
         //return response()->json($produk);
-        return view('produk.show',compact('produk'));
+        return view('produk.show',compact('produk','kategori'));
     }
 
     /**
@@ -204,4 +207,29 @@ class ProdukController extends Controller
         }
 
     }
+
+    //get barang with this produk
+    public function getBarang(Request $request)
+    {
+        $id = $request->id;
+
+        if ($request->ajax()) {
+            $data = Barang::with('produk','merek','pemasok')->where('produk_id',$id)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="'. route('barang.show', $row->id) .'" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-sm btn-success mx-1 shadow detail"><i class="fas fa-sm fa-fw fa-eye"></i> Detail</a>';
+                    return $btn;
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-m-Y H:i:s');
+                })
+                ->editColumn('updated_at', function ($row) {
+                    return $row->updated_at->format('d-m-Y H:i:s');
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
 }

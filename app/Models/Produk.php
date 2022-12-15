@@ -17,7 +17,7 @@ class Produk extends Model
     //default value for keterangan if null
     protected $attributes = [
         'keterangan' => 'Tidak ada keterangan',
-        'jenis_produk' => 'Bahan Jadi'
+        'jenis_produk' => 'Barang Jadi'
     ];
 
     public function barang()

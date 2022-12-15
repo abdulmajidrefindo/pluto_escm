@@ -10,11 +10,6 @@
  @section('content')
 
      <div class="row">
-
-     </div>
-
-
-     <div class="row">
          <div class="col-12 col-sm-12 col-md-6">
              <div class="card card-dark">
                  <div class="card-header border-transparent" role="button" data-card-widget="collapse">
@@ -95,7 +90,8 @@
                              </x-adminlte-input>
 
                              <!-- link to update page -->
-                                <a href="{{ route('barang.edit', $barang->id) }}" class="btn bg-maroon float-right">Ubah Data Barang</a>
+                             <a href="{{ route('barang.edit', $barang->id) }}" class="btn bg-purple float-right">Ubah Data
+                                 Barang</a>
 
 
 
@@ -301,11 +297,6 @@
                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                  }
              });
-
-
-
-
-
          });
      </script>
 
