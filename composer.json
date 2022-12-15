@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "arielmejiadev/larapex-charts": "^5.2",
+        "diglactic/laravel-breadcrumbs": "^8.0",
         "guzzlehttp/guzzle": "^7.2",
         "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^9.19",

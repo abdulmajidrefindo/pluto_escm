@@ -3,7 +3,17 @@
 @section('title', 'Detail Barang')
 
 @section('content_header')
-    <h1>Rincian Merek</h1>
+
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1 class="m-0">Rincian Kategori</h1>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            {{ Breadcrumbs::render('merek.show', $merek) }}
+        </ol>
+    </div>
+</div>
 
 @stop
 

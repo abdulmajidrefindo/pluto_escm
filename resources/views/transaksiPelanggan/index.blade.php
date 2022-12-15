@@ -1,18 +1,21 @@
-@php
-
-    $heads = ['ID', 'Pelanggan', 'Total Harga', 'Taggal Transaksi', ['label' => 'Aksi', 'no-export' => true]];
-    $config = [
-        'order' => [[1, 'asc']],
-        'columns' => [null, null, null, null, ['orderable' => false]],
-    ];
-@endphp
 
 @extends('adminlte::page')
 
 @section('title', 'Transaksi')
 
 @section('content_header')
-    <h1>Daftar Transaksi</h1>
+
+<div class="row mb-2">
+    <div class="col-sm-6">
+        <h1 class="m-0">Transaksi Pelanggan</h1>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            {{ Breadcrumbs::render('transaksiPelanggan') }}
+        </ol>
+    </div>
+</div>
+
 @stop
 
 @section('content')
