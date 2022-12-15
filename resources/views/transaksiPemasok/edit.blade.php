@@ -178,13 +178,13 @@
                 }
             });
 
-            var totalHarga = $('.total-harga').text();
+            var totalHarga = {{ $transaksiPemasok->total_harga }};
 
             $('#tambahBarang').text('Mohon Isi Data Barang Terlebih Dahulu');
 
             //Tambah Barang Ke Table
             $('#tambahBarang').click(function() {
-                totalHarga = 0;
+
 
                 if ($('#kuantitas').val() == '' || $('#kuantitas').val() == 0) {
                     Swal.fire({
@@ -216,6 +216,7 @@
                 let unit = $('#unitBarang').text();
                 let harga = $('#harga').val();
                 let total = kuantitas * harga;
+                totalHarga += total;
                 let html = '';
                 html += '<tr>';
                 html +=
@@ -231,9 +232,7 @@
                 $('#selectBarang').val('');
                 $('#kuantitas').val('');
                 $('#tabelAddBarang').append(html);
-                $('#tabelAddBarang').find('.total').each(function() {
-                    totalHarga += parseInt($(this).text());
-                });
+
                 $('.total-harga').text(totalHarga);
                 //Hapus Barang Dari Select
                 $('#selectBarang option[value="' + id + '"]').remove();
