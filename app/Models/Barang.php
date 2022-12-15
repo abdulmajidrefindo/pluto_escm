@@ -92,16 +92,35 @@ class Barang extends Model
 
             event(new SisaStokEvent($model->id, 20));
 
-            /*update transaksi pemasok total harga if have relation
+
             if ($model->transaksiPemasok()->count() > 0) {
                 foreach ($model->transaksiPemasok as $transaksiPemasok) {
-                    $transaksiPemasok->update([
-                        'total_harga' => $transaksiPemasok->total_harga - $model->pivot->total_harga
-                    ]);
+                    $total_harga = 0;
+                    foreach ($model->TransaksiBarangPemasok as $transaksiBarangPemasok) {
+                        if ($transaksiBarangPemasok->transaksi_pemasok_id == $transaksiPemasok->id) {
+                            $total_harga += $transaksiBarangPemasok->total_harga;
+                        }
+                    }
+                    $transaksiPemasok->total_harga -= $total_harga;
+                    $transaksiPemasok->save();
                 }
             }
 
-            */
+            if ($model->transaksiPelanggan()->count() > 0) {
+                foreach ($model->transaksiPelanggan as $transaksiPelanggan) {
+                    $total_harga = 0;
+                    foreach ($model->TransaksiBarangPelanggan as $transaksiBarangPelanggan) {
+                        if ($transaksiBarangPelanggan->transaksi_pelanggan_id == $transaksiPelanggan->id) {
+                            $total_harga += $transaksiBarangPelanggan->total_harga;
+                        }
+                    }
+                    $transaksiPelanggan->total_harga -= $total_harga;
+                    $transaksiPelanggan->save();
+                }
+            }
+
+
+
 
             $model->transaksiPemasok()->detach();
             $model->transaksiPelanggan()->detach();
