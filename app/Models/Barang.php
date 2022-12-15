@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Log;
 
 use App\Providers\SisaStokEvent;
@@ -89,6 +90,8 @@ class Barang extends Model
         //delete barang and its relationship
         static::deleting(function ($model) {
 
+            event(new SisaStokEvent($model->id, 20));
+
             /*update transaksi pemasok total harga if have relation
             if ($model->transaksiPemasok()->count() > 0) {
                 foreach ($model->transaksiPemasok as $transaksiPemasok) {
@@ -104,7 +107,11 @@ class Barang extends Model
             $model->transaksiPelanggan()->detach();
         });
 
-        //delete all relation on before force deleting
+        static::deleted(function ($model) {
+
+            DB::table('notifications')->where('type','App\Notifications\SisaStokNotification')->where('data','like','%'.$model->id.'%')->delete();
+
+        });
     }
 
 }
