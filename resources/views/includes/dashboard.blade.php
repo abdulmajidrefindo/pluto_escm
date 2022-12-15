@@ -14,6 +14,9 @@
     </div>
     <div class="card-body">
       <div class="row row d-flex">
+
+        <!--
+
         <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-purple">
             <div class="inner">
@@ -27,6 +30,9 @@
             </a>
           </div>
         </div>
+
+      -->
+
         <div class="p-2 col-12 col-sm-6 col-md-3">
           <div class="small-box bg-purple">
             <div class="inner">
